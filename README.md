@@ -15,7 +15,7 @@
 
 ### Features
 
-- Variation of features for different roles: Instructor, Undergraduate or Company Superviser
+- Variation of features for different roles: Student, Instructor, Undergraduate or Company Superviser, Head of Engineering Departments
 - Notify users about updates through email
 - Upload and download course report
 - Validation of profile and course reports
