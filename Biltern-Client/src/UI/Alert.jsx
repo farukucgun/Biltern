@@ -1,0 +1,38 @@
+import React from 'react'
+import { useSelector } from 'react-redux';
+
+import classes from './Alert.module.css';
+
+/**
+ * @author Faruk Uçgun
+ * @date 23.04.2023
+ */
+
+const Alert = () => {
+    const alerts = useSelector((state) => state.alert.alerts);
+    // const loading = useAppSelector(state => state.post.loading);
+    // console.log(loading);
+    // if (loading) {
+    //     alerts.concat({id: "loading", msg: "Loading...", alertType: "info"});
+    // }
+
+    // useEffect(() => {
+        
+    // }, [alerts]);    
+
+    if (alerts === null || alerts.length === 0) {
+        return null;
+    }
+
+    return ( 
+        <div className={classes.alerts}>
+                {alerts.map((alert) => (
+                    <div key={alert.id} className={`alert alert-${alert.alertType}`}>
+                        {alert.msg}
+                    </div>    
+                ))}
+        </div>
+    );
+}
+
+export default Alert

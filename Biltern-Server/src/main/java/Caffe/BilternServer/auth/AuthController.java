@@ -1,5 +1,6 @@
 package Caffe.BilternServer.auth;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,30 +30,22 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @GetMapping("login")
-    public ResponseEntity<AuthenticationDTO> login(@RequestBody UserLoginRequest userLoginRequest){
-
-        if(userLoginRequest.getPassword() == null || userLoginRequest.getBilkentId() == null){
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
+    @PostMapping("login")
+    public ResponseEntity<AuthenticationDTO> login(@Valid @RequestBody UserLoginRequest userLoginRequest){
 
         return ResponseEntity.ok(authService.authenticate(userLoginRequest));
     }
 
-    @GetMapping("token")
+
+    @PostMapping("token")
     public ResponseEntity<String> accessToken(){
 
         return ResponseEntity.ok(authService.generateAccessToken());
     }
 
 
-    @GetMapping("resetPassword")
-    public ResponseEntity<String> changePassword(@RequestBody ForgotPasswordRequest forgotPasswordRequest){
-
-        if(forgotPasswordRequest.getBilkentId() == null || forgotPasswordRequest.getBilkentMail() == null){
-            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
-        }
-
+    @PostMapping("resetPassword")
+    public ResponseEntity<String> changePassword(@RequestBody @Valid ForgotPasswordRequest forgotPasswordRequest){
 
         authService.sendResetPasswordMail(forgotPasswordRequest);
 
@@ -60,16 +53,10 @@ public class AuthController {
     }
 
     @PatchMapping("changePassword")
-    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest){
+    public ResponseEntity<String> changePassword(@RequestBody @Valid ChangePasswordRequest changePasswordRequest){
 
 
         BilternUser bilternUser = (BilternUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-
-        if(changePasswordRequest.getBilternID() == null || changePasswordRequest.getPassword() == null){
-            return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
-        }
-
 
 
         if(!authService.changePassword(changePasswordRequest, bilternUser)){
