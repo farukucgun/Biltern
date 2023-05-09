@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author jmo
- * @date date
+ * @date 8.05.2023
  */
 
 @NoArgsConstructor
