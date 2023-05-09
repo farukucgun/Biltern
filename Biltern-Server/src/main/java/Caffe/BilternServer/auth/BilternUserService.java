@@ -13,16 +13,16 @@ import org.springframework.stereotype.Service;
  */
 
 
-
 @Service
 public class BilternUserService implements UserDetailsService {
-
 
     private final BilternUserRepo bilternUserRepo;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public BilternUserService(BilternUserRepo bilternUserRepo, PasswordEncoder passwordEncoder) {
+    public BilternUserService(
+            BilternUserRepo bilternUserRepo,
+            PasswordEncoder passwordEncoder) {
         this.bilternUserRepo = bilternUserRepo;
         this.passwordEncoder = passwordEncoder;
     }
@@ -40,11 +40,6 @@ public class BilternUserService implements UserDetailsService {
                 () -> new UsernameNotFoundException(
                         "Can't user with username: " + username
         ));
-    }
-
-
-    public void saveUser(String username) throws UsernameNotFoundException {
-
     }
 
 
