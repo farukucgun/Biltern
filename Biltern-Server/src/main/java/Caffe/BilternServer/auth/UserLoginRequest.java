@@ -1,19 +1,22 @@
 package Caffe.BilternServer.auth;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.NonNull;
 
 /**
  * @author jmo
- * @date date
+ * @date 7.05.2023
  */
 @NoArgsConstructor
 @Data
 public class UserLoginRequest {
 
 
+    @NotNull
     private Long bilkentId;
+
+    @NotNull
     private String password;
 
 }
