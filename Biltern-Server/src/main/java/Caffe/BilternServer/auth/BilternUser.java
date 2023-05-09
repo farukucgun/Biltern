@@ -1,12 +1,16 @@
 package Caffe.BilternServer.auth;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
+import Caffe.BilternServer.notification.Notification;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.hibernate.annotations.CascadeType;
 
 import java.util.Collection;
 
@@ -29,6 +33,10 @@ public class BilternUser implements UserDetails {
     private String password;
 
     private BilternUserRole bilternUserRole;
+
+    @OneToMany(mappedBy = "bilternUser", fetch = FetchType.LAZY)
+    @Cascade(CascadeType.ALL)
+    private List<Notification> notifications = new ArrayList<>();
 
     public Long getBilkentId() {
         return bilkentId;
