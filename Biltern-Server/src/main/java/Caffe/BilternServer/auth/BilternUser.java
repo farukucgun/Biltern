@@ -6,6 +6,7 @@ import java.util.List;
 
 import Caffe.BilternServer.notification.Notification;
 import jakarta.persistence.*;
+import lombok.Data;
 import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,6 +20,7 @@ import java.util.Collection;
  * @date 14.03.2023
  */
 
+@Data
 @Entity
 @Table(name = "biltern_user")
 public class BilternUser implements UserDetails {
@@ -31,7 +33,6 @@ public class BilternUser implements UserDetails {
     @Column(unique = true)
     private String bilkentMail;
     private String password;
-
     private BilternUserRole bilternUserRole;
 
     @OneToMany(mappedBy = "bilternUser", fetch = FetchType.LAZY)
