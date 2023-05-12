@@ -28,8 +28,6 @@ public class JwtService {
     private String idHeader;
     private String jwtSecretKey;
 
-    private String signed;
-
     private int refreshTokenExpiration;
     private int accessTokenExpiration;
     private int onceUseTokenExpiration;
@@ -99,12 +97,8 @@ public class JwtService {
 
         if(expiration == onceUseTokenExpiration){
 
-            signed = Base64.getEncoder().encodeToString(bilternUser.getPassword().getBytes());
-
             return Base64.getEncoder().encodeToString(bilternUser.getPassword().getBytes()).getBytes();
         }
-
-        signed = Base64.getEncoder().encodeToString(jwtSecretKey.getBytes());
 
         return Base64.getEncoder().encodeToString(jwtSecretKey.getBytes()).getBytes();
     }
