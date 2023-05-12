@@ -7,8 +7,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-
 /**
  * @author jmo
  * @date 4.04.2023
@@ -17,46 +15,56 @@ import java.util.HashMap;
 @Service
 public class MailService {
 
-
-    private final BilternUserService bilternUserService;
     private final JwtService jwtService;
     private final JavaMailSender javaMailSender;
 
 
     @Autowired
-    public MailService(BilternUserService bilternUserService,
-                       JwtService jwtService,
+    public MailService(JwtService jwtService,
                        JavaMailSender javaMailSender) {
-        this.bilternUserService = bilternUserService;
         this.jwtService = jwtService;
         this.javaMailSender = javaMailSender;
     }
 
 
 
-    public void sendPasswordChangeMail(String email, Long bilkentId, String token){
+    public void sendPasswordChangeMail(String bilkentMail, Long bilkentId, String token){
+        createAndSendMail("Biltern-Password Change", bilkentMail,
+                " <h1> Your password change link is below <h1> \n  <a href = \""
+                        + "http://127.0.0.1:5173?id=" +
+                        bilkentId + "&token=" + token  + "\" >  Click  </a> \n"
+                );
+    }
 
+
+    public void sendRegisterationMail(String bilkentMail, Long bilkentId, String password) {
+
+        createAndSendMail("Biltern Registeration", bilkentMail,
+                " <h1> Your Biltern account has been created <h1> " +
+                        "\nYou can use your credentials below to login: \n Bilkent ID: "+ bilkentId
+                        +"\nPassword: " + password + "\n<a href = \""
+                        + "http://127.0.0.1:5173/home" +
+                        "\" >  Click to open Biltern  </a> \n"
+        );
+        System.out.println("Sent mail to " + bilkentMail + " for registeration!");
+    }
+
+    private void createAndSendMail(String subject, String mail, String text){
         try{
 
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper messageHelper;
-            message.setSubject("Biltern-Password Change");
+            message.setSubject(subject);
 
             messageHelper = new MimeMessageHelper(message, true);
             messageHelper.setFrom("noreply@bilternmock.com");
-            messageHelper.setTo(email);
-            messageHelper.setText(" <h1> Your password change link is below <h1> \n  <a href = \"" + "http://localhost:5173?id=" + bilkentId + "&token=" + token  + "\" >  Click  </a> \n"  , true );
+            messageHelper.setTo(mail);
+            messageHelper.setText(text, true );
 
             javaMailSender.send(message);
         }
         catch (MessagingException messagingException){
             return;
         }
-    }
-
-
-
-
-
-
+    };
 }
