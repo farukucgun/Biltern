@@ -16,5 +16,6 @@ public interface BilternUserRepo extends JpaRepository<BilternUser, Long> {
 
     Optional<BilternUser> findBilternUserByUserName(String username);
 
+    BilternUser findBilternUserByBilkentMail(String mail);
 
 }
