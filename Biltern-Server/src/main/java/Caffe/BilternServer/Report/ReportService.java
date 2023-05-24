@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 
 
 @Service
@@ -32,7 +33,20 @@ public class ReportService {
 
 
     @Transactional
-    public void uploadReportPDF(byte[] reportContent){
+    public void setDueDate(Long reportId, LocalDate dueDate){
+        Report report = reportRepository.findReportById(reportId);
+        report.setDueDate(dueDate);
+        reportRepository.save(report);
+    }
+
+    @Transactional
+    public void setApprovalDueDate(Long reportId, LocalDate approvalDueDate){
+        Report report = reportRepository.findReportById(reportId);
+        report.setApprovalDueDate(approvalDueDate);
+        reportRepository.save(report);
+    }
+    @Transactional
+    public void uploadReportPDF(Long reportId, byte[] reportContent){
         Report report = new Report();
         report.setReportPdf(reportContent);
         reportRepository.save(report);
