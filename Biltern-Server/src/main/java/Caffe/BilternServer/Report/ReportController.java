@@ -30,24 +30,25 @@ public class ReportController {
     }
 
 
-    @PutMapping("/dueDate")
-    public void changeReportDueDate(@RequestBody Map<String, Object> requestBody){
+    @PutMapping("/dueDate/{reportId}")
+    public void changeReportDueDate(@PathVariable Long reportId, @RequestBody Map<String, Object> requestBody){
         LocalDate dueDate = LocalDate.parse((String) requestBody.get("dueDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        reportService.setDueDate(reportId, dueDate);
     }
 
-    @PutMapping("/approvalDueDate")
-    public void changeReportApprovalDueDate(@RequestBody Map<String, Object> requestBody){
+    @PutMapping("/approvalDueDate/{reportId}")
+    public void changeReportApprovalDueDate(@PathVariable Long reportId, @RequestBody Map<String, Object> requestBody){
         LocalDate approvalDueDate = LocalDate.parse((String) requestBody.get("approvalDueDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        reportService.setApprovalDueDate(reportId, approvalDueDate);
     }
 
-    @PutMapping("/reportContent")
-    public void uploadReport(@RequestBody MultipartFile file){
-        System.out.println("what the fuck");
+    @PutMapping("/{reportId}")
+    public void uploadReport(@PathVariable Long reportId, @RequestBody MultipartFile file){
         if (!file.isEmpty()) {
             try {
                 byte[] reportContent = file.getBytes();
 
-                reportService.uploadReportPDF(reportContent);
+                reportService.uploadReportPDF(reportId,reportContent);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -55,16 +56,15 @@ public class ReportController {
             }
         }
     }
-    @GetMapping("/reportContent")
-    public ResponseEntity<ByteArrayResource> downloadReport() {
+    @GetMapping("/{reportId}")
+    public ResponseEntity<ByteArrayResource> downloadReport(@PathVariable Long reportId) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
         headers.setContentDispositionFormData("attachment", "pdf_file.pdf");
 
-        Long id = Long.valueOf(1);
         return ResponseEntity.ok()
                 .headers(headers)
-                .body(reportService.downloadReport(id));
+                .body(reportService.downloadReport(reportId));
     }
 
     @DeleteMapping("/reportContent")
