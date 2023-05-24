@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("report")
 public class ReportController {
     private final ReportService reportService;
