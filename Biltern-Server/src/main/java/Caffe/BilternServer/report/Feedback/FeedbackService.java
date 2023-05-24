@@ -1,0 +1,57 @@
+package Caffe.BilternServer.report.Feedback;
+
+import Caffe.BilternServer.report.ReportRepository;
+
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.stereotype.Service;
+
+
+@Service
+public class FeedbackService {
+    private final FeedbackRepository feedbackRepository;
+    private final ReportRepository reportRepository;
+    @Autowired
+    public FeedbackService(
+            FeedbackRepository feedBackRepository, ReportRepository reportRepository) {
+        this.feedbackRepository = feedBackRepository;
+        this.reportRepository = reportRepository;
+    }
+
+    @Transactional
+    public void saveReportFeedback(Long reportId, byte[] feedbackPDF){
+        Feedback feedback = feedbackRepository.findByReport(reportId).orElseGet(() ->
+                new Feedback(reportRepository.findById(reportId).orElse(null)));
+
+        feedback.setPdfData(feedbackPDF);
+        feedback.setPrev(false);
+        feedbackRepository.save(feedback);
+    }
+    public ByteArrayResource downloadReportFeedback(Long reportId){
+        Feedback feedback = feedbackRepository.findByReport(reportId).get();
+        byte[] feedbackPDF = feedback.getPdfData();
+        ByteArrayResource byteArrayResource = new ByteArrayResource(feedbackPDF);
+
+        return byteArrayResource;
+    }
+    @Transactional
+    public void saveReportPreviewFeedback(Long reportId, byte[] feedbackPDF){
+        Feedback feedback = feedbackRepository.findByReport(reportId).orElseGet(() ->
+                new Feedback(reportRepository.findById(reportId).orElse(null)));
+
+        feedback.setPdfData(feedbackPDF);
+        feedback.setPrev(true);
+        feedbackRepository.save(feedback);
+    }
+    @Transactional
+    public void removeFeedback(Long reportId){
+        feedbackRepository.delete(feedbackRepository.findByReport(reportId).get());
+    }
+
+    @Transactional
+    public void removePreviewFeedback(Long reportId){
+        feedbackRepository.delete(feedbackRepository.findByReport(reportId).get());
+    }
+
+}
