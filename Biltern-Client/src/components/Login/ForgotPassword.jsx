@@ -10,6 +10,10 @@ import classes from './ForgotPassword.module.css';
 /**
  * @author Faruk Uçgun
  * @date 05.05.2023
+ * let url = new URL(url redirected from email);
+ * let token = url.searchParams.get("token");
+ * let id = url.searchParams.get("id");
+ * @todo: implement this
  */
 
 const ForgotPassword = () => {
@@ -26,6 +30,7 @@ const ForgotPassword = () => {
 
     const submitHandler = (event) => {
         event.preventDefault();
+        console.log(id, email);
         dispatch(resetPasswordAsync({id, email}));
         setID('');
         setEmail('');
@@ -57,8 +62,8 @@ const ForgotPassword = () => {
                     onChange={emailChangeHandler}
                     className={classes.input}
                 />
-                <button className={classes.back} onClick={goBackHandler}>Back</button>
                 <button type='submit' className={classes.submit}>Send Reset Email</button>
+                <button className={classes.back} onClick={goBackHandler}>Back</button>
             </form>
         </div>
     );

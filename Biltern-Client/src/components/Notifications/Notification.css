@@ -1,0 +1,19 @@
+.notification {
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+    list-style: none;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.notification-seen {
+    background-color: #f1f1f1;
+}
+
+.delete-notification {
+    float: right;
+    cursor: pointer;
+}

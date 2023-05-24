@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-// import { Routes, Route } from "react-router-dom";
 import { setTimedAlert } from '../../features/alertSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -29,7 +28,6 @@ const ChangePassword = () => {
         dispatch(changePasswordAsync({id, password}));
         setID('');
         setPassword('');
-        console.log('change password');
         navigate('/settings');
     }
 

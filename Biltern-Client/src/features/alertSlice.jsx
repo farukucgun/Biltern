@@ -18,7 +18,7 @@ const alertSlice = createSlice({
             const { msg, alertType, id } = action.payload;
             return state = {
                 ...state,
-                alerts: [...state.alerts, {msg, alertType, id}]
+                alerts: [{msg, alertType, id}, ...state.alerts]
             };
         },
         removeAlert: (state, action) => {
