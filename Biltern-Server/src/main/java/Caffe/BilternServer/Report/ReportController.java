@@ -30,15 +30,6 @@ public class ReportController {
     }
 
 
-    @GetMapping
-    public ResponseEntity<String> dosth(){
-        return ResponseEntity.ok("fuck you");
-    }
-
-    @PostMapping
-    public ResponseEntity<String> dosth2(){
-        return ResponseEntity.ok("fuck you");
-    }
     @PutMapping("/dueDate")
     public void changeReportDueDate(@RequestBody Map<String, Object> requestBody){
         LocalDate dueDate = LocalDate.parse((String) requestBody.get("dueDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
