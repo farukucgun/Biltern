@@ -21,17 +21,17 @@ public class StudentService {
     }
 
     public void addStudent(Student student) {
-        Optional<Student> studentOptional = studentRepository.findStudentByEmail();
+        Optional<Student> studentOptional = studentRepository.findStudentByUserName(student.getUserName());
         if (studentOptional.isPresent()) {
-            throw new IllegalStateException("A student with that email already exists.");
+            throw new IllegalStateException("A student with that username already exists.");
         }
         studentRepository.save(student);
     }
 
-    public void deleteStudent(Long studentId) {
-        if (!studentRepository.existsById(studentId)) {
+    public void deleteStudent(Long id) {
+        if (!studentRepository.existsById(id)) {
             throw new IllegalStateException("A student with that ID does not exist.");
         }
-        studentRepository.deleteById(studentId);
+        studentRepository.deleteById(id);
     }
 }
