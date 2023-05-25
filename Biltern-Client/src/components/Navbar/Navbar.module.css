@@ -1,7 +1,9 @@
 .navlink {
-    text-decoration: none;
-    border: 10px;
-    margin: 10px;
+    margin: 5px;
+    padding: 10px;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .sidebar {
@@ -15,11 +17,30 @@
     margin: 0;
 }
 
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    /* margin-top: 10px;
+    margin-bottom: 10px; */
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+}
+
 .userInfo {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    margin: 0;
+    padding: 0;
+    /* border: 1px solid #ccc; */
+}
+
+.userName {
     margin: 0;
     padding: 0;
 }
@@ -41,7 +62,17 @@
 }
 
 .item {
-    margin-top: 25px;
+    /* margin-top: 25px; */
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    /* height: 50px; */
+    cursor: pointer;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    border: 1px solid #ccc;
+    background-color: rgb(255, 255, 255);
 }
 
 .item:hover {
