@@ -23,6 +23,7 @@ import java.util.Collection;
 @Data
 @Entity
 @Table(name = "biltern_user")
+@Inheritance
 public class BilternUser implements UserDetails {
 
 
