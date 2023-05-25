@@ -1,8 +1,12 @@
 package Caffe.BilternServer.users;
 
+import Caffe.BilternServer.Course.Course;
 import Caffe.BilternServer.auth.BilternUser;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Student extends BilternUser {
@@ -19,6 +23,14 @@ public class Student extends BilternUser {
     @JoinColumn(name = "TA")
     @JsonIgnore
     private TeachingAssistant teachingAssistant;
+
+    @ManyToMany
+    @JoinTable(
+            name = "courses_taken",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    private Set<Course> courses;
 
     public String getDepartment() {
         return department;
@@ -42,5 +54,13 @@ public class Student extends BilternUser {
 
     public void setTeachingAssistant(TeachingAssistant teachingAssistant) {
         this.teachingAssistant = teachingAssistant;
+    }
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
     }
 }
