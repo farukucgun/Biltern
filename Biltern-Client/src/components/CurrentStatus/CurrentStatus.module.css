@@ -1,0 +1,72 @@
+.status {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-radius: 2%;
+    border: 1px solid #ccc;
+    /* padding: 10px; */
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+}
+
+.currentStatusPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #D9D9D9;
+}
+
+.submit {
+    margin-top: 10px;
+    border-radius: 5px;
+    background-color: #508AE1;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+}
+
+.infoPane {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-radius: 2%;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #ffffff;
+}
+
+.infoPaneLeft {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 200px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.infoPaneRight {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 200px;
+    padding: 10px;
+    margin-top: 10px;
+}
