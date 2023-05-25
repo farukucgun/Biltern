@@ -21,6 +21,7 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "biltern_user")
+@Inheritance
 public class BilternUser implements UserDetails {
 
 

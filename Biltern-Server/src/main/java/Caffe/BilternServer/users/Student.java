@@ -11,12 +11,12 @@ public class Student extends BilternUser {
     private String department;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "grader", referencedColumnName = "bilkentMail")
+    @JoinColumn(name = "grader")
     @JsonIgnore
     private Grader grader;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "TA", referencedColumnName = "bilkentMail")
+    @JoinColumn(name = "TA")
     @JsonIgnore
     private TeachingAssistant teachingAssistant;
 

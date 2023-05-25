@@ -13,7 +13,7 @@ public class TeachingAssistant extends BilternUser {
     @Column
     private Long reportCount;
 
-    @OneToMany(mappedBy = "TA")
+    @OneToMany
     @JsonIgnore
     private List<Student> students;
 
