@@ -15,7 +15,21 @@ public class Course {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private String courseName;
+    private String courseCode;
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
+    }
 }
