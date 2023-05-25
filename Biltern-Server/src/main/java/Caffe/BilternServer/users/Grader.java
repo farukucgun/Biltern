@@ -18,7 +18,7 @@ public class Grader extends BilternUser {
     @Column
     private File signature;
 
-    @OneToMany(mappedBy = "grader")
+    @OneToMany
     @JsonIgnore
     private List<Student> students;
 
