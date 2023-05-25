@@ -7,5 +7,5 @@ import java.util.Optional;
 
 @Repository
 public interface GradingFormRepository extends JpaRepository<GradingForm, Long> {
-    Optional<GradingForm> findByReport(Long reportId);
+    Optional<GradingForm> findByReportId(Long reportId);
 }

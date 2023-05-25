@@ -2,6 +2,9 @@ package Caffe.BilternServer.Report;
 
 import Caffe.BilternServer.Report.Feedback.Feedback;
 import Caffe.BilternServer.Report.GradingForm.GradingForm;
+import Caffe.BilternServer.users.Grader;
+import Caffe.BilternServer.users.Student;
+import Caffe.BilternServer.users.TeachingAssistant;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -14,8 +17,7 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(
             name = "id",
-            nullable = false,
-            updatable = false
+            nullable = false
     )
     private Long id;
     private LocalDate dueDate;
@@ -32,18 +34,24 @@ public class Report {
     @Enumerated(EnumType.STRING)
     private CompanyStats companyStats;
 
-//    @ManyToOne
-//    @JoinColumn(name = "student_id")
-//    private Student student;
+    @ManyToOne
+    @JoinColumn(name = "studentId")
+    private Student student;
 
+    @OneToOne
+    @JoinColumn(name = "graderId")
+    private Grader grader;
 
+    @OneToOne
+    @JoinColumn(name = "TAId")
+    private TeachingAssistant TA;
     @JsonIgnore
     private boolean isIteration;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "feedbackId")
     private Feedback feedback;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "gradingFormId")
     private GradingForm gradingForm;
 
@@ -125,6 +133,10 @@ public class Report {
 
     public void setFeedback(Feedback feedback) {
         this.feedback = feedback;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
 }

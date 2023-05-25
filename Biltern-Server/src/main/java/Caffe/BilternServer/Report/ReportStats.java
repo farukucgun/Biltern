@@ -13,7 +13,6 @@ public enum ReportStats {
     ReportStats(String... statusArray) {
         this.statusArray = statusArray;
     }
-
     public String[] getStatusArray() {
         return statusArray;
     }
