@@ -31,7 +31,7 @@ public class MailService {
     public void sendPasswordChangeMail(String bilkentMail, Long bilkentId, String token){
         createAndSendMail("Biltern-Password Change", bilkentMail,
                 " <h1> Your password change link is below <h1> \n  <a href = \""
-                        + "http://127.0.0.1:5173?id=" +
+                        + "http://127.0.0.1:5173/login/newpassword?id=" +
                         bilkentId + "&token=" + token  + "\" >  Click  </a> \n"
                 );
     }
