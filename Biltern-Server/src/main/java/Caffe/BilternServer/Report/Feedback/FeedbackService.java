@@ -20,7 +20,7 @@ public class FeedbackService {
 
     @Transactional
     public void saveReportFeedback(Long reportId, byte[] feedbackPDF){
-        Feedback feedback = feedbackRepository.findByReport(reportId).get();
+        Feedback feedback = feedbackRepository.findByReportIdAndAndIsPrev(reportId, false).get();
         if(feedback == null){
             feedback = new Feedback();
             feedback.setReport(reportRepository.findById(reportId).orElse(null));
@@ -31,7 +31,7 @@ public class FeedbackService {
         feedbackRepository.save(feedback);
     }
     public ByteArrayResource downloadReportFeedback(Long reportId){
-        Feedback feedback = feedbackRepository.findByReport(reportId).get();
+        Feedback feedback = feedbackRepository.findByReportIdAndAndIsPrev(reportId, false).get();
         byte[] feedbackPDF = feedback.getPdfData();
         ByteArrayResource byteArrayResource = new ByteArrayResource(feedbackPDF);
 
@@ -39,7 +39,7 @@ public class FeedbackService {
     }
     @Transactional
     public void saveReportPreviewFeedback(Long reportId, byte[] feedbackPDF){
-        Feedback feedback = feedbackRepository.findByReport(reportId).get();
+        Feedback feedback = feedbackRepository.findByReportIdAndAndIsPrev(reportId, true).get();
         if(feedback == null){
             feedback = new Feedback();
             feedback.setReport(reportRepository.findById(reportId).orElse(null));
@@ -51,12 +51,12 @@ public class FeedbackService {
     }
     @Transactional
     public void removeFeedback(Long reportId){
-        feedbackRepository.delete(feedbackRepository.findByReport(reportId).get());
+        feedbackRepository.delete(feedbackRepository.findByReportIdAndAndIsPrev(reportId, false).get());
     }
 
     @Transactional
     public void removePreviewFeedback(Long reportId){
-        feedbackRepository.delete(feedbackRepository.findByReport(reportId).get());
+        feedbackRepository.delete(feedbackRepository.findByReportIdAndAndIsPrev(reportId, true).get());
     }
 
 }
