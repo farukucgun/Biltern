@@ -8,4 +8,5 @@ import java.util.Optional;
 @Repository
 public interface TeachingAssistantRepository extends JpaRepository<TeachingAssistant, Long> {
 
+    Optional<TeachingAssistant> findTeachingAssistantByUserName(String userName);
 }
