@@ -1,5 +1,4 @@
 import React from 'react';
-import { setTimedAlert } from '../../features/alertSlice';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -11,12 +10,12 @@ import { useSelector } from 'react-redux';
 const Settings = () => {
 
     const navigate = useNavigate();
-
+    
     const token = useSelector(state => state.auth.token);
 
     const changePasswordHandler = (event) => {
         event.preventDefault();
-        navigate(`/changepassword/${token}`);
+        navigate(`/settings/changepassword/${token}`);
     }
     return (
         <div>

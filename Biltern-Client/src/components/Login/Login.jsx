@@ -40,8 +40,7 @@ const Login = () => {
 
     const forgotPasswordHandler = (event) => {
         event.preventDefault();
-        console.log('forgot password');
-        navigate('/forgotpassword');
+        navigate('/login/forgotpassword');
     }
 
     return (
