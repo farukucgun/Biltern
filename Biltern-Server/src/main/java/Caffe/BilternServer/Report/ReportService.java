@@ -140,4 +140,6 @@ public class ReportService {
     public TeachingAssistant getReportTA(Long reportId){
         return reportRepository.findReportById(reportId).getTA();
     }
+
+
 }
