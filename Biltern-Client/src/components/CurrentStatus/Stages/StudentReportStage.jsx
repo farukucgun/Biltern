@@ -1,30 +1,32 @@
 import React, {useState} from 'react';
 import FileUpload from "../../../UI/FileUpload";
-import { Document, Page, pdfjs } from 'react-pdf';
+// import { Document, Page, pdfjs } from 'react-pdf';
 import axios from 'axios';
 import ActionButton from '../../../UI/ActionButton';
+import { useNavigate } from 'react-router-dom';
 
-import 'react-pdf/dist/esm/Page/TextLayer.css';
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+// import 'react-pdf/dist/esm/Page/TextLayer.css';
+// import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import classes from '../CurrentStatus.module.css';
 
 
-const StudentReportStage = () => {
+const StudentReportStage = (props) => {
+    const {id} = props;
+    // pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-    pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-
-    const [numPages, setNumPages] = useState(null);
-    const [pageNumber, setPageNumber] = useState(1);
-    const [url, setURL] = useState("");
-    const [viewReport, setViewReport] = useState(false);
+    const navigate = useNavigate();
+    // const [numPages, setNumPages] = useState(null);
+    // const [pageNumber, setPageNumber] = useState(1);
+    // const [url, setURL] = useState("");
+    // const [viewReport, setViewReport] = useState(false);
 
     const submitHandler = (files) => {
         console.log(files[0]);
     };
 
-    const onDocumentLoadSuccess = ({ numPages }) => {
-        setNumPages(numPages);
-    }
+    // const onDocumentLoadSuccess = ({ numPages }) => {
+    //     setNumPages(numPages);
+    // }
 
     const fetchReport = async ({onFetchReport}) => {
         const config = {
@@ -46,14 +48,17 @@ const StudentReportStage = () => {
     };
 
     const ViewReportHandler = async () => {
-        setPageNumber(1);
-        const onFetchReport = (blob) => {
-            const url = URL.createObjectURL(blob);
-            setURL(url);
-        }
+        console.log("navigate to report with id to display report");
+        // navigate("/report/1");
 
-        await fetchReport({onFetchReport});   
-        setViewReport((prev) => !prev); 
+        // setPageNumber(1);
+        // const onFetchReport = (blob) => {
+        //     const url = URL.createObjectURL(blob);
+        //     setURL(url);
+        // }
+
+        // await fetchReport({onFetchReport});   
+        // setViewReport((prev) => !prev); 
     }
 
     const downloadReportHandler = async () => {
@@ -79,28 +84,29 @@ const StudentReportStage = () => {
         fetchReport({onFetchReport});
     }
 
-    const previousPageHandler = () => {
-        if (pageNumber === 1) {
-            return;
-        }
-        setPageNumber((prev) => prev - 1);
-    }
+    // const previousPageHandler = () => {
+    //     if (pageNumber === 1) {
+    //         return;
+    //     }
+    //     setPageNumber((prev) => prev - 1);
+    // }
 
-    const nextPageHandler = () => {
-        if (pageNumber === numPages) {
-            return;
-        }
-        setPageNumber((prev) => prev + 1);
-    }
+    // const nextPageHandler = () => {
+    //     if (pageNumber === numPages) {
+    //         return;
+    //     }
+    //     setPageNumber((prev) => prev + 1);
+    // }
 
     return (
         <div>
             <div className={classes.status}>
+                <h2>Student Report Stage</h2>
                 <h3>Previous Status</h3>
                 <h3>Current Status</h3>
                 <h3>Next Status</h3>
             </div>
-            {viewReport && 
+            {/* {viewReport && 
                 <>
                 <Document file={url} onLoadSuccess={onDocumentLoadSuccess}>
                     <Page pageNumber={pageNumber} />
@@ -110,7 +116,7 @@ const StudentReportStage = () => {
                 </p> 
                 <button onClick={previousPageHandler}> previous </button>
                 <button onClick={nextPageHandler}> next </button>
-            </>}
+            </>} */}
             <div className={classes.actions}>
                 <ActionButton
                     className=""
