@@ -14,8 +14,10 @@ import classes from './CurrentStatus.module.css';
 
 const CurrentStatus = () => {
 
-    const [currentStatus, setCurrentStatus] = useState([]);
+    const [currentStatus, setCurrentStatus] = useState("IterationStage");
     const dispatch = useDispatch();
+
+    const dummyId = 1;
 
     useEffect(() => {
         const fetchCurrentStatus = async () => {
@@ -56,7 +58,10 @@ const CurrentStatus = () => {
                     <p>Bilkent ID: 22001462</p>
                 </div>
             </div>
-            <StudentReportStage />
+            {currentStatus == "studentReportStage" && <StudentReportStage id={dummyId}/>}
+            {currentStatus == "TAEvaluationStage" && <TAEvaluationStage id={dummyId}/>}
+            {currentStatus == "IterationStage" && <IterationStage id={dummyId}/>}
+            {currentStatus == "FinalStage" && <FinalStage id={dummyId}/>}
         </div>
     );
 }
