@@ -32,15 +32,21 @@ public class AssignmentService {
         this.TARepository = TARepository;
     }
 
-    public void addReportToCourse(Long reportId, Long courseId){
-        Report report = reportRepository.getById(reportId);
+    public void addStudentToCourse(Long studentId, Long courseId){
+
+        Report report = new Report();
+        Student student = studentRepository.getById(studentId);
         Course course = courseRepository.getById(courseId);
 
+        report.setStudent(student);
+        report.setCourse(course);
+        report = reportRepository.save(report);
 
+        student.getReports().add(report);
         course.getReports().add(report);
 
-        reportRepository.save(report);
         courseRepository.save(course);
+        studentRepository.save(student);
     }
 
     public void addReportToGrader(Long reportId, Long graderId){
