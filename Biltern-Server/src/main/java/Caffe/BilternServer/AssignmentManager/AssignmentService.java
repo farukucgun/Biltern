@@ -5,10 +5,17 @@ import Caffe.BilternServer.Course.Course;
 import Caffe.BilternServer.Course.CourseRepository;
 import Caffe.BilternServer.Report.Report;
 import Caffe.BilternServer.Report.ReportRepository;
-import Caffe.BilternServer.Report.ReportService;
+
 import Caffe.BilternServer.users.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Row;
 
 @Service
 public class AssignmentService {
@@ -32,6 +39,7 @@ public class AssignmentService {
         this.TARepository = TARepository;
     }
 
+    @Transactional
     public void addStudentToCourse(Long studentId, Long courseId){
 
         Report report = new Report();
@@ -48,7 +56,7 @@ public class AssignmentService {
         courseRepository.save(course);
         studentRepository.save(student);
     }
-
+    @Transactional
     public void addReportToGrader(Long reportId, Long graderId){
         Report report = reportRepository.getById(reportId);
         Grader grader = graderRepository.getById(graderId);
@@ -60,6 +68,7 @@ public class AssignmentService {
         graderRepository.save(grader);
     }
 
+    @Transactional
     public void addReportToTeachingAssistant(Long reportId, Long TAId) {
         Report report = reportRepository.getById(reportId);
         TeachingAssistant TA = TARepository.getById(TAId);
