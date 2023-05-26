@@ -12,7 +12,7 @@ import java.util.List;
  * @date 9.05.2023
  */
 
-
+@CrossOrigin(origins = "${client.domain}")
 @RestController
 @RequestMapping("notification")
 public class NotificationController {
