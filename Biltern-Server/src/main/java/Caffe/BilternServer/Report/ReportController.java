@@ -52,7 +52,7 @@ public class ReportController {
         reportService.setApprovalDueDate(reportId, approvalDueDate);
     }
 
-    @GetMapping("/approval/{reportId}")
+    @GetMapping("/approvalDueDate/{reportId}")
     public ResponseEntity<LocalDate> getApprovalDueDate(@PathVariable Long reportId){
         return ResponseEntity.ok(reportService.getapprovalDueDate(reportId));
     }
