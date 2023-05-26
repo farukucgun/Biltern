@@ -4,6 +4,7 @@ import Caffe.BilternServer.Report.Feedback.FeedbackService;
 import Caffe.BilternServer.Report.GradingForm.GradingFormService;
 import Caffe.BilternServer.users.Grader;
 import Caffe.BilternServer.users.TeachingAssistant;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -40,12 +41,21 @@ public class ReportController {
         reportService.setDueDate(reportId, dueDate);
     }
 
+    @GetMapping("/dueDate/{reportId}")
+    public ResponseEntity<LocalDate> getDueDate(@PathVariable Long reportId){
+        return ResponseEntity.ok(reportService.getDueDate(reportId));
+    }
+
     @PutMapping("/approvalDueDate/{reportId}")
     public void changeReportApprovalDueDate(@PathVariable Long reportId, @RequestBody Map<String, Object> requestBody){
         LocalDate approvalDueDate = LocalDate.parse((String) requestBody.get("approvalDueDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         reportService.setApprovalDueDate(reportId, approvalDueDate);
     }
 
+    @GetMapping("/approval/{reportId}")
+    public ResponseEntity<LocalDate> getApprovalDueDate(@PathVariable Long reportId){
+        return ResponseEntity.ok(reportService.getapprovalDueDate(reportId));
+    }
     @PutMapping("/reportContent/{reportId}")
     public void uploadReport(@PathVariable Long reportId, @RequestBody MultipartFile file){
         if (!file.isEmpty()) {

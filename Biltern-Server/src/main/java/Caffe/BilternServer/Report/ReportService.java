@@ -8,6 +8,7 @@ import Caffe.BilternServer.users.Grader;
 import Caffe.BilternServer.users.TeachingAssistant;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 
@@ -141,5 +142,11 @@ public class ReportService {
         return reportRepository.findReportById(reportId).getTA();
     }
 
+    public LocalDate getDueDate(Long reportId){
+        return reportRepository.getById(reportId).getDueDate();
+    }
 
+    public LocalDate getapprovalDueDate(Long reportId){
+        return reportRepository.getById(reportId).getApprovalDueDate();
+    }
 }
