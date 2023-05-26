@@ -30,7 +30,7 @@ public class Student extends BilternUser {
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
-    private Set<Course> courses;
+    private List<Course> courses;
 
     public String getDepartment() {
         return department;
@@ -56,11 +56,11 @@ public class Student extends BilternUser {
         this.teachingAssistant = teachingAssistant;
     }
 
-    public Set<Course> getCourses() {
+    public List<Course> getCourses() {
         return courses;
     }
 
-    public void setCourses(Set<Course> courses) {
+    public void setCourses(List<Course> courses) {
         this.courses = courses;
     }
 }
