@@ -25,7 +25,7 @@ const IterationStage = (props) => {
             }
         };
 
-        await axios.put(`http://localhost:8080/dueDate/${id}`, config)
+        await axios.get(`http://localhost:8080/report/dueDate/${id}`, config)
             .then(res => {
                 setDueDate(res.data);
             })
