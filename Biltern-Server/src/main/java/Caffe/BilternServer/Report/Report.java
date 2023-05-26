@@ -1,5 +1,6 @@
 package Caffe.BilternServer.Report;
 
+import Caffe.BilternServer.Course.Course;
 import Caffe.BilternServer.Report.Feedback.Feedback;
 import Caffe.BilternServer.Report.GradingForm.GradingForm;
 import Caffe.BilternServer.users.Grader;
@@ -38,14 +39,17 @@ public class Report {
     @JoinColumn(name = "studentId")
     private Student student;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "graderId")
     private Grader grader;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "TAId")
     private TeachingAssistant TA;
 
+    @ManyToOne
+    @JoinColumn(name = "courseId")
+    private Course course;
 
     @JsonIgnore
     private boolean isIteration;
@@ -163,6 +167,14 @@ public class Report {
 
     public void setTA(TeachingAssistant TA) {
         this.TA = TA;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 }
 
