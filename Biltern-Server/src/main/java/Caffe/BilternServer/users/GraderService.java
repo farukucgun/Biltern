@@ -1,5 +1,7 @@
 package Caffe.BilternServer.users;
 
+import Caffe.BilternServer.Report.Report;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -4,6 +4,8 @@ import Caffe.BilternServer.Report.Feedback.Feedback;
 import Caffe.BilternServer.Report.Feedback.FeedbackRepository;
 import Caffe.BilternServer.Report.GradingForm.GradingForm;
 import Caffe.BilternServer.Report.GradingForm.GradingFormRepository;
+import Caffe.BilternServer.users.Grader;
+import Caffe.BilternServer.users.TeachingAssistant;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -131,4 +133,13 @@ public class ReportService {
         }
 
     }
+
+    public Grader getReportGrader(Long reportId){
+        return reportRepository.findReportById(reportId).getGrader();
+    }
+    public TeachingAssistant getReportTA(Long reportId){
+        return reportRepository.findReportById(reportId).getTA();
+    }
+
+
 }
