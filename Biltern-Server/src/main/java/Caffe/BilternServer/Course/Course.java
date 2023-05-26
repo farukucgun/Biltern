@@ -1,6 +1,10 @@
 package Caffe.BilternServer.Course;
 
+import Caffe.BilternServer.Report.Report;
+import Caffe.BilternServer.users.Student;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity(name = "Course")
 @Table(name = "Course")
@@ -17,6 +21,9 @@ public class Course {
     @Column(unique = true, nullable = false)
     private String courseCode;
 
+    @OneToMany
+    private List<Report> reports;
+
     public Long getId() {
         return id;
     }
@@ -31,5 +38,12 @@ public class Course {
 
     public void setCourseCode(String courseCode) {
         this.courseCode = courseCode;
+    }
+    public List<Report> getReports() {
+        return reports;
+    }
+
+    public void setReports(List<Report> reports) {
+        this.reports = reports;
     }
 }
