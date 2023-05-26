@@ -45,6 +45,8 @@ public class Report {
     @OneToOne
     @JoinColumn(name = "TAId")
     private TeachingAssistant TA;
+
+
     @JsonIgnore
     private boolean isIteration;
     @OneToOne(cascade = CascadeType.ALL)
@@ -139,5 +141,28 @@ public class Report {
         this.id = id;
     }
 
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Grader getGrader() {
+        return grader;
+    }
+
+    public void setGrader(Grader grader) {
+        this.grader = grader;
+    }
+
+    public TeachingAssistant getTA() {
+        return TA;
+    }
+
+    public void setTA(TeachingAssistant TA) {
+        this.TA = TA;
+    }
 }
 

@@ -2,6 +2,8 @@ package Caffe.BilternServer.Report;
 
 import Caffe.BilternServer.Report.Feedback.FeedbackService;
 import Caffe.BilternServer.Report.GradingForm.GradingFormService;
+import Caffe.BilternServer.users.Grader;
+import Caffe.BilternServer.users.TeachingAssistant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -148,7 +150,16 @@ public class ReportController {
                 .body(gradingFormService.downloadGradingForm(reportId));
     }
 
-    @PutMapping
+    @GetMapping("/grader/{reportId}")
+    public ResponseEntity<Grader> getReportGrader(@PathVariable Long reportId){
+        return ResponseEntity.ok(reportService.getReportGrader(reportId));
+    }
+
+    @GetMapping("/TA/{reportId}")
+    public ResponseEntity<TeachingAssistant> getReportTA(@PathVariable Long reportId){
+        return ResponseEntity.ok(reportService.getReportTA(reportId));
+    }
+
     @PostMapping
     public void addReport(){
         reportService.addNewReport();
