@@ -1,4 +1,5 @@
 package Caffe.BilternServer.Course;
+import Caffe.BilternServer.Report.Report;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -26,5 +27,9 @@ public class CourseService {
             throw new IllegalStateException("A course with that code already exists.");
         }
         courseRepository.save(course);
+    }
+
+    public void addReport(Long courseId, Report report){
+        courseRepository.getById(courseId);
     }
 }
