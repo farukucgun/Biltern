@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import { Document, Page } from 'react-pdf';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import FinalStage from './Stages/FinalStage';
@@ -17,12 +16,6 @@ const CurrentStatus = () => {
 
     const [currentStatus, setCurrentStatus] = useState([]);
     const dispatch = useDispatch();
-    const [numPages, setNumPages] = useState(null);
-    const [pageNumber, setPageNumber] = useState(1);
-
-    function onDocumentLoadSuccess({ numPages }) {
-        setNumPages(numPages);
-      }
 
     useEffect(() => {
         const fetchCurrentStatus = async () => {
@@ -62,14 +55,6 @@ const CurrentStatus = () => {
                     <p>Courses: CS-299</p>
                     <p>Bilkent ID: 22001462</p>
                 </div>
-
-                <Document file="somefile.pdf" onLoadSuccess={onDocumentLoadSuccess}>
-                    <Page pageNumber={pageNumber} />
-                </Document>
-                <p>
-                    Page {pageNumber} of {numPages}
-                </p>
-
             </div>
             <StudentReportStage />
         </div>
