@@ -1,0 +1,22 @@
+.student_statistics_panel_container{
+    width: 400px;
+    height: 300px;
+    border: 1px solid black;
+    box-sizing: border-box;
+    padding: 2%;
+    border-radius: 15px;
+    overflow: hidden;
+    margin: 2%;
+    background-color: white;
+}
+
+
+.student_statistics_panel_container h1{
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 0px;
+}
+.student_statistics_chart{
+    padding: 0%;
+    margin: 0;
+}

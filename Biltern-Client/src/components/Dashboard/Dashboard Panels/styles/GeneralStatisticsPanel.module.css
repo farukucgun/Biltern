@@ -1,0 +1,24 @@
+.general_statistics_panel_container{
+    margin: 20px;
+    width: 650px;
+    height: 500px;
+    border: 1px solid black;
+    border-radius: 15px;
+    background-color: white;
+}
+.general_statistics_panel_container h1{
+    text-align: center;
+}
+.general_stats{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.detailed_stats{
+    display: flex;
+    flex-direction: row;
+    background-color: #F0E9E9;
+}
+.chart_element{
+    width: 200px;
+}
