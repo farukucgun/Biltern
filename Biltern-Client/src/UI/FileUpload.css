@@ -39,6 +39,18 @@
     text-decoration-line: underline;
 }
 
+.submit {
+    margin-top: 10px;
+    border-radius: 5px;
+    background-color: #508AE1;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+}
+
 #drag-file-element {
     position: absolute;
     width: 100%;

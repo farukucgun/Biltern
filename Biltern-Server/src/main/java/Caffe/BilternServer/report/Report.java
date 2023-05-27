@@ -65,6 +65,10 @@ public class Report {
     @JoinColumn(name = "previousIterationId")
     private Report previousIteration;
 
+    public Report(){
+        reportStats = ReportStats.NOT_SUBMITTED;
+        companyStats = CompanyStats.WAITING;
+    }
     public LocalDate getDueDate() {
         return dueDate;
     }

@@ -8,9 +8,10 @@ import "./FileUpload.css";
  */
 
 const FileUpload = (props) => {
-    const {accept, multiple, onFilesAdded, dragMessage, uploadMessage} = props;
+    const {accept, multiple, dragMessage, uploadMessage, buttonMessage, onSubmit} = props;
     const [dragActive, setDragActive] = useState(false);
     const [uploadedFileName, setUploadedFileName] = useState('');
+    const [files , setFiles] = useState([]);
     const inputRef = useRef(null);
     
     const handleDrag = (event) => {
@@ -31,10 +32,10 @@ const FileUpload = (props) => {
         if (event.dataTransfer.files && event.dataTransfer.files[0]) {
             setUploadedFileName(event.dataTransfer.files[0].name);
             if (multiple) {
-                onFilesAdded(event.dataTransfer.files);
+                setFiles(event.dataTransfer.files);
             }
             else {
-                onFilesAdded([event.dataTransfer.files[0]]);
+                setFiles([event.dataTransfer.files[0]]);
             }
         }
     };
@@ -44,53 +45,67 @@ const FileUpload = (props) => {
         if (event.target.files && event.target.files[0]) {
             setUploadedFileName(event.target.files[0].name);
             if (multiple) {
-                onFilesAdded(event.target.files);
+                setFiles(event.target.files);
             }
             else {
-                onFilesAdded([event.target.files[0]]);
+                setFiles([event.target.files[0]]);
             }
         }
     };
     
-    const onButtonClick = () => {
+    const onButtonClick = (event) => {
+        event.preventDefault();
         inputRef.current.click();
     };
+
+    const submitHandler = (event) => {
+        event.preventDefault();
+        onSubmit(files);
+    }
     
     return (
-      <form id="form-file-upload" onDragEnter={handleDrag} onSubmit={(event) => event.preventDefault()}>
-        <input 
-            ref={inputRef} 
-            type="file" 
-            id="input-file-upload" 
-            onChange={handleChange} 
-            accept={accept}
-            multiple={multiple}
-            />
-        <label 
-            id="label-file-upload" 
-            htmlFor="input-file-upload" 
-            className={dragActive ? "drag-active" : "" }>
-          <div>
-            {uploadedFileName && <p>Uploaded: {uploadedFileName}</p>}
-            <p>{dragMessage}</p>
+        <form id="form-file-upload" onDragEnter={handleDrag}>
+            <input 
+                ref={inputRef} 
+                type="file" 
+                id="input-file-upload" 
+                onChange={handleChange} 
+                accept={accept}
+                multiple={multiple}
+                />
+            <label 
+                id="label-file-upload" 
+                htmlFor="input-file-upload" 
+                className={dragActive ? "drag-active" : "" }>
+                <div>
+                    {uploadedFileName && <p>Uploaded: {uploadedFileName}</p>}
+                    <p>{dragMessage}</p>
+                    <button 
+                        className="file-upload-button" 
+                        onClick={onButtonClick}
+                        type='button'
+                    >
+                        {uploadMessage}
+                    </button>
+                </div> 
+            </label>
+            { dragActive 
+            && 
+            <div 
+                id="drag-file-element" 
+                onDragEnter={handleDrag} 
+                onDragLeave={handleDrag} 
+                onDragOver={handleDrag} 
+                onDrop={handleDrop}>  
+            </div> }
             <button 
-                className="file-upload-button" 
-                onClick={onButtonClick}
+                onClick={submitHandler}
+                className="submit"
+                type='button'
             >
-                {uploadMessage}
+                {buttonMessage}
             </button>
-          </div> 
-        </label>
-        { dragActive 
-        && 
-        <div 
-            id="drag-file-element" 
-            onDragEnter={handleDrag} 
-            onDragLeave={handleDrag} 
-            onDragOver={handleDrag} 
-            onDrop={handleDrop}>  
-        </div> }
-      </form>
+        </form>
     );
   };
 
