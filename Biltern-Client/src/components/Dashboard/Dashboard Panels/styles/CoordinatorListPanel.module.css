@@ -1,0 +1,32 @@
+
+.coordinator_list_panel_container{
+    width: 400px;
+    height: 300px;
+    border: 1px solid black;
+    border-radius: 15px;
+    box-sizing: border-box;
+    padding: 3%;
+    margin: 20px;
+    background-color: white;
+}
+
+.coordinator_list_panel_container h1{
+    margin-bottom: 3%;
+    margin-top: 0px;
+    text-align: center;
+}
+
+.coordinator_list_panel_container td, th {
+    border: 1px solid black;
+}
+
+.coordinator_list_panel_container table{
+    border-collapse: collapse;
+    height: 80%;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.coordinator_table_element{
+    text-align: center;
+}

@@ -1,0 +1,23 @@
+[
+    {
+        "name": "graderName1",
+        "course": "cs399",
+        "numberOfStudents": 20
+    },
+    {
+        "name": "graderName2",
+        "course": "cs299",
+        "numberOfStudents": 22
+    },
+    {
+        "name": "graderName3",
+        "course": "cs299",
+        "numberOfStudents": 21
+    },
+    {
+        "name": "graderName4",
+        "course": "cs299",
+        "numberOfStudents": 24
+    }
+]
+
