@@ -1,18 +1,49 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import FileUpload from "../../../UI/FileUpload";
 import axios from 'axios';
 import ActionButton from '../../../UI/ActionButton';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { setTimedAlert } from '../../../features/alertSlice';
 
 import classes from '../CurrentStatus.module.css';
 
 const TAEvaluationStage = (props) => {
     const {id} = props;
+    const [dueDate, setDueDate] = useState(null);
+
+    const token = useSelector(state => state.auth.token);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const submitHandler = (files) => {
         console.log(files[0]);
     };
+
+    useEffect(() => {
+        const fetchDueDate = async () => {
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": token || ""
+                }
+            };
+            await axios.get(`http://localhost:8080/report/dueDate/${id}`, config)
+                .then(res => {
+                    setDueDate(res.data);
+                })
+                .catch(err => {
+                    dispatch(setTimedAlert({msg: "Error while fetching due date", alertType: "error", timeout: 4000}));
+                });
+        };
+
+        fetchDueDate()
+            .catch(err => {
+                console.log(err);
+                dispatch(setTimedAlert({msg: "Error while fetching due date", alertType: "error", timeout: 4000}));
+            }
+        );
+    }, []);
 
     const fetchReport = async ({onFetchReport, path}) => {
         const config = {
@@ -70,38 +101,43 @@ const TAEvaluationStage = (props) => {
     }
 
     return (
-        <div className={classes.actions}>
-            <div className={classes.buttons}>
-                <ActionButton
-                    className=""
-                    text="Download Student Report"
-                    onClick={downloadStudentReportHandler}
-                />
-                <ActionButton
-                    className=""
-                    text="View Student Report"
-                    onClick={ViewReportHandler}
-                />
-                <ActionButton
-                    className=""
-                    text="Download TA Feedback"
-                    onClick={downloadFeedbackHandler}
-                />
-                <ActionButton
-                    className=""
-                    text="View TA Feedback"
-                    onClick={viewFeedbackHandler}
-                />
+        <div>
+            <div className={classes.dueDate}>
+                <p>Due Date: {dueDate}</p>
             </div>
-            <div>
-                <FileUpload 
-                    accept=".pdf" 
-                    multiple={false}
-                    onSubmit={submitHandler} 
-                    dragMessage="Drag and drop a pdf file or click here"
-                    uploadMessage="Upload a pdf file"
-                    buttonMessage="Upload"    
-                />
+            <div className={classes.actions}>
+                <div className={classes.buttons}>
+                    <ActionButton
+                        className=""
+                        text="Download Student Report"
+                        onClick={downloadStudentReportHandler}
+                    />
+                    <ActionButton
+                        className=""
+                        text="View Student Report"
+                        onClick={ViewReportHandler}
+                    />
+                    <ActionButton
+                        className=""
+                        text="Download TA Feedback"
+                        onClick={downloadFeedbackHandler}
+                    />
+                    <ActionButton
+                        className=""
+                        text="View TA Feedback"
+                        onClick={viewFeedbackHandler}
+                    />
+                </div>
+                <div>
+                    <FileUpload 
+                        accept=".pdf" 
+                        multiple={false}
+                        onSubmit={submitHandler} 
+                        dragMessage="Drag and drop a pdf file or click here"
+                        uploadMessage="Upload a pdf file"
+                        buttonMessage="Upload"    
+                    />
+                </div>
             </div>
         </div>
     )

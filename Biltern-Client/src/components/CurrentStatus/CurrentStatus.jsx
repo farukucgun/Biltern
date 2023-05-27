@@ -6,6 +6,7 @@ import IterationStage from './Stages/IterationStage';
 import TAEvaluationStage from './Stages/TAEvaluationStage';
 import StudentReportStage from './Stages/StudentReportStage'; 
 import { setTimedAlert } from '../../features/alertSlice';
+import StudentCurrentStatus from './Student/StudentCurrentStatus';
 
 import classes from './CurrentStatus.module.css';
 /**
@@ -38,6 +39,18 @@ const CurrentStatus = () => {
         <FinalStage id={dummyId}/>
     ];
 
+    // const fetchDueDate = async ({id, setDueDate, path}) => {
+    //     const dispatch = useDispatch();
+    //     const config = setHeaders(token);
+    //     await axios.get(`http://localhost:8080/${path}/${id}`, config)
+    //         .then(res => {
+    //             setDueDate(res.data);
+    //         })
+    //         .catch(err => {
+    //             dispatch(setTimedAlert({msg: "Error while fetching due date", alertType: "error", timeout: 4000}));
+    //         });
+    // };
+
     // const stageComponent = () => {
     //     if (JSON.stringify(currentStatus) == JSON.stringify(allStats[0])) {
     //         return stagesComponents[0];
@@ -60,7 +73,6 @@ const CurrentStatus = () => {
 
         await axios.get(`http://localhost:8080/report/reportStatus/${dummyId}`, config)
             .then(res => {
-                console.log(res.data);
                 setCurrentStatus(res.data);
             })
             .catch(err => {
@@ -95,9 +107,10 @@ const CurrentStatus = () => {
                 <h3 className={classes.activeState}>{currentStatus[1]}</h3>
                 <h3 className={classes.singleState}>{currentStatus[2]}</h3>
             </div>
-            {<StudentReportStage id={dummyId}/>}
+            <StudentCurrentStatus id={dummyId} currentStatus={currentStatus}/>
+            {/* {<StudentReportStage id={dummyId}/>}
             {<TAEvaluationStage id={dummyId}/>}
-            {<IterationStage id={dummyId}/>}
+            {<IterationStage id={dummyId}/>} */}
             {/* {<FinalStage id={dummyId}/>} */}
         </div>
     );
