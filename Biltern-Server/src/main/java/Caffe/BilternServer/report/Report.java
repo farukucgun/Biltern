@@ -1,7 +1,11 @@
-package Caffe.BilternServer.Report;
+package Caffe.BilternServer.report;
 
-import Caffe.BilternServer.Report.Feedback.Feedback;
-import Caffe.BilternServer.Report.GradingForm.GradingForm;
+import Caffe.BilternServer.course.Course;
+import Caffe.BilternServer.report.Feedback.Feedback;
+import Caffe.BilternServer.report.GradingForm.GradingForm;
+import Caffe.BilternServer.users.Grader;
+import Caffe.BilternServer.users.Student;
+import Caffe.BilternServer.users.TeachingAssistant;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -14,8 +18,7 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(
             name = "id",
-            nullable = false,
-            updatable = false
+            nullable = false
     )
     private Long id;
     private LocalDate dueDate;
@@ -32,10 +35,21 @@ public class Report {
     @Enumerated(EnumType.STRING)
     private CompanyStats companyStats;
 
-//    @ManyToOne
-//    @JoinColumn(name = "student_id")
-//    private Student student;
+    @ManyToOne
+    @JoinColumn(name = "studentId")
+    private Student student;
 
+    @ManyToOne
+    @JoinColumn(name = "graderId")
+    private Grader grader;
+
+    @ManyToOne
+    @JoinColumn(name = "TAId")
+    private TeachingAssistant TA;
+
+    @ManyToOne
+    @JoinColumn(name = "courseId")
+    private Course course;
 
     @JsonIgnore
     private boolean isIteration;
@@ -43,7 +57,7 @@ public class Report {
     @JoinColumn(name = "feedbackId")
     private Feedback feedback;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "gradingFormId")
     private GradingForm gradingForm;
 
@@ -51,6 +65,10 @@ public class Report {
     @JoinColumn(name = "previousIterationId")
     private Report previousIteration;
 
+    public Report(){
+        reportStats = ReportStats.NOT_SUBMITTED;
+        companyStats = CompanyStats.WAITING;
+    }
     public LocalDate getDueDate() {
         return dueDate;
     }
@@ -127,5 +145,40 @@ public class Report {
         this.feedback = feedback;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Grader getGrader() {
+        return grader;
+    }
+
+    public void setGrader(Grader grader) {
+        this.grader = grader;
+    }
+
+    public TeachingAssistant getTA() {
+        return TA;
+    }
+
+    public void setTA(TeachingAssistant TA) {
+        this.TA = TA;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
 }
 
