@@ -1,0 +1,10 @@
+.mini_student_list_container{
+    width: 80%;
+    border: 1px solid black;
+    border-radius: 15px;
+    height: 400px;
+    background-color: white;
+}
+.mini_student_list_container h1{
+    text-align: center;
+}
