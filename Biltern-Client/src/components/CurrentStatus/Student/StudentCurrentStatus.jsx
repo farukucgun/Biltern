@@ -5,9 +5,9 @@ import FinalStage from '../Stages/FinalStage';
 import IterationStage from '../Stages/IterationStage';
 import TAEvaluationStage from '../Stages/TAEvaluationStage';
 import StudentReportStage from '../Stages/StudentReportStage'; 
-import { setTimedAlert } from '../../../features/alertSlice';
 
 import classes from '../CurrentStatus.module.css';
+
 /**
  * @author Faruk Uçgun
  * @date 07.05.2023
@@ -23,8 +23,8 @@ const StudentCurrentStatus = (props) => {
 
     return (
         <div className={classes.currentStatusPage}>
-            {/* {<StudentReportStage id={id}/>} */}
-            {<TAEvaluationStage id={id}/>}
+            {<StudentReportStage id={id}/>}
+            {/* {<TAEvaluationStage id={id}/>} */}
             {/* {<IterationStage id={id}/>} */}
             {/* {<FinalStage id={id}/>} */}
         </div>

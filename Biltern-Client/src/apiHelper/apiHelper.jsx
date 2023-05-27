@@ -1,23 +1,23 @@
 import axios from 'axios';
 
-const _handleError = async response => {
-    if (!response.ok) {
-        let errorData
-        try {
-            errorData = await response.json()
-        } catch {}
-    
-        console.log('errorData', errorData)
-        // GENERAL ERROR
-        throw new Error(errorData.message)
+const _handleError = async (res) => {
+    if (res.status !== 200) {
+        throw new Error("Something went wrong")
     }
 }
   
 const commonHeader = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
     "Authorization": localStorage.getItem("token") || " "
 }
   
+const _get = async (url, responseType) => {
+    return await axios.get(url, {
+        headers: commonHeader,
+        responseType
+    })
+}
+
 const _post = async (url, data) => {
     return await axios.post(url,
         {body: JSON.stringify(data)},
@@ -31,49 +31,36 @@ const _put = async (url, data) => {
         {headers: commonHeader}
     )
 }
-  
-  async function _put (url, data) {
-    return await fetch(url, {
-      method: 'PUT',
-      headers: commonHeader,
-      body: JSON.stringify(data)
+
+const _delete = async (url) => {
+    return await axios.delete(url, {
+        headers: commonHeader
     })
-  }
-  
-  async function _get (url) {
-    return await fetch(url, {
-      headers: commonHeader
-    })
-  }
-  
-  async function _delete (url) {
-    return await fetch(url, {
-      method: 'DELETE',
-      headers: commonHeader
-    })
-  }
-  
-  export async function postFetcher (url, data, isRaw = false) {
+}
+
+const getFetcher = async (url, responseType="json", isRaw=true) => {
+    const res = await _get(url, responseType)
+    await _handleError(res)
+    return isRaw ? res : res.json();
+}
+
+const postFetcher = async (url, data, isRaw=true) => {
     const res = await _post(url, data)
     await _handleError(res)
     return isRaw ? res : res.json()
-  }
-  
-  export async function putFetcher (url, data) {
+}
+
+const putFetcher = async (url, data) => {
     const res = await _put(url, data)
     await _handleError(res)
     return res.json()
-  }
-  
-  export async function getFetcher (url, isRaw = false) {
-    const res = await _get(url)
-    await _handleError(res)
-    return isRaw ? res : res.json()
-  }
-  
-  export async function deleteFetcher (url, isRaw = true) {
+}
+
+const deleteFetcher = async (url, isRaw=true) => {
     const res = await _delete(url)
     await _handleError(res)
     return isRaw ? res : res.json()
-  }
+}
+
+export { getFetcher, postFetcher, putFetcher, deleteFetcher }
   
