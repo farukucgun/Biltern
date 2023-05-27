@@ -1,4 +1,4 @@
-package Caffe.BilternServer.Report.GradingForm;
+package Caffe.BilternServer.report.GradingForm;
 
 import com.itextpdf.text.DocumentException;
 import jakarta.transaction.Transactional;

@@ -1,7 +1,7 @@
-package Caffe.BilternServer.Report;
+package Caffe.BilternServer.report;
 
-import Caffe.BilternServer.Report.Feedback.FeedbackService;
-import Caffe.BilternServer.Report.GradingForm.GradingFormService;
+import Caffe.BilternServer.report.Feedback.FeedbackService;
+import Caffe.BilternServer.report.GradingForm.GradingFormService;
 import Caffe.BilternServer.users.Grader;
 import Caffe.BilternServer.users.TeachingAssistant;
 import org.springframework.beans.factory.annotation.Autowired;

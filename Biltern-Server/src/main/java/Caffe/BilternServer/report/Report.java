@@ -1,8 +1,8 @@
-package Caffe.BilternServer.Report;
+package Caffe.BilternServer.report;
 
-import Caffe.BilternServer.Course.Course;
-import Caffe.BilternServer.Report.Feedback.Feedback;
-import Caffe.BilternServer.Report.GradingForm.GradingForm;
+import Caffe.BilternServer.course.Course;
+import Caffe.BilternServer.report.Feedback.Feedback;
+import Caffe.BilternServer.report.GradingForm.GradingForm;
 import Caffe.BilternServer.users.Grader;
 import Caffe.BilternServer.users.Student;
 import Caffe.BilternServer.users.TeachingAssistant;

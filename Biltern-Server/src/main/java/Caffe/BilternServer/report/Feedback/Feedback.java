@@ -1,6 +1,6 @@
-package Caffe.BilternServer.Report.Feedback;
+package Caffe.BilternServer.report.Feedback;
 
-import Caffe.BilternServer.Report.Report;
+import Caffe.BilternServer.report.Report;
 import jakarta.persistence.*;
 
 @Entity(name = "Feedback")

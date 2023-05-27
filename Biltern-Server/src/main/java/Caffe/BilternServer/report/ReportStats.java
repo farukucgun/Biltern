@@ -1,4 +1,4 @@
-package Caffe.BilternServer.Report;
+package Caffe.BilternServer.report;
 
 public enum ReportStats {
     NOT_SUBMITTED(" ", "Waiting for submission", "Submitted"),
