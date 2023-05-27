@@ -1,0 +1,35 @@
+.uploaded_files_item_container{
+    width: 250px;
+    height: 180px;
+    margin: 30px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid gray;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.file_information{
+    background-color: gray;
+    position: absolute;
+    top: 145px;
+    width: 250px;
+    height: 35px;
+    display: flex;
+    box-sizing: border-box;
+    padding: 5px;
+    justify-content: space-around;
+}
+
+.image{
+    display: flex;
+    width: 20%;
+    
+}
+.file_name{
+    display: flex;
+    width: 80%;
+    align-items: center;
+}
+.file_name p{
+    margin: 0px;
+    font-size: small;
+}
