@@ -46,7 +46,6 @@ public class MailService {
                         + "http://127.0.0.1:5173/home" +
                         "\" >  Click to open Biltern  </a> \n"
         );
-        System.out.println("Sent mail to " + bilkentMail + " for registeration!");
     }
 
     private void createAndSendMail(String subject, String mail, String text){
