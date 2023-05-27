@@ -20,6 +20,8 @@ import PrivateRoute from './routing/PrivateRoute';
 import NotFound from './UI/NotFound';
 import Landing from './components/Landing/Landing';
 import Notifications from './components/Notifications/Notifications';
+import GradingFormPage from "./components/GradingFormPage/GradingFormPage";
+import DisplayFilePage from './components/DisplayFilePage/DisplayFilePage';
 
 import './App.css';
 
@@ -71,6 +73,8 @@ const App = () => {
             <Route path="/roleassignment" element={<PrivateRoute component={<RoleAssignment />}/>}/>
             <Route path="/settings" element={<PrivateRoute component={<Settings />}/>} />
             <Route path="/settings/changepassword/:resetToken" element={<PrivateRoute component={<ChangePassword />}/>}/>
+            <Route path="/gradingformpage" element={<PrivateRoute component={<GradingFormPage />}/>}/>
+            <Route path='/displayfilepage' element={<PrivateRoute component={<DisplayFilePage />}/>}/>
             <Route path="*" element={<NotFound/>}/>
         </Routes>
       </main>

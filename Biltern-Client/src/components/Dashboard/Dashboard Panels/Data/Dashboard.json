@@ -1,0 +1,26 @@
+[
+    {
+        "userType": "student",
+        "currentUser": true
+    },
+    {
+        "userType": "teachingAssistant",
+        "currentUser": false
+    },
+    {
+        "userType": "grader",
+        "currentUser": false
+    },
+    {
+        "userType": "coordinator",
+        "currentUser": false
+    },
+    {
+        "userType": "secretary",
+        "currentUser": false
+    },
+    {
+        "userType": "admin",
+        "currentUser": false
+    }
+]
