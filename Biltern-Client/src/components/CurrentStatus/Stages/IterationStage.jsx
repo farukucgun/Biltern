@@ -3,14 +3,16 @@ import FileUpload from "../../../UI/FileUpload";
 import axios from 'axios';
 import ActionButton from '../../../UI/ActionButton';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import classes from '../CurrentStatus.module.css';
 
 const IterationStage = (props) => {
     const {id} = props;
-    const navigate = useNavigate();
-
     const [dueDate, setDueDate] = useState(null); 
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const token = useSelector(state => state.auth.token);
 
     const submitHandler = (files) => {
         console.log(files[0]);
@@ -21,7 +23,7 @@ const IterationStage = (props) => {
         const config = {
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": localStorage.getItem("token") || ""
+                "Authorization": token || ""
             }
         };
 
@@ -30,12 +32,13 @@ const IterationStage = (props) => {
                 setDueDate(res.data);
             })
             .catch(err => {
-                dispatch(setTimedAlert({msg: "Error while fetching ", alertType: "error", timeout: 4000}));
+                // dispatch(setTimedAlert({msg: "Error while fetching ", alertType: "error", timeout: 4000}));
             });
         };
 
         fetchDueDate()
             .catch(err => {
+                console.log(err);
                 dispatch(setTimedAlert({msg: "Error while fetching ", alertType: "error", timeout: 4000}));
             }
         );
@@ -89,15 +92,16 @@ const IterationStage = (props) => {
     }
 
     const downloadStudentReportHandler = () => {
-        fetchReport({onFetchReport: downloadReport, path: "report/reportContent/1"}); 
+        fetchReport({onFetchReport: downloadReport, path: `report/reportContent/${id}`}); 
     }
 
     const downloadFeedbackHandler = () => {
-        fetchReport({onFetchReport: downloadReport, path: "report/reportContent/1"}); 
+        fetchReport({onFetchReport: downloadReport, path: `report/reportContent/${id}`}); 
     }
 
     const askRevisionHandler = () => {
         console.log("send request to ask for revision");
+        
     }
 
     const extendDeadlineHandler = () => {
@@ -105,12 +109,9 @@ const IterationStage = (props) => {
     }
 
     return (
-        <div>
-            <div className={classes.status}>
-                <h2>Iteration Stage</h2>
-                <h3>Previous Status</h3>
-                <h3>Current Status</h3>
-                <h3>Next Status</h3>
+        <div className={classes.iterationStage}>
+            <div className={classes.dueDate}>
+                <p>Due Date: {dueDate}</p>
             </div>
             <div className={classes.actions}>
                 <div className={classes.buttons}>
@@ -145,17 +146,15 @@ const IterationStage = (props) => {
                         onClick={extendDeadlineHandler}
                     />
                 </div>
-                <div>
-                    <FileUpload 
-                        accept=".pdf" 
-                        multiple={false}
-                        onSubmit={submitHandler} 
-                        dragMessage="Drag and drop a pdf file or click here"
-                        uploadMessage="Upload a pdf file"
-                        buttonMessage="Upload"    
-                    />
-                </div>
-            </div>
+                <FileUpload 
+                    accept=".pdf" 
+                    multiple={false}
+                    onSubmit={submitHandler} 
+                    dragMessage="Drag and drop a pdf file or click here"
+                    uploadMessage="Upload a pdf file"
+                    buttonMessage="Upload"    
+                />
+            </div>    
         </div>
     )
 }

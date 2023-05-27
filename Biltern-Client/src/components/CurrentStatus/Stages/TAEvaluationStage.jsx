@@ -62,54 +62,46 @@ const TAEvaluationStage = (props) => {
     }
 
     const downloadStudentReportHandler = () => {
-        fetchReport({onFetchReport: downloadReport, path: "report/reportContent/1"}); 
+        fetchReport({onFetchReport: downloadReport, path: `report/reportContent/${id}`}); 
     }
 
     const downloadFeedbackHandler = () => {
-        fetchReport({onFetchReport: downloadReport, path: "report/reportContent/1"}); 
+        fetchReport({onFetchReport: downloadReport, path: `report/reportContent/${id}`}); 
     }
 
     return (
-        <div>
-            <div className={classes.status}>
-                <h2>TAEvaluation Stage</h2>
-                <h3>Previous Status</h3>
-                <h3>Current Status</h3>
-                <h3>Next Status</h3>
+        <div className={classes.actions}>
+            <div className={classes.buttons}>
+                <ActionButton
+                    className=""
+                    text="Download Student Report"
+                    onClick={downloadStudentReportHandler}
+                />
+                <ActionButton
+                    className=""
+                    text="View Student Report"
+                    onClick={ViewReportHandler}
+                />
+                <ActionButton
+                    className=""
+                    text="Download TA Feedback"
+                    onClick={downloadFeedbackHandler}
+                />
+                <ActionButton
+                    className=""
+                    text="View TA Feedback"
+                    onClick={viewFeedbackHandler}
+                />
             </div>
-            <div className={classes.actions}>
-                <div className={classes.buttons}>
-                    <ActionButton
-                        className=""
-                        text="Download Student Report"
-                        onClick={downloadStudentReportHandler}
-                    />
-                    <ActionButton
-                        className=""
-                        text="View Student Report"
-                        onClick={ViewReportHandler}
-                    />
-                    <ActionButton
-                        className=""
-                        text="Download TA Feedback"
-                        onClick={downloadFeedbackHandler}
-                    />
-                    <ActionButton
-                        className=""
-                        text="View TA Feedback"
-                        onClick={viewFeedbackHandler}
-                    />
-                </div>
-                <div>
-                    <FileUpload 
-                        accept=".pdf" 
-                        multiple={false}
-                        onSubmit={submitHandler} 
-                        dragMessage="Drag and drop a pdf file or click here"
-                        uploadMessage="Upload a pdf file"
-                        buttonMessage="Upload"    
-                    />
-                </div>
+            <div>
+                <FileUpload 
+                    accept=".pdf" 
+                    multiple={false}
+                    onSubmit={submitHandler} 
+                    dragMessage="Drag and drop a pdf file or click here"
+                    uploadMessage="Upload a pdf file"
+                    buttonMessage="Upload"    
+                />
             </div>
         </div>
     )
