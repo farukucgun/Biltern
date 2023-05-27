@@ -34,7 +34,6 @@ public class RoleAdministrationController {
 
     @PostMapping("register")
     public void registerUser(@Valid @RequestBody UserRegisterationRequest userRegisterationRequest) throws InstanceAlreadyExistsException {
-        System.out.println(userRegisterationRequest);
         bilternUserService.registerUser(userRegisterationRequest);
     }
 }
