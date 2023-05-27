@@ -1,4 +1,4 @@
-package Caffe.BilternServer.Report.GradingForm;
+package Caffe.BilternServer.report.GradingForm;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

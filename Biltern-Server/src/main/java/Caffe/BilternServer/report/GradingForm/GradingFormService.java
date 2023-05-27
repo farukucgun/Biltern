@@ -1,11 +1,10 @@
-package Caffe.BilternServer.Report.GradingForm;
+package Caffe.BilternServer.report.GradingForm;
 
 import com.itextpdf.text.DocumentException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
-import com.itextpdf.text.Document;
 import com.itextpdf.text.pdf.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -25,7 +24,7 @@ public class GradingFormService {
 
     public ByteArrayResource downloadGradingForm(Long reportId) {
         byte[] pdfTemplate = pdfTemplateRepository.findById(Long.valueOf(1)).get().getTemplate();
-        GradingForm gradingForm =  gradingFormRepository.findByReport(reportId).orElse(null);
+        GradingForm gradingForm =  gradingFormRepository.findByReportId(reportId).orElse(null);
         Map<String, String> grades = gradingForm.getGrades();
         try {
             PdfReader reader = new PdfReader(pdfTemplate);
@@ -36,7 +35,7 @@ public class GradingFormService {
             AcroFields formFields = stamper.getAcroFields();
 
             for (Map.Entry<String, String> entry : grades.entrySet()) {
-                formFields.setField(entry.getKey(),entry.getValue());
+                formFields.setField(entry.getKey().toLowerCase().trim(),entry.getValue());
             }
             stamper.setFormFlattening(true);
             stamper.close();
@@ -54,12 +53,12 @@ public class GradingFormService {
 
     @Transactional
     public void setGradingFormGrades(Long reportId,Map<String, String> grades){
-        GradingForm gradingForm =  gradingFormRepository.findByReport(reportId).orElse(null);
+        GradingForm gradingForm =  gradingFormRepository.findByReportId(reportId).orElse(null);
         gradingForm.setGrades(grades);
         gradingFormRepository.save(gradingForm);
     }
     public Map<String,String> getGradingFormGrades(Long reportId){
-        return gradingFormRepository.findByReport(reportId).orElse(null).getGrades();
+        return gradingFormRepository.findByReportId(reportId).orElse(null).getGrades();
     }
 
 

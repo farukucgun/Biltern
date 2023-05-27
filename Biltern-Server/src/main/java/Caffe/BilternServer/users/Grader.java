@@ -1,5 +1,6 @@
 package Caffe.BilternServer.users;
 
+import Caffe.BilternServer.report.Report;
 import Caffe.BilternServer.auth.BilternUser;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
@@ -20,7 +21,7 @@ public class Grader extends BilternUser {
 
     @OneToMany
     @JsonIgnore
-    private List<Student> students;
+    private List<Report> report;
 
     public Long getReportCount() {
         return reportCount;
@@ -38,11 +39,11 @@ public class Grader extends BilternUser {
         this.signature = signature;
     }
 
-    public List<Student> getStudents() {
-        return students;
+    public List<Report> getReport() {
+        return report;
     }
 
-    public void setStudents(List<Student> students) {
-        this.students = students;
+    public void setReport(List<Report> report) {
+        this.report = report;
     }
 }
