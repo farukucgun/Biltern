@@ -1,0 +1,16 @@
+.reminders_panel_container{
+    width: 400px;
+    height: 300px;
+    border: 1px solid black;
+    border-radius: 15px;
+    margin: 2%;
+    background-color: white;
+}
+
+.reminders_panel_container h1{
+    text-align: center;
+}
+
+.reminders_panel_container li{
+    margin: 10px 25px;
+}

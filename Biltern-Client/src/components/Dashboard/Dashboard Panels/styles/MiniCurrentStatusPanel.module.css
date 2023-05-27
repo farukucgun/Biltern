@@ -1,0 +1,45 @@
+.mini_current_status_panel_container{
+    box-sizing: border-box;
+    width: 400px;
+    height: 250px;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 2%;
+    margin: 2%;
+    background-color: white;
+}
+.mini_current_status_panel_container h1{
+    text-align: center;
+    margin: 5px;
+}
+.stage_marker{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    margin-right: 10%;
+    margin-left: 10%;
+}
+
+.mini_current_status_panel_container img{
+    width: 30px;
+}
+
+.stages_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    resize: none;
+}
+
+.stage{
+    display: flex;
+    background-color: #A1F4FF;
+    height: 80px;
+    width: 30%;
+    border-radius: 20px;
+    align-items: center;
+    justify-content: center;
+    padding: 1%;
+    opacity: 60%;
+}
