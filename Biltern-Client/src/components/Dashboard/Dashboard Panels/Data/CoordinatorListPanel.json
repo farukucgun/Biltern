@@ -1,0 +1,21 @@
+[
+    {
+        "name": "coordinator1",
+        "course": "CS299",
+        "department": "Computer Science",
+        "numberOfStudents": 154
+    },
+    {
+        "name": "coordinator2",
+        "department": "Industrial Engineering",
+        "course": "ME299",
+        "numberOfStudents": 126
+    },
+    {
+        "name": "coordinator3",
+        "department": "Mechanical Engineering",
+        "course": "IE299",
+        "numberOfStudents": 134
+    }
+]
+

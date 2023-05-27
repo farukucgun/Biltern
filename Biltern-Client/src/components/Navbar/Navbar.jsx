@@ -20,7 +20,8 @@ const items = [
   {to: "/currentstatus", name: "Current Status"},
   {to: "/settings", name: "Settings"},
   {to: "/semesterInitialization", name: "Semester Initialization"},
-  {to: "/roleassignment", name: "Role Assignment"}
+  {to: "/roleassignment", name: "Role Assignment"},
+  {to: "/gradingformpage", name: "Grading Form"}
 ]
 
 const Navbar = () => {

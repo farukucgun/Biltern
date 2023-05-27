@@ -1,0 +1,30 @@
+[
+    {
+      "value": 45,
+      "stageNumber": "Stage 1"
+    },
+    {
+      "value": 25,
+      "stageNumber": "Stage 2"
+    },
+    {
+      "value": 20,
+      "stageNumber": "Stage 3"
+    },
+    {
+      "value": 30,
+      "stageNumber": "Stage 4"
+    },
+    {
+      "value": 20,
+      "stageNumber": "Stage 5"
+    },
+    {
+      "value": 15,
+      "stageNumber": "Stage 6"
+    },
+    {
+      "value": 10,
+      "stageNumber": "Stage 7"
+    }
+  ]
