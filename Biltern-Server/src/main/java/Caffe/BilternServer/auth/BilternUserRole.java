@@ -10,6 +10,5 @@ public enum BilternUserRole {
     FACULTY_MEMBER,
     DEPARTMENT_COORDINATOR,
     BCC_ADMIN,
-
     SECRETARY
 }

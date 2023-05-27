@@ -1,13 +1,10 @@
 package Caffe.BilternServer.users;
 
-import Caffe.BilternServer.Course.Course;
-import Caffe.BilternServer.Report.Report;
+import Caffe.BilternServer.report.Report;
 import Caffe.BilternServer.auth.BilternUser;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class Student extends BilternUser {

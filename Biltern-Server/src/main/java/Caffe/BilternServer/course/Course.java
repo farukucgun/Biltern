@@ -1,7 +1,6 @@
-package Caffe.BilternServer.Course;
+package Caffe.BilternServer.course;
 
-import Caffe.BilternServer.Report.Report;
-import Caffe.BilternServer.users.Student;
+import Caffe.BilternServer.report.Report;
 import jakarta.persistence.*;
 
 import java.util.List;
