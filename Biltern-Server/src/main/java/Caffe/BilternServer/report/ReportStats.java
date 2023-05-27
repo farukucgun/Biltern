@@ -1,4 +1,4 @@
-package Caffe.BilternServer.Report;
+package Caffe.BilternServer.report;
 
 public enum ReportStats {
     NOT_SUBMITTED(" ", "Waiting for submission", "Submitted"),
@@ -13,7 +13,6 @@ public enum ReportStats {
     ReportStats(String... statusArray) {
         this.statusArray = statusArray;
     }
-
     public String[] getStatusArray() {
         return statusArray;
     }

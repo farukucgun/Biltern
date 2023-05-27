@@ -1,4 +1,4 @@
-package Caffe.BilternServer.Report;
+package Caffe.BilternServer.report;
 
 public enum CompanyStats {
     RECEIVED("Recieved"),

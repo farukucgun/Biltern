@@ -26,6 +26,7 @@ public class AuthController {
         this.authService = authService;
     }
 
+
     @PostMapping("login")
     public ResponseEntity<AuthenticationDTO> login(@Valid @RequestBody UserLoginRequest userLoginRequest){
 
@@ -61,13 +62,6 @@ public class AuthController {
 
         return ResponseEntity.ok("User password has been successfully changed.");
     }
-
-
-
-
-
-
-
 
 
 
