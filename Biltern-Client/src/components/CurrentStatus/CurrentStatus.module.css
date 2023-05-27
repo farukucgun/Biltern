@@ -35,6 +35,46 @@
     background-color: #ffffff;
 }
 
+.singleState {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-radius: 2%;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    background-color: #e6811b;
+}
+
+.dueDate {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-radius: 2%;
+    border: 1px solid #ccc;
+    /* padding: 10px;
+    margin: 10px; */
+    background-color: #f4f21b;
+
+}
+
+.activeState {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-radius: 2%;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    background-color: #21f42b;
+}
+
 .actions {
     display: flex;
     flex-direction: row;
