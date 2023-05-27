@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import FileUpload from "../../../UI/FileUpload";
-import axios from 'axios';
 import ActionButton from '../../../UI/ActionButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setTimedAlert } from '../../../features/alertSlice';
+import { getApprovalDueDate, getReportContent, getPreviewFeedback } from '../../../apiHelper/backendHelper';
 
 import classes from '../CurrentStatus.module.css';
 
@@ -12,7 +12,6 @@ const TAEvaluationStage = (props) => {
     const {id} = props;
     const [dueDate, setDueDate] = useState(null);
 
-    const token = useSelector(state => state.auth.token);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -21,48 +20,15 @@ const TAEvaluationStage = (props) => {
     };
 
     useEffect(() => {
-        const fetchDueDate = async () => {
-            const config = {
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": token || ""
-                }
-            };
-            await axios.get(`http://localhost:8080/report/dueDate/${id}`, config)
-                .then(res => {
-                    setDueDate(res.data);
-                })
-                .catch(err => {
-                    dispatch(setTimedAlert({msg: "Error while fetching due date", alertType: "error", timeout: 4000}));
-                });
-        };
-
-        fetchDueDate()
+        getApprovalDueDate(id)
+            .then(res => {
+                setDueDate(res.data);
+            })
             .catch(err => {
                 console.log(err);
                 dispatch(setTimedAlert({msg: "Error while fetching due date", alertType: "error", timeout: 4000}));
-            }
-        );
-    }, []);
-
-    const fetchReport = async ({onFetchReport, path}) => {
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": localStorage.getItem("token") || ""
-            }
-        };
-
-        await axios.get(`http://localhost:8080/${path}`, {config, responseType: 'arraybuffer'})
-            .then(res => {
-                const blob = new Blob([res.data], {type: 'application/pdf'});
-                onFetchReport(blob);
-            })
-            .catch(err => {
-                // dispatch(setTimedAlert({msg: "Error while fetching notifications", alertType: "error", timeout: 4000}));
-                console.log(err);
             });
-    };
+    }, []);
 
     const ViewReportHandler = () => {
         console.log("navigate to report with id to display report");
@@ -93,11 +59,25 @@ const TAEvaluationStage = (props) => {
     }
 
     const downloadStudentReportHandler = () => {
-        fetchReport({onFetchReport: downloadReport, path: `report/reportContent/${id}`}); 
+        getReportContent(id, 'arraybuffer', true)
+            .then(res => {
+                const blob = new Blob([res.data], {type: 'application/pdf'});
+                downloadReport(blob);
+            })
+            .catch(err => {
+                dispatch(setTimedAlert({msg: "Error while fetching report", alertType: "error", timeout: 4000}));
+            });
     }
 
     const downloadFeedbackHandler = () => {
-        fetchReport({onFetchReport: downloadReport, path: `report/reportContent/${id}`}); 
+        getPreviewFeedback(id, 'arraybuffer', true)
+            .then(res => {
+                const blob = new Blob([res.data], {type: 'application/pdf'});
+                downloadReport(blob);
+            })
+            .catch(err => {
+                dispatch(setTimedAlert({msg: "Error while fetching feedback", alertType: "error", timeout: 4000}));
+            });
     }
 
     return (
