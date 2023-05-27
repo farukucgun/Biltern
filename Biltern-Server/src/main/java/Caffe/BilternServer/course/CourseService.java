@@ -1,10 +1,6 @@
-package Caffe.BilternServer.Course;
-import Caffe.BilternServer.Report.Report;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Row;
+package Caffe.BilternServer.course;
+import Caffe.BilternServer.report.Report;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +27,11 @@ public class CourseService {
 
     public void addReport(Long courseId, Report report){
         courseRepository.getById(courseId);
+    }
+
+
+    public Course getCourseByCode(String courseCode){
+        return courseRepository.findByCourseCode(courseCode).orElseThrow(
+                () -> new EntityNotFoundException());
     }
 }

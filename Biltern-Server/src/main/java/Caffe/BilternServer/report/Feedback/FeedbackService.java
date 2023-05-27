@@ -1,6 +1,6 @@
-package Caffe.BilternServer.Report.Feedback;
+package Caffe.BilternServer.report.Feedback;
 
-import Caffe.BilternServer.Report.ReportRepository;
+import Caffe.BilternServer.report.ReportRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;

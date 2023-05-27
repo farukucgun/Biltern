@@ -1,31 +1,44 @@
-package Caffe.BilternServer.Report;
+package Caffe.BilternServer.report;
 
-import Caffe.BilternServer.Report.Feedback.Feedback;
-import Caffe.BilternServer.Report.Feedback.FeedbackRepository;
-import Caffe.BilternServer.Report.GradingForm.GradingForm;
-import Caffe.BilternServer.Report.GradingForm.GradingFormRepository;
+import Caffe.BilternServer.course.Course;
+import Caffe.BilternServer.course.CourseService;
+import Caffe.BilternServer.report.Feedback.Feedback;
+import Caffe.BilternServer.report.Feedback.FeedbackRepository;
+import Caffe.BilternServer.report.GradingForm.GradingForm;
+import Caffe.BilternServer.report.GradingForm.GradingFormRepository;
+import Caffe.BilternServer.users.Department;
 import Caffe.BilternServer.users.Grader;
 import Caffe.BilternServer.users.TeachingAssistant;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.parser.Entity;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
-
+import java.util.List;
 
 @Service
 public class ReportService {
     private final ReportRepository reportRepository;
     private final FeedbackRepository feedbackRepository;
     private final GradingFormRepository gradingFormRepository;
+    private final CourseService courseService;
+
     @Autowired
     public ReportService(
-            ReportRepository reportRepository, FeedbackRepository feedbackRepository, GradingFormRepository gradingFormRepository) {
+            ReportRepository reportRepository,
+            FeedbackRepository feedbackRepository,
+            GradingFormRepository gradingFormRepository,
+            CourseService courseService) {
         this.reportRepository = reportRepository;
         this.feedbackRepository = feedbackRepository;
         this.gradingFormRepository = gradingFormRepository;
+        this.courseService = courseService;
     }
 
 
@@ -134,6 +147,7 @@ public class ReportService {
 
     }
 
+
     public Grader getReportGrader(Long reportId){
         return reportRepository.findReportById(reportId).getGrader();
     }
@@ -141,5 +155,63 @@ public class ReportService {
         return reportRepository.findReportById(reportId).getTA();
     }
 
+
+    public Map<ReportStats, Integer> getGraderStats(Grader grader) {
+        Map<ReportStats, Integer> graderStats = new HashMap<>();
+
+        for(ReportStats reportStats: ReportStats.values()){
+            graderStats.put(reportStats, reportRepository.countAllByGraderAndReportStats(grader, reportStats));
+        }
+
+        return graderStats;
+    }
+
+
+    public Map<ReportStats, Integer> getTAStats(TeachingAssistant teachingAssistant) {
+        Map<ReportStats, Integer> taStats= new HashMap<>();
+
+        for(ReportStats reportStats: ReportStats.values()){
+            taStats.put(reportStats, reportRepository.countAllByTAAndReportStats(teachingAssistant, reportStats));
+        }
+
+        return taStats;
+    }
+
+
+    public List<Map<ReportStats, Integer>> getDepartmentStats(Department department){
+
+
+
+        Course course299, course399;
+
+        try {
+            course299 = courseService.getCourseByCode(department + "299");
+            course399 = courseService.getCourseByCode(department + "399");
+
+        }
+        catch (EntityNotFoundException entityNotFoundException){
+            return List.of(new HashMap<>(), new HashMap<>());
+        }
+
+        List<Map<ReportStats, Integer>> departmentStats = new ArrayList<>();
+
+        Map<ReportStats, Integer> courseStats299 = new HashMap<>();
+        Map<ReportStats, Integer> courseStats399 = new HashMap<>();
+
+
+        for(ReportStats reportStats: ReportStats.values()){
+            courseStats299.put(reportStats, reportRepository.countAllByCourseAndReportStats(
+                    course299, reportStats
+            ));
+            courseStats399.put(reportStats, reportRepository.countAllByCourseAndReportStats(
+                    course399, reportStats
+            ));
+        }
+
+        departmentStats.add(courseStats299);
+        departmentStats.add(courseStats399);
+
+        return departmentStats;
+    }
 
 }

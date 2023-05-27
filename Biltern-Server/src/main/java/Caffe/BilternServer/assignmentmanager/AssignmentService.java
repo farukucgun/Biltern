@@ -1,11 +1,10 @@
-package Caffe.BilternServer.AssignmentManager;
+package Caffe.BilternServer.assignmentmanager;
 
 
-import Caffe.BilternServer.Course.Course;
-import Caffe.BilternServer.Course.CourseRepository;
-import Caffe.BilternServer.Report.Report;
-import Caffe.BilternServer.Report.ReportRepository;
-import Caffe.BilternServer.Report.ReportService;
+import Caffe.BilternServer.course.Course;
+import Caffe.BilternServer.course.CourseRepository;
+import Caffe.BilternServer.report.Report;
+import Caffe.BilternServer.report.ReportRepository;
 import Caffe.BilternServer.users.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
