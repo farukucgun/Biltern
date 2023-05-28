@@ -4,6 +4,7 @@ package Caffe.BilternServer.users;
 import Caffe.BilternServer.report.Report;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -65,13 +66,13 @@ public class GraderService {
             reportDTO.setReportStats(report.getReportStats());
             reportDTO.setReportId(reportDTO.getReportId());
             reportDTO.setDueDate(report.getDueDate());
-            reportDTO.setCourseCode(report.getCourse().getCourseCode());
+            //reportDTO.setCourseCode(report.getCourse().getCourseCode());
 
             reportDTO.setGraderName(grader.getUserName());
             reportDTO.setGraderId(grader.getBilkentId());
 
-            reportDTO.setTaId(report.getTA().getBilkentId());
-            reportDTO.setTaName(report.getTA().getUserName());
+            reportDTO.setTaId(report.getTeachingAssistant().getBilkentId());
+            reportDTO.setTaName(report.getTeachingAssistant().getUserName());
 
             reportDTO.setStudentId(report.getStudent().getBilkentId());
             reportDTO.setStudentName(report.getStudent().getUserName());
@@ -80,5 +81,23 @@ public class GraderService {
         }
 
         return listOfReports;
+    }
+
+    public void uploadSignature(Long id, byte[] signature) {
+        if (!graderRepository.existsById(id)) {
+            throw new IllegalStateException("A grader with that ID does not exist.");
+        }
+        Grader grader = graderRepository.getById(id);
+        grader.setSignature(signature);
+    }
+
+    public ByteArrayResource downloadSignature(Long id) {
+        if (!graderRepository.existsById(id)) {
+            throw new IllegalStateException("A grader with that ID does not exist.");
+        }
+        Grader grader = graderRepository.getById(id);
+        byte[] signature = grader.getSignature();
+        ByteArrayResource byteArrayResource = new ByteArrayResource(signature);
+        return byteArrayResource;
     }
 }

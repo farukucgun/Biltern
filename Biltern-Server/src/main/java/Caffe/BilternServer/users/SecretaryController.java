@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "${client.domain}")
 @RestController
 @RequestMapping("secretary")
 public class SecretaryController {
