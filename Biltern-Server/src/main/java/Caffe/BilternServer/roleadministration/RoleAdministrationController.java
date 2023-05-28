@@ -15,6 +15,7 @@ import java.util.List;
  */
 
 
+@CrossOrigin(origins = "${client.domain}")
 @RestController
 @RequestMapping("user/administration")
 public class RoleAdministrationController {

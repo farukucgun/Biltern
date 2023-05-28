@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import FinalStage from './Stages/FinalStage';
-import IterationStage from './Stages/IterationStage';
-import TAEvaluationStage from './Stages/TAEvaluationStage';
-import StudentReportStage from './Stages/StudentReportStage'; 
 import { setTimedAlert } from '../../features/alertSlice';
-import StudentCurrentStatus from './Student/StudentCurrentStatus';
+import StudentCurrentStage from './Student/StudentCurrentStage';
+import TACurrentStage from './TA/TACurrentStage';
+import InstructorCurrentStage from "./Instructor/InstructorCurrentStage";
+import { getReportStatus, getCompanyStatus } from '../../apiHelper/backendHelper';
 
 import classes from './CurrentStatus.module.css';
 /**
@@ -18,10 +16,10 @@ import classes from './CurrentStatus.module.css';
 const CurrentStatus = () => {
 
     const dummyId = 1;
-    const token = useSelector(state => state.auth.token);
-    const role = useSelector(state => state.auth.role);
+    const role = useSelector(state => state.auth.user.role);
     const dispatch = useDispatch();
-    const [currentStatus, setCurrentStatus] = useState([]);
+    const [reportStatus, setReportStatus] = useState([]);
+    const [companyStatus, setCompanyStatus] = useState([]);
 
     const allStats = [
         [" ", "Waiting for submission", "Submitted"],
@@ -32,60 +30,22 @@ const CurrentStatus = () => {
         [" ", "Withdrawn", " "],
     ];
 
-    const stagesComponents = [
-        <StudentReportStage id={dummyId}/>,
-        <TAEvaluationStage id={dummyId}/>,
-        <IterationStage id={dummyId}/>,
-        <FinalStage id={dummyId}/>
-    ];
-
-    // const fetchDueDate = async ({id, setDueDate, path}) => {
-    //     const dispatch = useDispatch();
-    //     const config = setHeaders(token);
-    //     await axios.get(`http://localhost:8080/${path}/${id}`, config)
-    //         .then(res => {
-    //             setDueDate(res.data);
-    //         })
-    //         .catch(err => {
-    //             dispatch(setTimedAlert({msg: "Error while fetching due date", alertType: "error", timeout: 4000}));
-    //         });
-    // };
-
-    // const stageComponent = () => {
-    //     if (JSON.stringify(currentStatus) == JSON.stringify(allStats[0])) {
-    //         return stagesComponents[0];
-    //     } else if (JSON.stringify(currentStatus) == JSON.stringify(allStats[1]) && role == "TA") {
-    //         return stagesComponents[1];
-    //     } else if (JSON.stringify(currentStatus) == JSON.stringify(allStats[1]) && role == "Student") {
-    //         return stagesComponents[0];
-    //     } else if (JSON.stringify(currentStatus) == JSON.stringify(allStats[2]) && role == "Student") {
-    //         return stagesComponents[2];
-
-
     useEffect(() => {
-        const fetchCurrentStatus = async () => {
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": token || ""
-            }
-        };
+        getReportStatus(dummyId)
+        .then(res => {
+            setReportStatus(res.data);
+        })
+        .catch(err => {
+            dispatch(setTimedAlert("Error while fetching report status", "error"));
+        })
 
-        await axios.get(`http://localhost:8080/report/reportStatus/${dummyId}`, config)
-            .then(res => {
-                setCurrentStatus(res.data);
-            })
-            .catch(err => {
-                // dispatch(setTimedAlert({msg: "Error while fetching notifications", alertType: "error", timeout: 4000}));
-            });
-        };
-
-        fetchCurrentStatus()
-            .catch(err => {
-                console.log(err);
-                // dispatch(setTimedAlert({msg: "Error while fetching notifications", alertType: "error", timeout: 4000}));
-            }
-        );
+        getCompanyStatus(dummyId)
+        .then(res => {
+            setCompanyStatus(res.data);
+        })
+        .catch(err => {
+            dispatch(setTimedAlert("Error while fetching company status", "error"));
+        })
     }, []);
 
     return (
@@ -101,17 +61,21 @@ const CurrentStatus = () => {
                     <p>Bilkent ID: 22001462</p>
                 </div>
             </div>
+                <h3>Company Evaluation Status</h3>
             <div className={classes.status}>
                 {/* make them buttons */}
-                <h3 className={classes.singleState}>{currentStatus[0]}</h3>
-                <h3 className={classes.activeState}>{currentStatus[1]}</h3>
-                <h3 className={classes.singleState}>{currentStatus[2]}</h3>
+                <h3 className={classes.singleState}>{companyStatus}</h3>
             </div>
-            <StudentCurrentStatus id={dummyId} currentStatus={currentStatus}/>
-            {/* {<StudentReportStage id={dummyId}/>}
-            {<TAEvaluationStage id={dummyId}/>}
-            {<IterationStage id={dummyId}/>} */}
-            {/* {<FinalStage id={dummyId}/>} */}
+                <h3>Report Status</h3>
+            <div className={classes.status}>
+                {/* make them buttons */}
+                <h3 className={classes.singleState}>{reportStatus[0]}</h3>
+                <h3 className={classes.activeState}>{reportStatus[1]}</h3>
+                <h3 className={classes.singleState}>{reportStatus[2]}</h3>
+            </div>
+            {role == "Student" && <StudentCurrentStage id={dummyId} currentStatus={reportStatus}/>}
+            {role == "TeachingAssistant" && <TACurrentStage id={dummyId} currentStatus={reportStatus}/>}
+            {role == "BCC_ADMIN" && <InstructorCurrentStage id={dummyId} currentStatus={reportStatus}/>}
         </div>
     );
 }

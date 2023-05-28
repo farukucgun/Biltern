@@ -1,23 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import FileUpload from "../../../UI/FileUpload";
 import ActionButton from '../../../UI/ActionButton';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setTimedAlert } from '../../../features/alertSlice';
-import { getReportDueDate, getReportContent, uploadReportContent } from '../../../apiHelper/backendHelper';
+import { getReportDueDate, getReportContent, changeReportDueDate } from '../../../apiHelper/backendHelper';
+import DatePicker from '../../../UI/datePicker';
 
 import classes from '../CurrentStatus.module.css';
 
 const StudentReportStage = (props) => {
     const {id} = props;
     const [dueDate, setDueDate] = useState(null);
+    const [datePickerOpen, setDatePickerOpen] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const submitHandler = (files) => {
-        console.log(files[0]);
-        uploadReportContent(id, files[0])
-    };
 
     useEffect(() => {
         getReportDueDate(id)
@@ -25,7 +21,6 @@ const StudentReportStage = (props) => {
                 setDueDate(res.data);
             })
             .catch(err => {
-                console.log(err);
                 dispatch(setTimedAlert({msg: "Error while fetching due date", alertType: "error", timeout: 4000}));
             });
     }, []);
@@ -65,6 +60,23 @@ const StudentReportStage = (props) => {
             });
     }
 
+    const showExtendDeadline = () => {
+        setDatePickerOpen((prevState) => (!prevState));
+    }
+
+    const extendDeadlineHandler = (date) => {
+        let data = {"dueDate": date};
+        changeReportDueDate(id, data)
+            .then(res => {
+                setDueDate(date);
+                dispatch(setTimedAlert({msg: "Deadline extended successfully", alertType: "success", timeout: 4000}));
+            })
+            .catch(err => {
+                dispatch(setTimedAlert({msg: "Error while extending deadline", alertType: "error", timeout: 4000}));
+            });
+        setDatePickerOpen(false);
+    }
+
     return (
         <div className={classes.StudentReportStage}>
             <div className={classes.dueDate}>
@@ -82,18 +94,14 @@ const StudentReportStage = (props) => {
                         text="View Report"
                         onClick={ViewReportHandler}
                     />
-                </div>
-                <div>
-                    <FileUpload 
-                        accept=".pdf" 
-                        multiple={false}
-                        onSubmit={submitHandler} 
-                        dragMessage="Drag and drop a pdf file or click here"
-                        uploadMessage="Upload a pdf file"
-                        buttonMessage="Upload"    
+                    <ActionButton
+                        className=""
+                        text="Extend Deadline"
+                        onClick={showExtendDeadline}
                     />
                 </div>
             </div>
+            {datePickerOpen && <DatePicker onConfirm={extendDeadlineHandler}/>}
         </div>    
     )
 }

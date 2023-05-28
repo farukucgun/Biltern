@@ -18,17 +18,39 @@ const _get = async (url, responseType) => {
     })
 }
 
-const _post = async (url, data) => {
-    return await axios.post(url,
-        {body: JSON.stringify(data)},
-        {headers: commonHeader}
+const _post = async (url, data, contentType) => {
+    let headers = commonHeader;
+    if (contentType) {
+        headers["Content-Type"] = contentType;
+    }
+    return await axios.put(url, 
+        data, 
+        headers
     )
 }
 
-const _put = async (url, data) => {
-    return await axios.put(url,
-        {body: JSON.stringify(data)},
-        {headers: commonHeader}
+const _put = async (url, data, contentType) => {
+    let headers = commonHeader;
+    if (contentType) {
+        headers["Content-Type"] = contentType;
+    }
+    return await axios.put(url, 
+        data, 
+        headers
+    )
+}
+
+const _patch = async (url, data, contentType) => {
+    console.log("url: ", url);
+    console.log("data: ", data);
+    console.log("contentType: ", contentType);
+    let headers = commonHeader;
+    if (contentType) {
+        headers["Content-Type"] = contentType;
+    }
+    return await axios.patch(url, 
+        data, 
+        headers
     )
 }
 
@@ -44,16 +66,22 @@ const getFetcher = async (url, responseType="json", isRaw=true) => {
     return isRaw ? res : res.json();
 }
 
-const postFetcher = async (url, data, isRaw=true) => {
-    const res = await _post(url, data)
+const postFetcher = async (url, data, contentType="application/json", isRaw=true) => {
+    const res = await _post(url, data, contentType)
     await _handleError(res)
     return isRaw ? res : res.json()
 }
 
-const putFetcher = async (url, data) => {
-    const res = await _put(url, data)
+const putFetcher = async (url, data, contentType="application/json", isRaw=true) => {
+    const res = await _put(url, data, contentType)
     await _handleError(res)
-    return res.json()
+    return isRaw ? res : res.json()
+}
+
+const patchFetcher = async (url, data, contentType="application/json", isRaw=true) => {
+    const res = await _patch(url, data, contentType)
+    await _handleError(res)
+    return isRaw ? res : res.json()
 }
 
 const deleteFetcher = async (url, isRaw=true) => {
@@ -62,5 +90,5 @@ const deleteFetcher = async (url, isRaw=true) => {
     return isRaw ? res : res.json()
 }
 
-export { getFetcher, postFetcher, putFetcher, deleteFetcher }
+export { getFetcher, postFetcher, putFetcher, patchFetcher, deleteFetcher }
   

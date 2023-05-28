@@ -1,67 +1,45 @@
 import React, {useEffect, useState} from 'react';
 import FileUpload from "../../../UI/FileUpload";
-import axios from 'axios';
 import ActionButton from '../../../UI/ActionButton';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { setTimedAlert } from '../../../features/alertSlice';
+import DatePicker from '../../../UI/datePicker';
+import { getReportDueDate, getReportContent, uploadReportFeedback, 
+    getReportFeedback, changeReportDueDate} from '../../../apiHelper/backendHelper';
+
+// @todo: iteration logic is not implemented yet 
 
 import classes from '../CurrentStatus.module.css';
 
 const IterationStage = (props) => {
     const {id} = props;
     const [dueDate, setDueDate] = useState(null); 
+    const [datePickerOpen, setDatePickerOpen] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const token = useSelector(state => state.auth.token);
 
     const submitHandler = (files) => {
-        console.log(files[0]);
+        let formData = new FormData();
+        formData.append('file', files[0]);
+        uploadReportFeedback(id, formData, "multipart/form-data")
+            .then(res => {
+                dispatch(setTimedAlert({msg: "Report uploaded successfully", alertType: "success", timeout: 4000}));
+            })
+            .catch(err => {
+                dispatch(setTimedAlert({msg: "Error while uploading report", alertType: "error", timeout: 4000}));
+            });
     };
 
     useEffect(() => {
-        const fetchDueDate = async () => {
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": token || ""
-            }
-        };
-
-        await axios.get(`http://localhost:8080/report/dueDate/${id}`, config)
+        getReportDueDate(id)
             .then(res => {
                 setDueDate(res.data);
             })
             .catch(err => {
-                // dispatch(setTimedAlert({msg: "Error while fetching ", alertType: "error", timeout: 4000}));
+                dispatch(setTimedAlert({msg: "Error while fetching due date", alertType: "error", timeout: 4000}));
             });
-        };
-
-        fetchDueDate()
-            .catch(err => {
-                console.log(err);
-                dispatch(setTimedAlert({msg: "Error while fetching ", alertType: "error", timeout: 4000}));
-            }
-        );
     }, []);
-
-    const fetchReport = async ({onFetchReport, path}) => {
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": localStorage.getItem("token") || ""
-            }
-        };
-
-        await axios.get(`http://localhost:8080/${path}`, {config, responseType: 'arraybuffer'})
-            .then(res => {
-                const blob = new Blob([res.data], {type: 'application/pdf'});
-                onFetchReport(blob);
-            })
-            .catch(err => {
-                // dispatch(setTimedAlert({msg: "Error while fetching notifications", alertType: "error", timeout: 4000}));
-                console.log(err);
-            });
-    };
 
     const ViewReportHandler = () => {
         console.log("navigate to report with id to display report");
@@ -92,20 +70,42 @@ const IterationStage = (props) => {
     }
 
     const downloadStudentReportHandler = () => {
-        fetchReport({onFetchReport: downloadReport, path: `report/reportContent/${id}`}); 
+        getReportContent(id, 'arraybuffer', true)
+            .then(res => {
+                const blob = new Blob([res.data], {type: 'application/pdf'});
+                downloadReport(blob);
+            })
+            .catch(err => {
+                dispatch(setTimedAlert({msg: "Error while fetching report", alertType: "error", timeout: 4000}));
+            });
     }
 
     const downloadFeedbackHandler = () => {
-        fetchReport({onFetchReport: downloadReport, path: `report/reportContent/${id}`}); 
+        getReportFeedback(id, 'arraybuffer', true)
+            .then(res => {
+                const blob = new Blob([res.data], {type: 'application/pdf'});
+                downloadReport(blob);
+            })
+            .catch(err => {
+                dispatch(setTimedAlert({msg: "Error while fetching feedback", alertType: "error", timeout: 4000}));
+            });
     }
 
-    const askRevisionHandler = () => {
-        console.log("send request to ask for revision");
-        
+    const showExtendDeadline = () => {
+        setDatePickerOpen((prevState) => (!prevState));
     }
 
-    const extendDeadlineHandler = () => {
-        console.log("deadline extended");
+    const extendDeadlineHandler = (date) => {
+        let data = {"dueDate": date};
+        changeReportDueDate(id, data)
+            .then(res => {
+                setDueDate(date);
+                dispatch(setTimedAlert({msg: "Deadline extended successfully", alertType: "success", timeout: 4000}));
+            })
+            .catch(err => {
+                dispatch(setTimedAlert({msg: "Error while extending deadline", alertType: "error", timeout: 4000}));
+            });
+        setDatePickerOpen(false);
     }
 
     return (
@@ -127,23 +127,18 @@ const IterationStage = (props) => {
                     />
                     <ActionButton
                         className=""
-                        text="Download TA Feedback"
+                        text="Download Feedback"
                         onClick={downloadFeedbackHandler}
                     />
                     <ActionButton
                         className=""
-                        text="View TA Feedback"
+                        text="View Feedback"
                         onClick={viewFeedbackHandler}
                     />
                     <ActionButton
                         className=""
-                        text="Ask For Revision"
-                        onClick={askRevisionHandler}
-                    />
-                    <ActionButton
-                        className=""
                         text="Extend Deadline"
-                        onClick={extendDeadlineHandler}
+                        onClick={showExtendDeadline}
                     />
                 </div>
                 <FileUpload 
@@ -154,7 +149,8 @@ const IterationStage = (props) => {
                     uploadMessage="Upload a pdf file"
                     buttonMessage="Upload"    
                 />
-            </div>    
+            </div>
+            {datePickerOpen && <DatePicker onConfirm={extendDeadlineHandler}/>}   
         </div>
     )
 }
