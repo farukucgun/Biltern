@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-
+@CrossOrigin(origins = "${client.domain}")
 @RestController
 @RequestMapping("grader")
 public class GraderController {

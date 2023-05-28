@@ -7,7 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "${client.domain}")
 @RestController
 @RequestMapping("student")
 public class StudentController {
@@ -30,7 +30,7 @@ public class StudentController {
     }
 
 
-    @GetMapping
+    @GetMapping("details")
     public ResponseEntity<StudentDTO> getStudentDetails(){
 
         BilternUser student = (BilternUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
