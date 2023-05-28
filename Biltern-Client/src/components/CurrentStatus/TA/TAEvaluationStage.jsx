@@ -1,64 +1,42 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import FileUpload from "../../../UI/FileUpload";
-import axios from 'axios';
 import ActionButton from '../../../UI/ActionButton';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { setTimedAlert } from '../../../features/alertSlice';
+import { getApprovalDueDate, getReportContent, getPreviewFeedback, uploadPreviewFeedback } from '../../../apiHelper/backendHelper';
 
 import classes from '../CurrentStatus.module.css';
 
-const IterationStage = (props) => {
+const TAEvaluationStage = (props) => {
     const {id} = props;
+    const [dueDate, setDueDate] = useState(null);
+
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [dueDate, setDueDate] = useState(null); 
-
     const submitHandler = (files) => {
-        console.log(files[0]);
+        let formData = new FormData();
+        formData.append('file', files[0]);
+        uploadPreviewFeedback(id, formData, "multipart/form-data")
+            .then(res => {
+                dispatch(setTimedAlert({msg: "Report uploaded successfully", alertType: "success", timeout: 4000}));
+            })
+            .catch(err => {
+                dispatch(setTimedAlert({msg: "Error while uploading report", alertType: "error", timeout: 4000}));
+            });
     };
 
     useEffect(() => {
-        const fetchDueDate = async () => {
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": localStorage.getItem("token") || ""
-            }
-        };
-
-        await axios.put(`http://localhost:8080/dueDate/${id}`, config)
+        getApprovalDueDate(id)
             .then(res => {
                 setDueDate(res.data);
             })
             .catch(err => {
-                dispatch(setTimedAlert({msg: "Error while fetching ", alertType: "error", timeout: 4000}));
-            });
-        };
-
-        fetchDueDate()
-            .catch(err => {
-                dispatch(setTimedAlert({msg: "Error while fetching ", alertType: "error", timeout: 4000}));
-            }
-        );
-    }, []);
-
-    const fetchReport = async ({onFetchReport, path}) => {
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": localStorage.getItem("token") || ""
-            }
-        };
-
-        await axios.get(`http://localhost:8080/${path}`, {config, responseType: 'arraybuffer'})
-            .then(res => {
-                const blob = new Blob([res.data], {type: 'application/pdf'});
-                onFetchReport(blob);
-            })
-            .catch(err => {
-                // dispatch(setTimedAlert({msg: "Error while fetching notifications", alertType: "error", timeout: 4000}));
                 console.log(err);
+                dispatch(setTimedAlert({msg: "Error while fetching due date", alertType: "error", timeout: 4000}));
             });
-    };
+    }, []);
 
     const ViewReportHandler = () => {
         console.log("navigate to report with id to display report");
@@ -89,28 +67,31 @@ const IterationStage = (props) => {
     }
 
     const downloadStudentReportHandler = () => {
-        fetchReport({onFetchReport: downloadReport, path: "report/reportContent/1"}); 
+        getReportContent(id, 'arraybuffer', true)
+            .then(res => {
+                const blob = new Blob([res.data], {type: 'application/pdf'});
+                downloadReport(blob);
+            })
+            .catch(err => {
+                dispatch(setTimedAlert({msg: "Error while fetching report", alertType: "error", timeout: 4000}));
+            });
     }
 
     const downloadFeedbackHandler = () => {
-        fetchReport({onFetchReport: downloadReport, path: "report/reportContent/1"}); 
-    }
-
-    const askRevisionHandler = () => {
-        console.log("send request to ask for revision");
-    }
-
-    const extendDeadlineHandler = () => {
-        console.log("deadline extended");
+        getPreviewFeedback(id, 'arraybuffer', true)
+            .then(res => {
+                const blob = new Blob([res.data], {type: 'application/pdf'});
+                downloadReport(blob);
+            })
+            .catch(err => {
+                dispatch(setTimedAlert({msg: "Error while fetching feedback", alertType: "error", timeout: 4000}));
+            });
     }
 
     return (
         <div>
-            <div className={classes.status}>
-                <h2>Iteration Stage</h2>
-                <h3>Previous Status</h3>
-                <h3>Current Status</h3>
-                <h3>Next Status</h3>
+            <div className={classes.dueDate}>
+                <p>Due Date: {dueDate}</p>
             </div>
             <div className={classes.actions}>
                 <div className={classes.buttons}>
@@ -126,23 +107,13 @@ const IterationStage = (props) => {
                     />
                     <ActionButton
                         className=""
-                        text="Download TA Feedback"
+                        text="Download Feedback"
                         onClick={downloadFeedbackHandler}
                     />
                     <ActionButton
                         className=""
-                        text="View TA Feedback"
+                        text="View Feedback"
                         onClick={viewFeedbackHandler}
-                    />
-                    <ActionButton
-                        className=""
-                        text="Ask For Revision"
-                        onClick={askRevisionHandler}
-                    />
-                    <ActionButton
-                        className=""
-                        text="Extend Deadline"
-                        onClick={extendDeadlineHandler}
                     />
                 </div>
                 <div>
@@ -160,4 +131,4 @@ const IterationStage = (props) => {
     )
 }
 
-export default IterationStage;
+export default TAEvaluationStage;
