@@ -44,10 +44,10 @@ public class GraderController {
 
     @Transactional
     @PutMapping(path = "/signature/{graderId}")
-    public void uploadSignature(@PathVariable Long graderId, @RequestBody MultipartFile signature) {
-        if (!signature.isEmpty()) {
+    public void uploadSignature(@PathVariable Long graderId, @RequestBody MultipartFile file) {
+        if (file != null) {
             try {
-                byte[] signatureFile = signature.getBytes();
+                byte[] signatureFile = file.getBytes();
                 graderService.uploadSignature(graderId, signatureFile);
             }
             catch (IOException e){
