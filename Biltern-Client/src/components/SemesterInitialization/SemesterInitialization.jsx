@@ -1,6 +1,8 @@
 import React from 'react';
 import FileUpload from '../../UI/FileUpload';
 import { useDispatch } from 'react-redux';
+import { setTimedAlert } from '../../features/alertSlice';
+import { initSemester } from '../../apiHelper/backendHelper';
 
 import classes from './SemesterInitialization.module.css';
 
@@ -15,7 +17,15 @@ const SemesterInitialization = () => {
     
     const submitHandler = (files) => {
         console.log(files[0]);
-        // dispatch some stuff here
+        const formData = new FormData();
+        formData.append('file', files[0]);
+        initSemester(formData, "multipart/form-data")
+            .then(res => {
+                dispatch(setTimedAlert("Semester initialized successfully", "success"));
+            })
+            .catch(err => {
+                dispatch(setTimedAlert("Semester initialization failed", "error"));
+            });
     }
 
     return (
@@ -24,11 +34,11 @@ const SemesterInitialization = () => {
             <FileUpload 
                 accept=".xlsx" 
                 multiple={false}
-                onFilesAdded={submitHandler} 
                 dragMessage="Drag and drop an excel file here or click"
                 uploadMessage="Upload an excel file"    
+                buttonMessage="Initiate Semester"
+                onSubmit={submitHandler}
             />
-            <button type='submit' className={classes.submit}>Initialize Semester</button>
         </div>
     );
 }

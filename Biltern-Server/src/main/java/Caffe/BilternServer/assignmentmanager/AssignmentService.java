@@ -1,7 +1,6 @@
 package Caffe.BilternServer.assignmentmanager;
 
 
-import Caffe.BilternServer.auth.BilternUser;
 import Caffe.BilternServer.auth.BilternUserRole;
 import Caffe.BilternServer.auth.BilternUserService;
 import Caffe.BilternServer.course.Course;
@@ -83,7 +82,7 @@ public class AssignmentService {
     @Transactional
     public void addReportToGrader(Long studentId, String courseName, Long graderId){
         Report report = reportRepository.
-                findReportByStudentBilkentIdAndCourseCourseCode(studentId, courseName).get();
+                findReportByStudentBilkentIdAndCourse_CourseCode(studentId, courseName).get();
         Grader grader = graderRepository.findById(graderId).get();
 
         report.setGrader(grader);
@@ -92,6 +91,7 @@ public class AssignmentService {
             graderReports = new ArrayList<Report>();
         }
         graderReports.add(report);
+        grader.getReports().add(report);
 
         reportRepository.save(report);
         graderRepository.save(grader);
@@ -100,10 +100,10 @@ public class AssignmentService {
     @Transactional
     public void addReportToTeachingAssistant(Long studentId, String courseName, Long TAId) {
         Report report = reportRepository.
-                findReportByStudentBilkentIdAndCourseCourseCode(studentId, courseName).get();
+                findReportByStudentBilkentIdAndCourse_CourseCode(studentId, courseName).get();
         TeachingAssistant TA = TARepository.findById(TAId).get();
 
-        report.setTA(TA);
+        report.setTeachingAssistant(TA);
         List<Report> TAReports = TA.getReports();
         if(TAReports == null){
             TAReports = new ArrayList<Report>();
@@ -245,11 +245,11 @@ public class AssignmentService {
                 //skip empty cells
                 if (cell == null || cell.getCellType() == CellType.BLANK) {
                     //end of the list stop iterating
-                    if((rowIndex + 1 <= lastRowNum) &&
-                            (sheet.getRow(rowIndex + 1).getCell(0) == null)){
-                        listDone = true;
-                        break;
-                    }
+//                    if((rowIndex + 1 <= lastRowNum) &&
+//                            (sheet.getRow(rowIndex + 1).getCell(0) == null)){
+//                        listDone = true;
+//                        break;
+//                    }
                     continue;
                 }
 

@@ -7,7 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "${client.domain}")
 @RestController
 @RequestMapping("teachingassistant")
 public class TeachingAssistantController {
@@ -29,7 +29,7 @@ public class TeachingAssistantController {
         teachingAssistantService.deleteTeachingAssistant(id);
     }
 
-    @GetMapping("/details")
+    @GetMapping("/details/what")
     public ResponseEntity<TeachingAssistantDTO> getTADetails() {
         BilternUser teachingAssistant = (BilternUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return ResponseEntity.ok(teachingAssistantService.getTADetails(teachingAssistant.getBilkentId()));
