@@ -32,7 +32,7 @@ public class Course {
     @Column(unique = true, nullable = false)
     private String courseCode;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Report> reports;
 
     public Long getId() {
