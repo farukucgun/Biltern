@@ -7,12 +7,18 @@ import pdf from "./CS319_AnalysisReport_Iter1_Caffe (2).pdf";
 import { pdfjs } from 'react-pdf';
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
+import { submitGradingForm } from "../../apiHelper/backendHelper";
+import { useDispatch } from 'react-redux';
+import { setTimedAlert } from '../../features/alertSlice';
 
 
 pdfjs.GlobalWorkerOptions.workerSrc = 
 `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 export default function GradingFormPage(){
+
+    const dispatch = useDispatch();
+
     const [numPages, setNumPages] = React.useState(null);
 
     function onDocumentLoadSuccess({ numPages }) {
@@ -53,15 +59,51 @@ export default function GradingFormPage(){
     const [tableAssesment7, setTableAssesment7] = React.useState(0);
     const [tableAssesment8, setTableAssesment8] = React.useState(0);
     const [reportSatisfactory, setReportSatisfactory] = React.useState("");
+    const [recommendPlace, setRecommendPlace] = React.useState("");
     const [signature, setSignature] = React.useState("");
 
     const sumOfItems2_7 = tableAssesment2 + tableAssesment3 + tableAssesment4 + tableAssesment5+ tableAssesment6 +tableAssesment7;
 
     function handleSubmit(){
-        const body= {
+        let formData = new FormData();
+        formData.append('input1', stajDegerlendirmeFormu);
+        formData.append('input2', relatedToCS);
+        formData.append('input3', supervisorSimilarBackground);
+        formData.append('input4', partBSatisfactory === "satisfactory"? "choice1": "choice2");
+        formData.append('input5', revisionDate);
+        formData.append('input6', tableAssesment1);
+        formData.append('input7', sumOfItems2_7);
+        formData.append('input8', tableAssesment8);
+        formData.append('input9', reportSatisfactory === "satisfactory"? "choice1": "choice2");
+        formData.append('input10', recommendPlace);
+        formData.append('input11', tableEvidence1);
+        formData.append('input12', tableAssesment1);
+        formData.append('input13', tableEvidence2);
+        formData.append('input14', tableAssesment2);
+        formData.append('input15', tableEvidence3);
+        formData.append('input16', tableAssesment3);
+        formData.append('input17', tableEvidence4);
+        formData.append('input18', tableAssesment4);
+        formData.append('input19', tableEvidence5);
+        formData.append('input20', tableAssesment5);
+        formData.append('input21', tableEvidence6);
+        formData.append('input22', tableAssesment6);
+        formData.append('input23', tableEvidence7);
+        formData.append('input24', tableAssesment7);
+        formData.append('input25', tableEvidence8);
+        formData.append('input26', tableAssesment8);
+        formData.append('formName', "company");
 
-        }
+        submitGradingForm(3, formData, "multipart/form-data")
+            .then(res => {
+                console.log(res.data)
+                dispatch(setTimedAlert("Grading form submitted successfully", "success"));
+            })
+            .catch(err => {
+                console.log(err)
 
+                dispatch(setTimedAlert("Grading form submission failed", "error"));
+            });
     }
 
     return (
@@ -400,8 +442,38 @@ export default function GradingFormPage(){
                                 />
                             </label>
                         </div>
+                        <div className={classes.part_a}>
+                            <label>
+                                <input 
+                                    type="radio"
+                                    value="choice1"
+                                    checked={reportSatisfactory === "choice1"}
+                                    onChange={(event)=>setRecommendPlace(event.target.value)}
+                                />
+                                I strongly recommend this place for future students
+                            </label>
+                            <label>
+                                <input 
+                                    type="radio"
+                                    value="choice2"
+                                    checked={reportSatisfactory === "choice2"}
+                                    onChange={(event)=>setRecommendPlace(event.target.value)}
+                                />
+                                I am satisfied with this place 
+                            </label>
+                            <label>
+                                <input 
+                                    type="radio"
+                                    value="choice3"
+                                    checked={reportSatisfactory === "choice3"}
+                                    onChange={(event)=>setRecommendPlace(event.target.value)}
+                                />
+                                Unsatisfactory
+                            </label>
+                        </div>
                         <button 
                             className={classes.submit_button}
+                            onClick={handleSubmit}
                         >
                             Submit
                         </button>
