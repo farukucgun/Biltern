@@ -5,6 +5,7 @@ import Caffe.BilternServer.auth.BilternUser;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 
@@ -18,8 +19,9 @@ public class Grader extends BilternUser {
     @Column
     private Long reportCount;
 
-    @Column
-    private File signature;
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] signature;
 
     @OneToMany
     @JsonIgnore
