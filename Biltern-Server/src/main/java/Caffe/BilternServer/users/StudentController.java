@@ -1,6 +1,9 @@
 package Caffe.BilternServer.users;
 
+import Caffe.BilternServer.auth.BilternUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,9 +19,6 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping
-    public List<Student> getStudents() { return studentService.getStudents(); }
-
     @PostMapping
     public void addStudent(@RequestBody Student student) {
         studentService.addStudent(student);
@@ -28,4 +28,14 @@ public class StudentController {
     public void deleteStudent(@PathVariable("id") Long id) {
         studentService.deleteStudent(id);
     }
+
+
+    @GetMapping
+    public ResponseEntity<StudentDTO> getStudentDetails(){
+
+        BilternUser student = (BilternUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return ResponseEntity.ok(studentService.getStudentDetails(student.getBilkentId()));
+    }
+
 }

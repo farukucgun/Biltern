@@ -3,6 +3,7 @@ package Caffe.BilternServer.auth;
 import Caffe.BilternServer.roleadministration.UserRegisterationRequest;
 import Caffe.BilternServer.users.Coordinator;
 import Caffe.BilternServer.users.Secretary;
+import Caffe.BilternServer.users.Student;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -82,6 +83,11 @@ public class BilternUserService implements UserDetailsService {
             userToBeRegistered = new Coordinator();
             ((Coordinator)userToBeRegistered).setDepartment(userRegisterationRequest.getDepartment());
             ((Coordinator)userToBeRegistered).setDean(userRegisterationRequest.isDean());
+        }
+        else if(userRegisterationRequest.getBilternUserRole() == BilternUserRole.UNDERGRADUATE){
+            userToBeRegistered = new Student();
+            ((Student)userToBeRegistered).setDepartment(userRegisterationRequest.getDepartment());
+            ((Student) userToBeRegistered).setReports(new ArrayList<>());
         }
         else {
             userToBeRegistered = new BilternUser();
