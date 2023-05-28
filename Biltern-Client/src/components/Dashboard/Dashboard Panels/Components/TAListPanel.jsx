@@ -1,6 +1,7 @@
 import React from "react";
 import classes from '../styles/TAListPanel.module.css'
 import TaData from '../Data/TAList.json'
+import compare from '../../../../utils/sorting'
 
 /**
  * @author Enes Bektaş
@@ -9,33 +10,20 @@ import TaData from '../Data/TAList.json'
 
 export default function TAListPanel(){
 
-    let [taData, setTaData] = React.useState(TaData)
+    const teachingAssitantsExist = TaData !== undefined;
+
+    let [taData, setTaData] = React.useState(TaData);
 
     function handleSortClick(sortingValue){
-        console.log("clicked")
-
+        const compareFunc = compare(sortingValue);
         setTaData(prevTaData =>{
-            const sortedTaData = prevTaData.sort(compare)
-            console.log("copy", sortedTaData)
-            return [...sortedTaData]
+            const sortedTaData = prevTaData.sort(compareFunc);
+            return [...sortedTaData];
         })
-        function compare(a, b){
-            if(sortingValue === "name"){
-                return a.name > b.name? 1: -1
-            }
-            else if(sortingValue === "course"){
-                return a.course > b.course? 1: -1
-            }
-            else if(sortingValue === "numberOfStudents"){
-                return a.numberOfStudents > b.numberOfStudents? 1: -1
-            }
-            else if(sortingValue === "grader"){
-                return a.grader > b.grader? 1: -1
-            }
-        }
+
     }
 
-    const taInfo = taData.map(element => {
+    const taInfo = taData.slice(0,4).map(element => {
         return(
             <tr key={element.name}>
                 <td className={classes.ta_table_element} >{element.name}</td>
@@ -49,15 +37,23 @@ export default function TAListPanel(){
     return(
         <div className={classes.ta_list_panel_container}>
             <h1> Teaching Assistant List</h1>
+            {teachingAssitantsExist
+            ?
             <table >
                 <tr>
                     <th className={classes.ta_table_element} onClick={() => handleSortClick("name")}>Name</th>
-                    <th className={classes.ta_table_element} onClick={() => handleSortClick("department")}>Course</th>
-                    <th className={classes.ta_table_element} onClick={() => handleSortClick("course")}>Number of Students</th>
-                    <th className={classes.ta_table_element} onClick={() => handleSortClick("numberOfStudents")}> Grader</th>
+                    <th className={classes.ta_table_element} onClick={() => handleSortClick("course")}>Course</th>
+                    <th className={classes.ta_table_element} onClick={() => handleSortClick("numberOfStudents")}>Number of Students</th>
+                    <th className={classes.ta_table_element} onClick={() => handleSortClick("grader")}> Grader</th>
                 </tr>
                 {taInfo}
             </table>
+            :
+            <div>
+                There are no teaching assistants at the moment.
+            </div>
+            }
+
         </div>
     )
 }
