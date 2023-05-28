@@ -18,7 +18,7 @@ public class TeachingAssistantController {
         this.teachingAssistantService = teachingAssistantService;
     }
 
-    @GetMapping("/details")
+    @GetMapping
     public List<TeachingAssistant> getTeachingAssistants() { return teachingAssistantService.getTeachingAssistants(); }
 
     @PostMapping
@@ -29,7 +29,7 @@ public class TeachingAssistantController {
         teachingAssistantService.deleteTeachingAssistant(id);
     }
 
-    @GetMapping("details")
+    @GetMapping("/details")
     public ResponseEntity<TeachingAssistantDTO> getTADetails() {
         BilternUser teachingAssistant = (BilternUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return ResponseEntity.ok(teachingAssistantService.getTADetails(teachingAssistant.getBilkentId()));
