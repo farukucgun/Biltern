@@ -1,31 +1,37 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import FileUpload from "../../../UI/FileUpload";
 import ActionButton from '../../../UI/ActionButton';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { setTimedAlert } from '../../../features/alertSlice';
-import { getApprovalDueDate, getReportContent, getPreviewFeedback } from '../../../apiHelper/backendHelper';
+import { getReportDueDate, getReportContent, uploadReportContent, getReportFeedback } from '../../../apiHelper/backendHelper';
 
 import classes from '../CurrentStatus.module.css';
 
-const TAEvaluationStage = (props) => {
+const IterationStage = (props) => {
     const {id} = props;
-    const [dueDate, setDueDate] = useState(null);
-
-    const dispatch = useDispatch();
+    const [dueDate, setDueDate] = useState(null); 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const submitHandler = (files) => {
-        console.log(files[0]);
+        let formData = new FormData();
+        formData.append('file', files[0]);
+        uploadReportContent(id, formData, "multipart/form-data")
+            .then(res => {
+                dispatch(setTimedAlert({msg: "Report uploaded successfully", alertType: "success", timeout: 4000}));
+            })
+            .catch(err => {
+                dispatch(setTimedAlert({msg: "Error while uploading report", alertType: "error", timeout: 4000}));
+            });
     };
 
     useEffect(() => {
-        getApprovalDueDate(id)
+        getReportDueDate(id)
             .then(res => {
                 setDueDate(res.data);
             })
             .catch(err => {
-                console.log(err);
                 dispatch(setTimedAlert({msg: "Error while fetching due date", alertType: "error", timeout: 4000}));
             });
     }, []);
@@ -70,7 +76,7 @@ const TAEvaluationStage = (props) => {
     }
 
     const downloadFeedbackHandler = () => {
-        getPreviewFeedback(id, 'arraybuffer', true)
+        getReportFeedback(id, 'arraybuffer', true)
             .then(res => {
                 const blob = new Blob([res.data], {type: 'application/pdf'});
                 downloadReport(blob);
@@ -81,7 +87,7 @@ const TAEvaluationStage = (props) => {
     }
 
     return (
-        <div>
+        <div className={classes.iterationStage}>
             <div className={classes.dueDate}>
                 <p>Due Date: {dueDate}</p>
             </div>
@@ -99,28 +105,26 @@ const TAEvaluationStage = (props) => {
                     />
                     <ActionButton
                         className=""
-                        text="Download TA Feedback"
+                        text="Download Feedback"
                         onClick={downloadFeedbackHandler}
                     />
                     <ActionButton
                         className=""
-                        text="View TA Feedback"
+                        text="View Feedback"
                         onClick={viewFeedbackHandler}
                     />
                 </div>
-                <div>
-                    <FileUpload 
-                        accept=".pdf" 
-                        multiple={false}
-                        onSubmit={submitHandler} 
-                        dragMessage="Drag and drop a pdf file or click here"
-                        uploadMessage="Upload a pdf file"
-                        buttonMessage="Upload"    
-                    />
-                </div>
-            </div>
+                <FileUpload 
+                    accept=".pdf" 
+                    multiple={false}
+                    onSubmit={submitHandler} 
+                    dragMessage="Drag and drop a pdf file or click here"
+                    uploadMessage="Upload a pdf file"
+                    buttonMessage="Upload"    
+                />
+            </div>    
         </div>
     )
 }
 
-export default TAEvaluationStage;
+export default IterationStage;
