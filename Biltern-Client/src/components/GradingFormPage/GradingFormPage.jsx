@@ -20,14 +20,14 @@ export default function GradingFormPage(){
     }
 
     const [sizes, setSizes] = React.useState([
-        611,
+        630,
         'auto'
     ]);
     
     const [scale, setScale] = React.useState(1)
     function onSlide(event){
         console.log(sizes[0])
-        setScale((event.pageX-200)/611)
+        setScale((event.pageX-220)/630)
     }
 
 
