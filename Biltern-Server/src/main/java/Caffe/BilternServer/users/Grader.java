@@ -16,6 +16,7 @@ public class Grader extends BilternUser {
 
     @Lob
     @Column(columnDefinition = "LONGBLOB")
+    @Basic(fetch = FetchType.LAZY)
     private byte[] signature;
 
     @OneToMany(mappedBy = "grader", fetch = FetchType.LAZY)
