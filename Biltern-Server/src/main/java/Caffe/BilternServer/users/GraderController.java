@@ -19,7 +19,7 @@ public class GraderController {
         this.graderService = graderService;
     }
 
-    @GetMapping(path = "/details")
+    @GetMapping
     public List<Grader> getGraders() { return graderService.getGraders(); }
 
     @PostMapping
@@ -28,7 +28,7 @@ public class GraderController {
     @DeleteMapping(path = "{id}")
     public void deleteGrader(@PathVariable("id") Long id) { graderService.deleteGrader(id); }
 
-    @GetMapping("details")
+    @GetMapping("/details")
     public ResponseEntity<GraderDTO> getGraderDetails() {
         BilternUser grader = (BilternUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return ResponseEntity.ok(graderService.getGraderDetails(grader.getBilkentId()));
