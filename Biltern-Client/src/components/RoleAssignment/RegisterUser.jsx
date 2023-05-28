@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import { assignRoleToUsers } from '../../apiHelper/backendHelper';
 import { useDispatch } from 'react-redux';
 import { setTimedAlert } from '../../features/alertSlice';
 import { registerUser } from '../../apiHelper/backendHelper';
@@ -43,18 +42,24 @@ const RegisterUser = () => {
             console.log(err);
             dispatch(setTimedAlert({msg: "Role assignment failed", alertType: "error", timeout: 4000}));
         })
+        setId('');
+        setRole('');
+        setName('');
+        setEmail('');
+        setDepartment('');
+        setIsDean(false);
     }
 
     const idChangeHandler = (event) => { setId(event.target.value); }
-    const nameChangeHandler = (event) => { setId(event.target.value); }
+    const nameChangeHandler = (event) => { setName(event.target.value); }
     const roleChangeHandler = (event) => { setRole(event.target.value); }
-    const emailChangeHandler = (event) => { setId(event.target.value); }
-    const depChangeHandler = (event) => { setId(event.target.value); }
-    const isDeanChangeHandler = (event) => { setId(event.target.value); }
+    const emailChangeHandler = (event) => { setEmail(event.target.value); }
+    const depChangeHandler = (event) => { setDepartment(event.target.value); }
+    const isDeanChangeHandler = (event) => { setIsDean(event.target.value); }
 
     return (
         <div className={classes.roleAssignment_container}>
-            <h1>Role Assignment</h1>
+            <h1>Register User</h1>
             <input 
                 type="number" 
                 id="bilkentid"
@@ -76,17 +81,6 @@ const RegisterUser = () => {
                 className={classes.input}
                 onChange={emailChangeHandler}
             />
-            <label 
-                htmlFor="isDean">
-                Is Dean: 
-            </label>
-            <input
-                type="checkbox"
-                id="isDean"
-                name='isDean'
-                className={classes.input}
-                onChange={isDeanChangeHandler}
-            />
             <select 
                 name="role-select" 
                 id="role-select"
@@ -101,13 +95,27 @@ const RegisterUser = () => {
                 <option className={classes.option} value="SECRETARY">Secretary</option>
                 <option className={classes.option} value="DEPARTMENT_COORDINATOR">Coordinator</option>
             </select>
+            {role=="DEPARTMENT_COORDINATOR" &&
+            <>
+                <label 
+                    htmlFor="isDean">
+                    Is Dean: 
+                </label>
+                <input
+                    type="checkbox"
+                    id="isDean"
+                    name='isDean'
+                    className={classes.input}
+                    onChange={isDeanChangeHandler}
+                />
+            </>}
             <select 
                 name="dep-select" 
                 id="dep-select"
                 className={classes.select}
                 onChange={depChangeHandler}
             >
-                <option className={classes.option} value="Empty">Choose a Role</option>
+                <option className={classes.option} value="Empty">Choose a Department</option>
                 <option className={classes.option} value="CS">CS</option>
                 <option className={classes.option} value="IE">IE</option>
                 <option className={classes.option} value="EEE">EEE</option>

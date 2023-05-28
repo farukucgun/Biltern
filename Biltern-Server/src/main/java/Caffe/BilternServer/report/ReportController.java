@@ -4,7 +4,6 @@ import Caffe.BilternServer.report.Feedback.FeedbackService;
 import Caffe.BilternServer.report.GradingForm.GradingFormService;
 import Caffe.BilternServer.users.Grader;
 import Caffe.BilternServer.users.TeachingAssistant;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -146,7 +145,7 @@ public class ReportController {
     public void submitGrades(@PathVariable Long reportId, @RequestBody Map<String, String> grades){
         String formName = grades.get("formName");
         grades.remove("formName");
-        reportService.updateStatus(reportId, formName);
+        reportService.updateStatusGradingForm(reportId, formName);
         gradingFormService.setGradingFormGrades(reportId,grades);
     }
     @GetMapping("/GradingForm/{reportId}")
