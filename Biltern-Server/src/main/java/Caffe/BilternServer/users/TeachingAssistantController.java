@@ -29,7 +29,7 @@ public class TeachingAssistantController {
         teachingAssistantService.deleteTeachingAssistant(id);
     }
 
-    @GetMapping
+    @GetMapping("details")
     public ResponseEntity<TeachingAssistantDTO> getTADetails() {
         BilternUser teachingAssistant = (BilternUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return ResponseEntity.ok(teachingAssistantService.getTADetails(teachingAssistant.getBilkentId()));
