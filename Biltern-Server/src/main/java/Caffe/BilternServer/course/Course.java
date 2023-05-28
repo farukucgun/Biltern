@@ -2,9 +2,11 @@ package Caffe.BilternServer.course;
 
 import Caffe.BilternServer.report.Report;
 import Caffe.BilternServer.users.Secretary;
+import Caffe.BilternServer.users.Student;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+
 import java.util.List;
 
 
@@ -30,7 +32,7 @@ public class Course {
     @Column(unique = true, nullable = false)
     private String courseCode;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private List<Report> reports;
 
     public Long getId() {
@@ -39,5 +41,20 @@ public class Course {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
+    }
+    public List<Report> getReports() {
+        return reports;
+    }
+
+    public void setReports(List<Report> reports) {
+        this.reports = reports;
     }
 }

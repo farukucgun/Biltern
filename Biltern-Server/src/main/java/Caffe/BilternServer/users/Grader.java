@@ -5,8 +5,6 @@ import Caffe.BilternServer.auth.BilternUser;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -20,9 +18,8 @@ public class Grader extends BilternUser {
     @Column(columnDefinition = "LONGBLOB")
     private byte[] signature;
 
-
-    @OneToMany(mappedBy = "grader", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "grader", fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Report> reports = new ArrayList<>();
+    private List<Report> reports;
     private Department department;
 }

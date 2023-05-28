@@ -76,7 +76,6 @@ public class BilternUserService implements UserDetailsService {
         if(userRegisterationRequest.getBilternUserRole() == BilternUserRole.SECRETARY){
             userToBeRegistered = new Secretary();
             ((Secretary)userToBeRegistered).setDepartment(userRegisterationRequest.getDepartment());
-            ((Secretary)userToBeRegistered).setCourses(new ArrayList<>());
         }
         else if(userRegisterationRequest.getBilternUserRole() == BilternUserRole.DEPARTMENT_COORDINATOR){
             userToBeRegistered = new Coordinator();
