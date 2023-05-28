@@ -73,8 +73,8 @@ const CurrentStatus = () => {
                 <h3 className={classes.activeState}>{reportStatus[1]}</h3>
                 <h3 className={classes.singleState}>{reportStatus[2]}</h3>
             </div>
-            {role == "Student" && <StudentCurrentStage id={dummyId} currentStatus={reportStatus}/>}
-            {role == "TeachingAssistant" && <TACurrentStage id={dummyId} currentStatus={reportStatus}/>}
+            {role == "UNDERGRADUATE" && <StudentCurrentStage id={dummyId} currentStatus={reportStatus}/>}
+            {role == "TEACHING_ASSISTANT" && <TACurrentStage id={dummyId} currentStatus={reportStatus}/>}
             {role == "BCC_ADMIN" && <InstructorCurrentStage id={dummyId} currentStatus={reportStatus}/>}
         </div>
     );

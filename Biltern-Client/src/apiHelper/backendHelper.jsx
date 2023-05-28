@@ -100,6 +100,10 @@ export const deleteGrader = async (data) => {
     return await deleteFetcher(url.GRADER_SELECT_PATH(), data);
 }
 
+export const getGraderDetails = async () => {
+    return await getFetcher(url.GRADER_PATH());
+}
+
 // secretary controller
 export const getSecretaries = async () => {
     return await getFetcher(url.SECRETARY_PATH());
@@ -114,16 +118,16 @@ export const deleteSecretary = async (data) => {
 }
 
 // student controller
-export const getStudents = async () => {
-    return await getFetcher(url.STUDENT_PATH());
-}
-
 export const addStudent = async (data) => {
     return await postFetcher(url.STUDENT_PATH(), data);
 }
 
 export const deleteStudent = async (data) => {
     return await deleteFetcher(url.STUDENT_SELECT_PATH(), data);
+}
+
+export const getStudentDetails = async () => {
+    return await getFetcher(url.STUDENT_DETAILS_PATH());
 }
 
 // teaching assistant controller
@@ -138,6 +142,10 @@ export const addTeachingAssistant = async (data) => {
 export const deleteTeachingAssistant = async (data) => {
     return await deleteFetcher(url.TEACHING_ASSISTANT_SELECT_PATH(), data);
 }   
+
+export const getTeachingAssistantDetails = async () => {
+    return await getFetcher(url.TEACHING_ASSISTANT_DETAILS_PATH());
+}
 
 // role administration controller
 export const assignRoleToUsers = async (role, data) => {
@@ -170,7 +178,7 @@ export const addCourse = async (data) => {
     return await postFetcher(url.COURSE_PATH(), data);
 }
 
-
-
-
-
+// assignment controller
+export const initSemester = async (data, contentType) => {
+    return await postFetcher(url.SEMESTER_PATH(), data, contentType);
+}
