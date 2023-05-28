@@ -61,6 +61,7 @@ const FileUpload = (props) => {
     const submitHandler = (event) => {
         event.preventDefault();
         onSubmit(files);
+        setUploadedFileName('');
     }
     
     return (
