@@ -1,6 +1,9 @@
 package Caffe.BilternServer.users;
 
+import Caffe.BilternServer.auth.BilternUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,4 +28,13 @@ public class SecretaryController {
 
     @DeleteMapping(path = "{id}")
     public void deleteSecretary(@PathVariable("id") Long id) { secretaryService.deleteSecretary(id); }
+
+
+    @GetMapping("details")
+    public ResponseEntity<SecretaryDTO> getSecretaryDetails(){
+
+        BilternUser secretary = (BilternUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return ResponseEntity.ok(secretaryService.getSecretaryDetails(secretary.getBilkentId()));
+    }
 }
