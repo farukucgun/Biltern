@@ -18,7 +18,7 @@ public class Grader extends BilternUser {
     @Column(columnDefinition = "LONGBLOB")
     private byte[] signature;
 
-    @OneToMany(mappedBy = "grader", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "grader", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Report> reports;
     private Department department;
