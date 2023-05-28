@@ -76,67 +76,67 @@ export const getReportTA = async (reportId) => {
 
 // coordinator controller
 export const getCoordinators = async () => {
-    return await getFetcher(url.COORDINATOR_PATH);
+    return await getFetcher(url.COORDINATOR_PATH());
 }
 
 export const addCoordinator = async (data) => {
-    return await postFetcher(url.COORDINATOR_PATH, data);
+    return await postFetcher(url.COORDINATOR_PATH(), data);
 }
 
 export const deleteCoordinator = async (data) => {
-    return await deleteFetcher(url.COORDINATOR_SELECT_PATH, data);
+    return await deleteFetcher(url.COORDINATOR_SELECT_PATH(), data);
 }
 
 // grader controller
 export const getGraders = async () => {
-    return await getFetcher(url.GRADER_PATH);
+    return await getFetcher(url.GRADER_PATH());
 }
 
 export const addGrader = async (data) => {
-    return await postFetcher(url.GRADER_PATH, data);
+    return await postFetcher(url.GRADER_PATH(), data);
 }
 
 export const deleteGrader = async (data) => {
-    return await deleteFetcher(url.GRADER_SELECT_PATH, data);
+    return await deleteFetcher(url.GRADER_SELECT_PATH(), data);
 }
 
 // secretary controller
 export const getSecretaries = async () => {
-    return await getFetcher(url.SECRETARY_PATH);
+    return await getFetcher(url.SECRETARY_PATH());
 }
 
 export const addSecretary = async (data) => {
-    return await postFetcher(url.SECRETARY_PATH, data);
+    return await postFetcher(url.SECRETARY_PATH(), data);
 }
 
 export const deleteSecretary = async (data) => {
-    return await deleteFetcher(url.SECRETARY_SELECT_PATH, data);
+    return await deleteFetcher(url.SECRETARY_SELECT_PATH(), data);
 }
 
 // student controller
 export const getStudents = async () => {
-    return await getFetcher(url.STUDENT_PATH);
+    return await getFetcher(url.STUDENT_PATH());
 }
 
 export const addStudent = async (data) => {
-    return await postFetcher(url.STUDENT_PATH, data);
+    return await postFetcher(url.STUDENT_PATH(), data);
 }
 
 export const deleteStudent = async (data) => {
-    return await deleteFetcher(url.STUDENT_SELECT_PATH, data);
+    return await deleteFetcher(url.STUDENT_SELECT_PATH(), data);
 }
 
 // teaching assistant controller
 export const getTeachingAssistants = async () => {
-    return await getFetcher(url.TEACHING_ASSISTANT_PATH);
+    return await getFetcher(url.TEACHING_ASSISTANT_PATH());
 }
 
 export const addTeachingAssistant = async (data) => {
-    return await postFetcher(url.TEACHING_ASSISTANT_PATH, data);
+    return await postFetcher(url.TEACHING_ASSISTANT_PATH(), data);
 }
 
 export const deleteTeachingAssistant = async (data) => {
-    return await deleteFetcher(url.TEACHING_ASSISTANT_SELECT_PATH, data);
+    return await deleteFetcher(url.TEACHING_ASSISTANT_SELECT_PATH(), data);
 }   
 
 // role administration controller
@@ -145,29 +145,29 @@ export const assignRoleToUsers = async (role, data) => {
 }
 
 export const registerUser = async (data) => {
-    return await postFetcher(url.REGISTER_USER_PATH, data);
+    return await postFetcher(url.REGISTER_USER_PATH(), data);
 }
 
 // statistics controller
 export const getDepartmentCourseStatistics = async () => {
-    return await getFetcher(url.DEPARTMENT_COURSE_STATISTICS_PATH);
+    return await getFetcher(url.DEPARTMENT_COURSE_STATISTICS_PATH());
 }
 
 export const getGraderStatistics = async () => {
-    return await getFetcher(url.GRADER_STATISTICS_PATH);
+    return await getFetcher(url.GRADER_STATISTICS_PATH());
 }
 
 export const getTaStatistics = async () => {
-    return await getFetcher(url.TA_STATISTICS_PATH);
+    return await getFetcher(url.TA_STATISTICS_PATH());
 }
 
 // course controller
 export const getCourses = async () => {
-    return await getFetcher(url.COURSE_PATH);
+    return await getFetcher(url.COURSE_PATH());
 }
 
 export const addCourse = async (data) => {
-    return await postFetcher(url.COURSE_PATH, data);
+    return await postFetcher(url.COURSE_PATH(), data);
 }
 
 
