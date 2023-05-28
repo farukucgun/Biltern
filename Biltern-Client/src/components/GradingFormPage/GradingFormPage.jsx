@@ -30,16 +30,39 @@ export default function GradingFormPage(){
         setScale((event.pageX-220)/630)
     }
 
-    const [tableAssesment1, setTableAssesment1] = React.useState(0)
-    const [tableAssesment2, setTableAssesment2] = React.useState(0)
-    const [tableAssesment3, setTableAssesment3] = React.useState(0)
-    const [tableAssesment4, setTableAssesment4] = React.useState(0)
-    const [tableAssesment5, setTableAssesment5] = React.useState(0)
-    const [tableAssesment6, setTableAssesment6] = React.useState(0)
-    const [tableAssesment7, setTableAssesment7] = React.useState(0)
-    const [tableAssesment8, setTableAssesment8] = React.useState(0)
 
-    const sumOfItems2_7 = tableAssesment2 + tableAssesment3 + tableAssesment4 + tableAssesment5+ tableAssesment6 +tableAssesment7
+    const [stajDegerlendirmeFormu, setStajDegerlendirmeFormu] = React.useState(0);
+    const [relatedToCS, setRelatedToCS] = React.useState("N");
+    const [supervisorSimilarBackground, setSupervisorSimilarBackground] = React.useState("N");
+    const [partBSatisfactory, setPartBSatisfactory] = React.useState("");
+    const [revisionDate, setRevisionDate] = React.useState("")
+    const [tableEvidence1, setTableEvidence1] = React.useState("");
+    const [tableEvidence2, setTableEvidence2] = React.useState("");
+    const [tableEvidence3, setTableEvidence3] = React.useState("");
+    const [tableEvidence4, setTableEvidence4] = React.useState("");
+    const [tableEvidence5, setTableEvidence5] = React.useState("");
+    const [tableEvidence6, setTableEvidence6] = React.useState("");
+    const [tableEvidence7, setTableEvidence7] = React.useState("");
+    const [tableEvidence8, setTableEvidence8] = React.useState("");
+    const [tableAssesment1, setTableAssesment1] = React.useState(0);
+    const [tableAssesment2, setTableAssesment2] = React.useState(0);
+    const [tableAssesment3, setTableAssesment3] = React.useState(0);
+    const [tableAssesment4, setTableAssesment4] = React.useState(0);
+    const [tableAssesment5, setTableAssesment5] = React.useState(0);
+    const [tableAssesment6, setTableAssesment6] = React.useState(0);
+    const [tableAssesment7, setTableAssesment7] = React.useState(0);
+    const [tableAssesment8, setTableAssesment8] = React.useState(0);
+    const [reportSatisfactory, setReportSatisfactory] = React.useState("");
+    const [signature, setSignature] = React.useState("");
+
+    const sumOfItems2_7 = tableAssesment2 + tableAssesment3 + tableAssesment4 + tableAssesment5+ tableAssesment6 +tableAssesment7;
+
+    function handleSubmit(){
+        const body= {
+
+        }
+
+    }
 
     return (
         <div className={classes.grading_form_page_container}>
@@ -74,7 +97,10 @@ export default function GradingFormPage(){
                             <form>
                                 <label>
                                     (Staj değerlendirme formu) filled by employer:
-                                    <input type="number"  style={{width: "40px"}}/>
+                                    <input 
+                                        type="number"  
+                                        onChange={(ev)=>setStajDegerlendirmeFormu(ev.target.valueAsNumber)}
+                                    />
                                 </label>
                                 <p className={classes.explaining_information}>
                                     To be satisfactory, average of the grades on the "Staj değerlendirme
@@ -82,16 +108,20 @@ export default function GradingFormPage(){
                                 </p>
                                 <label><br/>
                                     Is the work done related to computer engineering? [Y/N]:
-                                    <select>
-                                        <option value="Y">Y</option>
+                                    <select
+                                        onChange={(choice)=>setRelatedToCS(choice.target.value)}    
+                                    >
                                         <option value="N">N</option>
+                                        <option value="Y">Y</option>
                                     </select>
                                 </label>
                                 <label><br/>
                                     Is the supervisor a computer engineer or has a similar engineering backgroud? [Y/N]:
-                                    <select>
-                                        <option value="Y">Y</option>
+                                    <select
+                                        onChange={(choice)=>setSupervisorSimilarBackground(choice.target.value)} 
+                                    >
                                         <option value="N">N</option>
+                                        <option value="Y">Y</option>
                                     </select>
                                 </label>
                             </form>
@@ -109,18 +139,32 @@ export default function GradingFormPage(){
                             <form>
                                 <label>
                                     Satisfactory
-                                    <input type="checkbox"/>
+                                    <input 
+                                        type="radio"
+                                        value="satisfactory"
+                                        checked={partBSatisfactory === "satisfactory"}
+                                        onChange={(event)=>setPartBSatisfactory(event.target.value)}
+                                    />
                                 </label>
                                 <label>
                                     Revision required
-                                    <input type="checkbox"/>
+                                    <input 
+                                        type="radio"
+                                        value="revisionRequired"
+                                        checked={partBSatisfactory === "revisionRequired"}
+                                        onChange={(event)=>setPartBSatisfactory(event.target.value)}
+                                    />
                                 </label>
                                 <p>
                                     If revision is required, changes needed must be stated on the report. The report is returned to the student until satisfactory.
                                 </p>
                                 <label>
                                     Due date for resubmission: 
-                                    <input type="date" style={{width: 100}}/>
+                                    <input 
+                                        type="date" 
+                                        style={{width: 100}}
+                                        onChange={(event)=>setRevisionDate(event.target.value)}
+                                    />
                                 </label>
                                 <p className={classes.explaining_information}>
                                     Student is given two weeks for each revision.
@@ -146,12 +190,15 @@ export default function GradingFormPage(){
                                         in the summer training)
                                     </th>
                                     <td>
-                                        <input type="text" />
+                                        <input 
+                                            type="text"
+                                            onChange={(event)=>setTableEvidence1(event.target.value)} 
+                                        />
                                     </td>
                                     <td>
                                         <input 
                                             type="number" 
-                                            onChange={(ev)=>setTableAssesment1(ev.target.valueAsNumber)}
+                                            onChange={(event)=>setTableAssesment1(event.target.valueAsNumber)}
                                         />
                                     </td>
                                 </tr>
@@ -161,12 +208,15 @@ export default function GradingFormPage(){
                                         science, and mathematics.                                            
                                     </th>
                                     <td>
-                                        <input type="text" />
+                                        <input 
+                                            type="text"
+                                            onChange={(event)=>setTableEvidence2(event.target.value)} 
+                                        />
                                     </td>
                                     <td>
                                         <input 
                                             type="number" 
-                                            onChange={(ev)=>setTableAssesment2(ev.target.valueAsNumber)}
+                                            onChange={(event)=>setTableAssesment2(event.target.valueAsNumber)}
                                         />
                                     </td>
                                 </tr>
@@ -175,12 +225,15 @@ export default function GradingFormPage(){
                                         (3) Recognizes ethical and professional responsibilities in engineering situations.                                             
                                     </th>
                                     <td>
-                                        <input type="text" />
+                                        <input 
+                                            type="text"
+                                            onChange={(event)=>setTableEvidence3(event.target.value)} 
+                                        />
                                     </td>
                                     <td>
                                         <input 
                                             type="number" 
-                                            onChange={(ev)=>setTableAssesment3(ev.target.valueAsNumber)}
+                                            onChange={(event)=>setTableAssesment3(event.target.valueAsNumber)}
                                         />
                                     </td>
                                 </tr>
@@ -190,12 +243,15 @@ export default function GradingFormPage(){
                                         solutions in global, economic, environmental, and social contexts.                                            
                                     </th>
                                     <td>
-                                        <input type="text" />
+                                        <input 
+                                            type="text"
+                                            onChange={(event)=>setTableEvidence4(event.target.value)} 
+                                        />
                                     </td>
                                     <td>
                                         <input 
                                             type="number" 
-                                            onChange={(ev)=>setTableAssesment4(ev.target.valueAsNumber)}
+                                            onChange={(event)=>setTableAssesment4(event.target.valueAsNumber)}
                                         />
                                     </td>
                                 </tr>
@@ -205,12 +261,15 @@ export default function GradingFormPage(){
                                         or strategies.                                            
                                     </th>
                                     <td>
-                                        <input type="text" />
+                                        <input 
+                                            type="text"
+                                            onChange={(event)=>setTableEvidence5(event.target.value)} 
+                                        />
                                     </td>
                                     <td>
                                         <input 
                                             type="number" 
-                                            onChange={(ev)=>setTableAssesment5(ev.target.valueAsNumber)}
+                                            onChange={(event)=>setTableAssesment5(event.target.valueAsNumber)}
                                         />
                                     </td>
                                 </tr>
@@ -219,12 +278,15 @@ export default function GradingFormPage(){
                                         (6) Able to apply new knowledge as needed.                                            
                                     </th>
                                     <td>
-                                        <input type="text" />
+                                        <input 
+                                            type="text"
+                                            onChange={(event)=>setTableEvidence6(event.target.value)} 
+                                        />
                                     </td>
                                     <td>
                                         <input 
                                             type="number" 
-                                            onChange={(ev)=>setTableAssesment6(ev.target.valueAsNumber)}
+                                            onChange={(event)=>setTableAssesment6(event.target.valueAsNumber)}
                                         />
                                     </td>
                                 </tr>
@@ -233,12 +295,15 @@ export default function GradingFormPage(){
                                         (7) Has awareness about diversity, equity, and inclusion.                                            
                                     </th>
                                     <td>
-                                        <input type="text" />
+                                        <input 
+                                            type="text" 
+                                            onChange={(event)=>setTableEvidence7(event.target.value)}
+                                        />
                                     </td>
                                     <td>
                                         <input 
                                             type="number" 
-                                            onChange={(ev)=>setTableAssesment7(ev.target.valueAsNumber)}
+                                            onChange={(event)=>setTableAssesment7(event.target.valueAsNumber)}
                                         />
                                     </td>
                                 </tr>
@@ -258,12 +323,15 @@ export default function GradingFormPage(){
                                         itself to be evaluated).                                            
                                     </th>
                                     <td>
-                                        <input type="text" />
+                                        <input 
+                                            type="text"
+                                            onChange={(event)=>setTableEvidence8(event.target.value)} 
+                                        />
                                     </td>
                                     <td>
                                         <input 
                                             type="number" 
-                                            onChange={(ev)=>setTableAssesment8(ev.target.valueAsNumber)}
+                                            onChange={(event)=>setTableAssesment8(event.target.valueAsNumber)}
                                         />
                                     </td>
                                 </tr>
@@ -315,15 +383,32 @@ export default function GradingFormPage(){
                             <h3> Overall Evaluation</h3>
                             <label>
                                 Satisfactory
-                                <input type="checkbox"/>
+                                <input 
+                                    type="radio"
+                                    value="satisfactory"
+                                    checked={reportSatisfactory === "satisfactory"}
+                                    onChange={(event)=>setReportSatisfactory(event.target.value)}
+                                />
                             </label>
                             <label>
                                 Unsatisfactory
-                                <input type="checkbox"/>
+                                <input 
+                                    type="radio"
+                                    value="unsatisfactory"
+                                    checked={reportSatisfactory === "unsatisfactory"}
+                                    onChange={(event)=>setReportSatisfactory(event.target.value)}
+                                />
                             </label>
                         </div>
-                        <button className={classes.submit_button}>
+                        <button 
+                            className={classes.submit_button}
+                        >
                             Submit
+                        </button>
+                        <button
+
+                        >
+                            Download Grading Form
                         </button>
                     </div>
             </SplitPane>          

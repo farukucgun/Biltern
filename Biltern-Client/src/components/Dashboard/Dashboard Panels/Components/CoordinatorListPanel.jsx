@@ -1,6 +1,7 @@
 import React from "react";
 import classes from '../styles/CoordinatorListPanel.module.css'
 import CoordinatorData from '../Data/CoordinatorListPanel.json'
+import compare from '../../../../utils/sorting'
 
 /**
  * @author Enes Bektaş
@@ -9,33 +10,20 @@ import CoordinatorData from '../Data/CoordinatorListPanel.json'
 
 export default function CoordinatorListPanel(){
 
+    const coordinatorsExist = CoordinatorData !== undefined;
+
     let [coordinatorData, setTaData] = React.useState(CoordinatorData)
 
     function handleSortClick(sortingValue){
-        console.log("clicked")
-
+        const compareFunc = compare(sortingValue);
         setTaData(prevTaData =>{
-            const sortedTaData = prevTaData.sort(compare)
-            console.log("copy", sortedTaData)
-            return [...sortedTaData]
+            const sortedTaData = prevTaData.sort(compareFunc);
+            return [...sortedTaData];
         })
-        function compare(a, b){
-            if(sortingValue === "name"){
-                return a.name > b.name? 1: -1
-            }
-            else if(sortingValue === "department"){
-                return a.department > b.department? 1: -1
-            }
-            else if(sortingValue === "course"){
-                return a.course > b.course? 1: -1
-            }
-            else if(sortingValue === "numberOfStudents"){
-                return a.numberOfStudents > b.numberOfStudents? 1: -1
-            }
-        }
+
     }
 
-    const coordinatorInfo = coordinatorData.map(element => {
+    const coordinatorInfo = coordinatorData.slice(0,4).map(element => {
         return(
             <tr key={element.name}>
                 <td className={classes.coordinator_table_element} >{element.name}</td>
@@ -49,6 +37,8 @@ export default function CoordinatorListPanel(){
     return(
         <div className={classes.coordinator_list_panel_container}>
             <h1> Coordinator List</h1>
+            {coordinatorsExist
+            ?
             <table >
                 <tr>
                     <th className={classes.coordinator_table_element} onClick={() => handleSortClick("name")}>Name</th>
@@ -58,6 +48,12 @@ export default function CoordinatorListPanel(){
                 </tr>
                 {coordinatorInfo}
             </table>
+            :
+            <div>
+                There are no coordinators at the moment.
+            </div>
+            }
+
         </div>
 
     )
