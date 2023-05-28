@@ -1,6 +1,5 @@
 package Caffe.BilternServer.users;
 
-import Caffe.BilternServer.report.Report;
 import lombok.Data;
 
 import java.io.File;
@@ -11,7 +10,7 @@ public class GraderDTO {
 
     private Long reportCount;
     private File signature;
-    private List<Report> reports;
+    private List<ReportDTO> reports;
     private Department department;
 
 }

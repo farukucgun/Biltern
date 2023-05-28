@@ -17,6 +17,8 @@ public class TeachingAssistant extends BilternUser {
     @Column
     private Long reportCount;
 
+    private Department department;
+
     @OneToMany
     @JsonIgnore
     private List<Report> reports;

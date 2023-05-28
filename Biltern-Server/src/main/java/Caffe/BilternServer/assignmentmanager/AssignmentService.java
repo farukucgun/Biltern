@@ -76,7 +76,7 @@ public class AssignmentService {
         Grader grader = graderRepository.getById(graderId);
 
         report.setGrader(grader);
-        grader.getReport().add(report);
+        grader.getReports().add(report);
 
         reportRepository.save(report);
         graderRepository.save(grader);

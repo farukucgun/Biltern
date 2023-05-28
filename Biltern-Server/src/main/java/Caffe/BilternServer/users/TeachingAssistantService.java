@@ -1,9 +1,11 @@
 package Caffe.BilternServer.users;
 
+import Caffe.BilternServer.report.Report;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,8 +42,41 @@ public class TeachingAssistantService {
 
         TeachingAssistantDTO teachingAssistantDTO = new TeachingAssistantDTO();
         teachingAssistantDTO.setReportCount(teachingAssistant.getReportCount());
-        teachingAssistantDTO.setReports(teachingAssistant.getReports());
+        teachingAssistantDTO.setDepartment(teachingAssistant.getDepartment());
+        teachingAssistantDTO.setReports(getTAReports(id));
 
         return teachingAssistantDTO;
+    }
+
+
+    public List<ReportDTO> getTAReports(Long bilkentId) {
+
+        TeachingAssistant teachingAssistant = teachingAssistantRepository.findById(bilkentId).orElseThrow(
+                () -> new EntityNotFoundException()
+        );
+
+        List<ReportDTO> listOfReports = new ArrayList<>();
+
+        for(Report report: teachingAssistant.getReports()){
+            ReportDTO reportDTO = new ReportDTO();
+
+            reportDTO.setReportStats(report.getReportStats());
+            reportDTO.setReportId(reportDTO.getReportId());
+            reportDTO.setDueDate(report.getDueDate());
+            reportDTO.setCourseCode(report.getCourse().getCourseCode());
+
+            reportDTO.setGraderName(report.getGrader().getUserName());
+            reportDTO.setGraderId(report.getGrader().getBilkentId());
+
+            reportDTO.setTaId(teachingAssistant.getBilkentId());
+            reportDTO.setTaName(teachingAssistant.getUserName());
+
+            reportDTO.setStudentId(report.getStudent().getBilkentId());
+            reportDTO.setStudentName(report.getStudent().getUserName());
+
+            listOfReports.add(reportDTO);
+        }
+
+        return listOfReports;
     }
 }
