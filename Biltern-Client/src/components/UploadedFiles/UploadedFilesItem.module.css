@@ -1,6 +1,6 @@
 .uploaded_files_item_container{
-    width: 250px;
-    height: 180px;
+    width: 350px;
+    height: 230px;
     margin: 30px;
     overflow: hidden;
     position: relative;
@@ -10,9 +10,9 @@
 .file_information{
     background-color: gray;
     position: absolute;
-    top: 145px;
-    width: 250px;
-    height: 35px;
+    top: 180px;
+    width: 350px;
+    height: 50px;
     display: flex;
     box-sizing: border-box;
     padding: 5px;

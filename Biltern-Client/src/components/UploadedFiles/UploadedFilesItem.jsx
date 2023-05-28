@@ -13,25 +13,24 @@ pdfjs.GlobalWorkerOptions.workerSrc =
 `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 export default function UploadedFilexItem(props){
-    const { to, pdfFile, index } = props;
+    const { to, fileURL, fileName, index } = props;
     const navigate = useNavigate();
 
     function handleOnClick(){
-        navigate('/displayfilepage')
+        navigate(to, {state:{url: fileURL}});
     }
-
 
     return(
         <div className={classes.uploaded_files_item_container} onClick={handleOnClick}>
-            <Document file={pdf}>
-                <Page pageNumber={1} scale={0.45}></Page>
+            <Document file={fileURL}>
+                <Page pageNumber={1} scale={0.58}></Page>
             </Document>
             <div className={classes.file_information}> 
                 <div className={classes.image}>
                     <img src={fileSymbol} />
                 </div>
                 <div className={classes.file_name}>
-                    <p> {pdfFile} </p>
+                    <p> {fileName} </p>
                 </div>
 
             </div>
