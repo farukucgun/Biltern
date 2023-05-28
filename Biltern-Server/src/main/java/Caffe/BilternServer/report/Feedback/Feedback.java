@@ -26,7 +26,12 @@ public class Feedback {
     @JoinColumn(name = "reportId", referencedColumnName = "id")
     private Report report;
 
+    public Feedback(){
 
+    }
+    public Feedback(Report report){
+        this.report = report;
+    }
     public byte[] getPdfData() {
         return pdfData;
     }
