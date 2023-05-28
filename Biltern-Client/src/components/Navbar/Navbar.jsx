@@ -23,6 +23,7 @@ const items = [
   {to: "/roleassignment", name: "Role Assignment"},
   {to: "/gradingformpage", name: "Grading Form"},
   {to: "/registeruser", name: "Register User"},
+  {to: "/studentlist", name: "Student List"},
 ]
 
 const Navbar = () => {
@@ -30,7 +31,8 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-  const userRole = useSelector(state => state.auth.user?.role) || "Grader";
+  const userRole = useSelector(state => state.auth.user?.role);
+  const userName = useSelector(state => state.auth.user?.name);
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -46,7 +48,7 @@ const Navbar = () => {
       <div className={classes.userInfo}>
         <img src={isAuthenticated ? dummy_profile_pic : empty_profile_pic} alt="profilePicture" className={classes.profilePic}/>
         <div className={classes.userInfoRight}>
-          <h4 className={classes.userName}>{isAuthenticated && "Eray Tüzün"}</h4>
+          <h4 className={classes.userName}>{isAuthenticated && userName}</h4>
           <p>{isAuthenticated && userRole}</p>
         </div>
       </div>

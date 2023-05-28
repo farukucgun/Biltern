@@ -42,6 +42,12 @@ const RegisterUser = () => {
             console.log(err);
             dispatch(setTimedAlert({msg: "Role assignment failed", alertType: "error", timeout: 4000}));
         })
+        setId('');
+        setRole('');
+        setName('');
+        setEmail('');
+        setDepartment('');
+        setIsDean(false);
     }
 
     const idChangeHandler = (event) => { setId(event.target.value); }

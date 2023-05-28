@@ -31,12 +31,18 @@ const authSlice = createSlice({
                 token: localStorage.getItem("token") || "",
                 user : {
                     role: localStorage.getItem("role") || "",
+                    email: localStorage.getItem("email") || "",
+                    name: localStorage.getItem("name") || "",
+                    id: localStorage.getItem("id") || ""
                 }
             };
         },
         login: (state, action) => {
             localStorage.setItem("token", action.payload.jwt);
             localStorage.setItem("role", action.payload.role);
+            localStorage.setItem("email", action.payload.email);
+            localStorage.setItem("id", action.payload.bilkentId);
+            localStorage.setItem("name", action.payload.fullName);
             return state = {
                 ...state,
                 isAuthenticated: true,
@@ -44,12 +50,18 @@ const authSlice = createSlice({
                 token: action.payload.jwt,
                 user : {
                     role: action.payload.role,
+                    email: action.payload.email,
+                    name: action.payload.fullName,
+                    id: action.payload.bilkentId
                 }
             };
         },
         logout: (state) => {
             localStorage.removeItem("token");
             localStorage.removeItem("role");
+            localStorage.removeItem("email");
+            localStorage.removeItem("id");
+            localStorage.removeItem("name");
             return state = {
                 ...state,
                 isAuthenticated: false,
