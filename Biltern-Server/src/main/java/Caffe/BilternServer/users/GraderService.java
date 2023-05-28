@@ -87,8 +87,9 @@ public class GraderService {
         if (!graderRepository.existsById(id)) {
             throw new IllegalStateException("A grader with that ID does not exist.");
         }
-        Grader grader = graderRepository.getById(id);
+        Grader grader = graderRepository.findById(id).get();
         grader.setSignature(signature);
+        graderRepository.save(grader);
     }
 
     public ByteArrayResource downloadSignature(Long id) {

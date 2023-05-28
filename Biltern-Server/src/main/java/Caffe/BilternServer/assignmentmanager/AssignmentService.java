@@ -91,7 +91,6 @@ public class AssignmentService {
             graderReports = new ArrayList<Report>();
         }
         graderReports.add(report);
-        grader.getReports().add(report);
 
         reportRepository.save(report);
         graderRepository.save(grader);

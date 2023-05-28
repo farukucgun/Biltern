@@ -56,11 +56,11 @@ public class Report {
     @JoinColumn(name = "courseId")
     private Course course;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "report", cascade = CascadeType.ALL)
     @JoinColumn(name = "feedbackId")
     private Feedback feedback;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "report", cascade = CascadeType.ALL)
     @JoinColumn(name = "gradingFormId")
     private GradingForm gradingForm;
 
@@ -69,6 +69,8 @@ public class Report {
     private Report previousIteration;
 
     public Report(){
+        feedback = new Feedback(this);
+        gradingForm = new GradingForm(this);
         reportStats = ReportStats.NOT_SUBMITTED;
         companyStats = CompanyStats.WAITING;
     }
