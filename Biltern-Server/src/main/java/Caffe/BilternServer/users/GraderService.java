@@ -4,6 +4,7 @@ package Caffe.BilternServer.users;
 import Caffe.BilternServer.report.Report;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,6 +31,23 @@ public class GraderService {
         graderRepository.save(grader);
     }
 
+    public void uploadSignature(Long id, byte[] signature) {
+        if (!graderRepository.existsById(id)) {
+            throw new IllegalStateException("A grader with that ID does not exist.");
+        }
+        Grader grader = graderRepository.getById(id);
+        grader.setSignature(signature);
+    }
+
+    public ByteArrayResource downloadSignature(Long id) {
+        if (!graderRepository.existsById(id)) {
+            throw new IllegalStateException("A grader with that ID does not exist.");
+        }
+        Grader grader = graderRepository.getById(id);
+        byte[] signature = grader.getSignature();
+        ByteArrayResource byteArrayResource = new ByteArrayResource(signature);
+        return byteArrayResource;
+    }
     public void deleteGrader(Long id) {
         if (!graderRepository.existsById(id)) {
             throw new IllegalStateException("A grader with that ID does not exist.");
