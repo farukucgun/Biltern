@@ -1,8 +1,12 @@
 package Caffe.BilternServer.users;
 
+import Caffe.BilternServer.course.Course;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,4 +36,28 @@ public class SecretaryService {
         }
         secretaryRepository.deleteById(id);
     }
+
+
+    public SecretaryDTO getSecretaryDetails(Long id){
+        Secretary secretary = secretaryRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException()
+        );
+
+
+        SecretaryDTO secretaryDTO = new SecretaryDTO();
+        Map<String, Long> courseMap = new HashMap<>();
+
+        for(Course course: secretary.getCourses()){
+            courseMap.put(course.getCourseCode(), course.getId());
+        }
+
+        secretaryDTO.setDepartment(secretary.getDepartment());
+        secretaryDTO.setCourseMap(courseMap);
+
+
+        return secretaryDTO;
+    }
+
+
+
 }
