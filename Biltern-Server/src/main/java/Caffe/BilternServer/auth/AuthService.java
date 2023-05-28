@@ -45,6 +45,9 @@ public class AuthService {
 
         authenticationDTO.setRole(bilternUser.getBilternUserRole());
         authenticationDTO.setJwt(jwtService.generateRefreshToken(bilternUser, new HashMap<>()));
+        authenticationDTO.setEmail(bilternUser.getBilkentMail());
+        authenticationDTO.setFullName(bilternUser.getUsername());
+        authenticationDTO.setBilkentId(bilternUser.getBilkentId());
 
         return authenticationDTO;
     }
