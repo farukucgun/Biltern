@@ -14,6 +14,8 @@ public class AuthenticationDTO {
 
     private String jwt;
     private BilternUserRole role;
+    private String fullName;
+    private String email;
 
-
+    private Long bilkentId;
 }
