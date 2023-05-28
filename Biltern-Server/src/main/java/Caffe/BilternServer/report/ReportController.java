@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "${client.domain}")
 @RequestMapping("report")
 public class ReportController {
     private final ReportService reportService;

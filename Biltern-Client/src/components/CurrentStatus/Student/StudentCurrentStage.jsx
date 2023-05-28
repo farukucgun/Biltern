@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import FinalStage from '../Stages/FinalStage';
-import IterationStage from '../Stages/IterationStage';
-import TAEvaluationStage from '../Stages/TAEvaluationStage';
-import StudentReportStage from '../Stages/StudentReportStage'; 
+import FinalStage from './FinalStage';
+import IterationStage from './IterationStage';
+import TAEvaluationStage from './TAEvaluationStage';
+import StudentReportStage from './StudentReportStage'; 
 
 import classes from '../CurrentStatus.module.css';
 
@@ -18,8 +18,6 @@ const StudentCurrentStatus = (props) => {
 
     const {id, currentStatus} = props;
     const dispatch = useDispatch();
-
-
 
     return (
         <div className={classes.currentStatusPage}>
