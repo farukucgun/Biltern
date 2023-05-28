@@ -28,7 +28,7 @@ public class GraderController {
     @DeleteMapping(path = "{id}")
     public void deleteGrader(@PathVariable("id") Long id) { graderService.deleteGrader(id); }
 
-    @GetMapping
+    @GetMapping("details")
     public ResponseEntity<GraderDTO> getGraderDetails() {
         BilternUser grader = (BilternUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return ResponseEntity.ok(graderService.getGraderDetails(grader.getBilkentId()));

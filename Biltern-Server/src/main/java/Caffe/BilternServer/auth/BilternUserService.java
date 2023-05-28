@@ -1,9 +1,7 @@
 package Caffe.BilternServer.auth;
 
 import Caffe.BilternServer.roleadministration.UserRegisterationRequest;
-import Caffe.BilternServer.users.Coordinator;
-import Caffe.BilternServer.users.Secretary;
-import Caffe.BilternServer.users.Student;
+import Caffe.BilternServer.users.*;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -66,7 +64,7 @@ public class BilternUserService implements UserDetailsService {
         bilternUserRepo.save(bilternUser);
     }
 
-    public boolean registerUser(UserRegisterationRequest userRegisterationRequest) throws InstanceAlreadyExistsException {
+    public boolean  registerUser(UserRegisterationRequest userRegisterationRequest) throws InstanceAlreadyExistsException {
 
         if(bilternUserRepo.findById(userRegisterationRequest.getBilkentId()).orElse(null) != null
                 || bilternUserRepo.findBilternUserByBilkentMail(userRegisterationRequest.getEmail()) != null){
@@ -89,8 +87,16 @@ public class BilternUserService implements UserDetailsService {
             ((Student)userToBeRegistered).setDepartment(userRegisterationRequest.getDepartment());
             ((Student) userToBeRegistered).setReports(new ArrayList<>());
         }
+        else if(userRegisterationRequest.getBilternUserRole() == BilternUserRole.FACULTY_MEMBER){
+            userToBeRegistered = new Grader();
+            ((Grader)userToBeRegistered).setDepartment(userRegisterationRequest.getDepartment());
+        }
+        else if(userRegisterationRequest.getBilternUserRole() == BilternUserRole.TEACHING_ASSISTANT){
+            userToBeRegistered = new TeachingAssistant();
+            ((TeachingAssistant)userToBeRegistered).setDepartment(userRegisterationRequest.getDepartment());
+        }
         else {
-            userToBeRegistered = new BilternUser();
+            throw new IllegalArgumentException("BCC Admin can't be assigned!");
         }
 
         userToBeRegistered.setBilternUserRole(userRegisterationRequest.getBilternUserRole());

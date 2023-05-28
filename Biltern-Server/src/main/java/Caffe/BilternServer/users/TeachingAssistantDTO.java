@@ -9,6 +9,8 @@ import java.util.List;
 public class TeachingAssistantDTO {
 
     private Long reportCount;
-    private List<Report> reports;
+    private List<ReportDTO> reports;
+
+    private Department department;
 
 }
