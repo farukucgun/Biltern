@@ -34,8 +34,13 @@ public class StudentController {
     public ResponseEntity<StudentDTO> getStudentDetails(){
 
         BilternUser student = (BilternUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         return ResponseEntity.ok(studentService.getStudentDetails(student.getBilkentId()));
+
+    }
+
+    @GetMapping("/details/{studentId}")
+    public ResponseEntity<StudentDTO> getStudentDetailsById(@PathVariable Long studentId){
+        return ResponseEntity.ok(studentService.getStudentDetails(studentId));
     }
 
 }
