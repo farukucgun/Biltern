@@ -147,7 +147,7 @@ public class ReportController {
         reportService.updateStatusGradingForm(reportId, formName);
         gradingFormService.setGradingFormGrades(reportId,grades);
     }
-    @GetMapping("/GradingForm/{reportId}")
+    @GetMapping("/gradingForm/{reportId}")
     public ResponseEntity<ByteArrayResource> downloadGradingForm(@PathVariable Long reportId){
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
@@ -158,6 +158,10 @@ public class ReportController {
                 .body(gradingFormService.downloadGradingForm(reportId));
     }
 
+    @GetMapping("/grades/{reportId}")
+    public ResponseEntity<Map> getGrading(@PathVariable Long reportId){
+        return ResponseEntity.ok(gradingFormService.getGradingFormGrades(reportId));
+    }
     @GetMapping("/grader/{reportId}")
     public ResponseEntity<Grader> getReportGrader(@PathVariable Long reportId){
         return ResponseEntity.ok(reportService.getReportGrader(reportId));
