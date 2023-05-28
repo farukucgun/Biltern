@@ -18,7 +18,7 @@ public class TeachingAssistantController {
         this.teachingAssistantService = teachingAssistantService;
     }
 
-    @GetMapping
+    @GetMapping("/details")
     public List<TeachingAssistant> getTeachingAssistants() { return teachingAssistantService.getTeachingAssistants(); }
 
     @PostMapping

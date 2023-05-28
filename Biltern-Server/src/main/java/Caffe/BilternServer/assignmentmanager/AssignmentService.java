@@ -20,7 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.management.InstanceAlreadyExistsException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -55,7 +57,7 @@ public class AssignmentService {
     public void addStudentToCourse(Long studentId, String courseCode){
 
         Report report = new Report();
-        Student student = studentRepository.findById(studentId).get();
+        Student student = (Student) studentRepository.findById(studentId).get();
         Course course = courseRepository.findByCourseCode(courseCode).orElse(new Course());
         course.setCourseCode(courseCode);
 
@@ -63,8 +65,17 @@ public class AssignmentService {
         report.setCourse(course);
         report = reportRepository.save(report);
 
-        student.getReports().add(report);
-        course.getReports().add(report);
+        List<Report> studentReports = student.getReports();
+        List<Report> courseReports = course.getReports();
+        if(studentReports == null){
+            studentReports = new ArrayList<Report>();
+        }
+        if(courseReports == null){
+            courseReports = new ArrayList<Report>();
+        }
+
+        studentReports.add(report);
+        courseReports.add(report);
 
         courseRepository.save(course);
         studentRepository.save(student);
@@ -73,10 +84,14 @@ public class AssignmentService {
     public void addReportToGrader(Long studentId, String courseName, Long graderId){
         Report report = reportRepository.
                 findReportByStudentBilkentIdAndCourseCourseCode(studentId, courseName).get();
-        Grader grader = graderRepository.getById(graderId);
+        Grader grader = graderRepository.findById(graderId).get();
 
         report.setGrader(grader);
-        grader.getReports().add(report);
+        List<Report> graderReports = grader.getReports();
+        if(graderReports == null){
+            graderReports = new ArrayList<Report>();
+        }
+        graderReports.add(report);
 
         reportRepository.save(report);
         graderRepository.save(grader);
@@ -86,10 +101,14 @@ public class AssignmentService {
     public void addReportToTeachingAssistant(Long studentId, String courseName, Long TAId) {
         Report report = reportRepository.
                 findReportByStudentBilkentIdAndCourseCourseCode(studentId, courseName).get();
-        TeachingAssistant TA = TARepository.getById(TAId);
+        TeachingAssistant TA = TARepository.findById(TAId).get();
 
         report.setTA(TA);
-        TA.getReports().add(report);
+        List<Report> TAReports = TA.getReports();
+        if(TAReports == null){
+            TAReports = new ArrayList<Report>();
+        }
+        TAReports.add(report);
 
         reportRepository.save(report);
         TARepository.save(TA);
@@ -194,6 +213,7 @@ public class AssignmentService {
 
             }
             if (validCell){
+                userRegisterationRequest.setDean(false);
                 bilternUserService.registerUser(userRegisterationRequest);
             }
             if(listDone){
@@ -219,14 +239,14 @@ public class AssignmentService {
 
             Row row = sheet.getRow(rowIndex);
             listDone = false;
-            for (int cellIndex = 0; cellIndex < lastCellNum; cellIndex++) {
+            for (int cellIndex = 0; cellIndex < lastCellNum && row != null; cellIndex++) {
                 Cell cell = row.getCell(cellIndex);
 
                 //skip empty cells
                 if (cell == null || cell.getCellType() == CellType.BLANK) {
                     //end of the list stop iterating
                     if((rowIndex + 1 <= lastRowNum) &&
-                            (sheet.getRow(rowIndex + 1).getCell(0).getCellType() == CellType.BLANK)){
+                            (sheet.getRow(rowIndex + 1).getCell(0) == null)){
                         listDone = true;
                         break;
                     }
@@ -260,6 +280,7 @@ public class AssignmentService {
                     if(!courseCode.equals("NA")){
                         addStudentToCourse(studentId, courseCode);
                         if(graderId != Long.valueOf(-1)){
+                            System.out.println("-----------what");
                             addReportToGrader(studentId, courseCode, graderId);
                         }
                         if(TAId != Long.valueOf(-1)){

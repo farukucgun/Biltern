@@ -16,6 +16,7 @@ public class Feedback {
     private Long id;
 
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition = "LONGBLOB")
     private byte[] pdfData;
 
