@@ -34,4 +34,10 @@ public class CourseService {
         return courseRepository.findByCourseCode(courseCode).orElseThrow(
                 () -> new EntityNotFoundException());
     }
+
+    public void deleteCourse(Long id){
+        Course course = courseRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException());
+        courseRepository.delete(course);
+    }
 }
