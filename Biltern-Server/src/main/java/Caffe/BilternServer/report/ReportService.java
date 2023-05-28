@@ -165,7 +165,7 @@ public class ReportService {
         return reportRepository.findReportById(reportId).getGrader();
     }
     public TeachingAssistant getReportTA(Long reportId){
-        return reportRepository.findReportById(reportId).getTA();
+        return reportRepository.findReportById(reportId).getTeachingAssistant();
     }
 
     public LocalDate getDueDate(Long reportId){
@@ -187,7 +187,7 @@ public class ReportService {
         Map<ReportStats, Integer> taStats= new HashMap<>();
 
         for(ReportStats reportStats: ReportStats.values()){
-            taStats.put(reportStats, reportRepository.countAllByTAAndReportStatsAndIsIteration(teachingAssistant, reportStats, false));
+            taStats.put(reportStats, reportRepository.countAllByTeachingAssistantAndReportStatsAndIsIteration(teachingAssistant, reportStats, false));
         }
 
         return taStats;
