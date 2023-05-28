@@ -20,6 +20,7 @@ export const COORDINATOR_SELECT_PATH = (coordinatorId) => COMMON_PATH + 'coordin
 // grader controller
 export const GRADER_PATH = () => COMMON_PATH + 'grader';
 export const GRADER_SELECT_PATH = (graderId) => COMMON_PATH + 'grader/' + graderId;
+export const GRADER_DETAILS_PATH = () => COMMON_PATH + 'grader/details';
 
 // secretary controller
 export const SECRETARY_PATH = () => COMMON_PATH + 'secretary';
@@ -28,10 +29,12 @@ export const SECRETARY_SELECT_PATH = (secretaryId) => COMMON_PATH + 'secretary/'
 // student controller
 export const STUDENT_PATH = () => COMMON_PATH + 'student';
 export const STUDENT_SELECT_PATH = (studentId) => COMMON_PATH + 'student/' + studentId;
+export const STUDENT_DETAILS_PATH = () => COMMON_PATH + 'student/details';
 
 // teaching assistant controller
 export const TEACHING_ASSISTANT_PATH = () => COMMON_PATH + 'teachingassistant';
 export const TEACHING_ASSISTANT_SELECT_PATH = (teachingAssistantId) => COMMON_PATH + 'teachingassistant/' + teachingAssistantId;
+export const TEACHING_ASSISTANT_DETAILS_PATH = () => COMMON_PATH + 'teachingassistant/details';
 
 // role admisinstration controller
 export const ASSIGN_ROLE_PATH = (role) => COMMON_PATH + 'user/administration/assignRoleToUsers/' + role;
@@ -44,6 +47,9 @@ export const TA_STATISTICS_PATH = (taId) => COMMON_PATH + 'statistics/teachingAs
 
 // course controller
 export const COURSE_PATH = () => COMMON_PATH + 'course';
+
+// assignment controller
+export const ASSIGNMENT_PATH = () => COMMON_PATH + 'init';
 
 
 

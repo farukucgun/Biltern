@@ -30,8 +30,16 @@ export default function GradingFormPage(){
         setScale((event.pageX-220)/630)
     }
 
+    const [tableAssesment1, setTableAssesment1] = React.useState(0)
+    const [tableAssesment2, setTableAssesment2] = React.useState(0)
+    const [tableAssesment3, setTableAssesment3] = React.useState(0)
+    const [tableAssesment4, setTableAssesment4] = React.useState(0)
+    const [tableAssesment5, setTableAssesment5] = React.useState(0)
+    const [tableAssesment6, setTableAssesment6] = React.useState(0)
+    const [tableAssesment7, setTableAssesment7] = React.useState(0)
+    const [tableAssesment8, setTableAssesment8] = React.useState(0)
 
-
+    const sumOfItems2_7 = tableAssesment2 + tableAssesment3 + tableAssesment4 + tableAssesment5+ tableAssesment6 +tableAssesment7
 
     return (
         <div className={classes.grading_form_page_container}>
@@ -57,9 +65,9 @@ export default function GradingFormPage(){
                 </div>
                 <div>
                         <div className={classes.part_a}>
-                            <h5>
+                            <h3>
                                 Part-A: Work Place
-                            </h5>
+                            </h3>
                             <p>
                                 Average of the grades on the Summer Training Evaluation Form
                             </p>
@@ -68,6 +76,10 @@ export default function GradingFormPage(){
                                     (Staj değerlendirme formu) filled by employer:
                                     <input type="number"  style={{width: "40px"}}/>
                                 </label>
+                                <p className={classes.explaining_information}>
+                                    To be satisfactory, average of the grades on the "Staj değerlendirme
+                                    Formu" must be at least 7.
+                                </p>
                                 <label><br/>
                                     Is the work done related to computer engineering? [Y/N]:
                                     <select>
@@ -83,12 +95,17 @@ export default function GradingFormPage(){
                                     </select>
                                 </label>
                             </form>
-                            
                         </div>
+                        <p className={classes.explaining_information}>
+                            ...... If all conditions in Part-A are satisfied, continue to Part-B,
+                            else mark Unsatisfactory in Overall Evaluation ......
+                        </p>
+
+
                         <div className={classes.part_a}>
-                            <h5>
+                            <h3>
                                 Part-B: Report
-                            </h5>
+                            </h3>
                             <form>
                                 <label>
                                     Satisfactory
@@ -98,33 +115,216 @@ export default function GradingFormPage(){
                                     Revision required
                                     <input type="checkbox"/>
                                 </label>
+                                <p>
+                                    If revision is required, changes needed must be stated on the report. The report is returned to the student until satisfactory.
+                                </p>
+                                <label>
+                                    Due date for resubmission: 
+                                    <input type="date" style={{width: 100}}/>
+                                </label>
+                                <p className={classes.explaining_information}>
+                                    Student is given two weeks for each revision.
+                                </p>
                             </form>
-                            <p>
-                                If revision is required, changes needed must be stated on the report. The report is returned to the student until satisfactory.
-                            </p>
+                        </div>
+                        <p className={classes.explaining_information}>
+                            ...... If the report in Part-B is Satisfactory, continue to Part-C,
+                            else return it to the student for Revision ......
+                        </p>
+
+                        <div className={classes.part_a}>
+                            <table>
+                                <tr>
+                                    <th> Evaluation of the Work </th>
+                                    <th> On what page(s) of the report is the evidence of this found? </th>
+                                    <th> Assesment/quality score (from 0=missing to 10=full) </th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        (1) Able to perform work at the level expected from a summer training in the
+                                        area of computer engineering. (this is the evaluation of all the work done
+                                        in the summer training)
+                                    </th>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input 
+                                            type="number" 
+                                            onChange={(ev)=>setTableAssesment1(ev.target.valueAsNumber)}
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        (2) Solves complex engineering problems by applying principles of engineering,
+                                        science, and mathematics.                                            
+                                    </th>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input 
+                                            type="number" 
+                                            onChange={(ev)=>setTableAssesment2(ev.target.valueAsNumber)}
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        (3) Recognizes ethical and professional responsibilities in engineering situations.                                             
+                                    </th>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input 
+                                            type="number" 
+                                            onChange={(ev)=>setTableAssesment3(ev.target.valueAsNumber)}
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        (4) Able to make informed judgements that consider the impact of engineering
+                                        solutions in global, economic, environmental, and social contexts.                                            
+                                    </th>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input 
+                                            type="number" 
+                                            onChange={(ev)=>setTableAssesment4(ev.target.valueAsNumber)}
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        (5) Able to acquire new knowledge using appropriate learning strategy
+                                        or strategies.                                            
+                                    </th>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input 
+                                            type="number" 
+                                            onChange={(ev)=>setTableAssesment5(ev.target.valueAsNumber)}
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        (6) Able to apply new knowledge as needed.                                            
+                                    </th>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input 
+                                            type="number" 
+                                            onChange={(ev)=>setTableAssesment6(ev.target.valueAsNumber)}
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        (7) Has awareness about diversity, equity, and inclusion.                                            
+                                    </th>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input 
+                                            type="number" 
+                                            onChange={(ev)=>setTableAssesment7(ev.target.valueAsNumber)}
+                                        />
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                         <div className={classes.part_a}>
-                            <h5>
+                            <table>
+                                <tr>
+                                    <th> Evaluation of Report </th>
+                                    <th> On what page(s) of the report is the counter evidence of this found? </th>
+                                    <th> Assesment/quality score (from 0=missing to 10=full) </th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Able to prepare reports with high standards in terms of content, 
+                                        organization, style and language (the Summer Training report
+                                        itself to be evaluated).                                            
+                                    </th>
+                                    <td>
+                                        <input type="text" />
+                                    </td>
+                                    <td>
+                                        <input 
+                                            type="number" 
+                                            onChange={(ev)=>setTableAssesment8(ev.target.valueAsNumber)}
+                                        />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+
+                        <div className={classes.part_a}>
+                            <h3>
                                 Part-C: Final Version of the Report
-                            </h5>
+                            </h3>
                             <h5>
                                 Based on the final version of the report, as evaluated on the back side of this form:
                             </h5>
                             <form>
                                 <label>
                                     Assessment/quality score of Evaluation of the Work - item(1):
-                                    <input />
+                                    <input 
+                                        type="number"
+                                        value={tableAssesment1}
+                                    />
                                 </label>
+                                <p className={classes.explaining_information}>
+                                    To be satisfactory, the score must be at least 7/10.
+                                </p>
                                 <label><br/>
                                     Sum of the Assessment/quality scores of Evaluation of Work - items (2)-(7):
-                                    <input/>
+                                    <input
+                                        type="number"
+                                        value={sumOfItems2_7}    
+                                    />
                                 </label>
+                                <p className={classes.explaining_information}>
+                                    To be satisfactory, the score must be at least 30/60.
+                                </p>
                                 <label><br/>
                                     The Assessment/quality score of Evaluation of Report:
-                                    <input/>
+                                    <input
+                                        type="number"
+                                        value={tableAssesment8}
+                                    />
                                 </label>
+                                <p className={classes.explaining_information}>
+                                    To be satisfactory, the score must be at least 7/10.
+                                </p>
                             </form>
                         </div>
+                        <div className={classes.part_a}>
+                            <h3> Overall Evaluation</h3>
+                            <label>
+                                Satisfactory
+                                <input type="checkbox"/>
+                            </label>
+                            <label>
+                                Unsatisfactory
+                                <input type="checkbox"/>
+                            </label>
+                        </div>
+                        <button className={classes.submit_button}>
+                            Submit
+                        </button>
                     </div>
             </SplitPane>          
 
