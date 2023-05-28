@@ -1,48 +1,51 @@
 import React, {useEffect, useState} from 'react';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import FinalStage from './Stages/FinalStage';
-import IterationStage from './Stages/IterationStage';
-import TAEvaluationStage from './Stages/TAEvaluationStage';
-import StudentReportStage from './Stages/StudentReportStage'; 
+import { useDispatch, useSelector } from 'react-redux';
+import { setTimedAlert } from '../../features/alertSlice';
+import StudentCurrentStage from './Student/StudentCurrentStage';
+import TACurrentStage from './TA/TACurrentStage';
+import InstructorCurrentStage from "./Instructor/InstructorCurrentStage";
+import { getReportStatus, getCompanyStatus } from '../../apiHelper/backendHelper';
 
 import classes from './CurrentStatus.module.css';
 /**
  * @author Faruk Uçgun
  * @date 07.05.2023
+ * @todo: witdrawn case
  */
 
 const CurrentStatus = () => {
 
-    const [currentStatus, setCurrentStatus] = useState("IterationStage");
-    const dispatch = useDispatch();
-
     const dummyId = 1;
+    const role = useSelector(state => state.auth.user.role);
+    const dispatch = useDispatch();
+    const [reportStatus, setReportStatus] = useState([]);
+    const [companyStatus, setCompanyStatus] = useState([]);
+
+    const allStats = [
+        [" ", "Waiting for submission", "Submitted"],
+        ["Submitted", "Waiting for approval", "Approved"],
+        ["Approved", "Waiting for grading", "Graded"],
+        ["Waiting for grading", "Graded", " "],
+        ["Revision requested", "Waiting for submission", "Submitted"],
+        [" ", "Withdrawn", " "],
+    ];
 
     useEffect(() => {
-        const fetchCurrentStatus = async () => {
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": localStorage.getItem("token") || ""
-            }
-        };
+        getReportStatus(dummyId)
+        .then(res => {
+            setReportStatus(res.data);
+        })
+        .catch(err => {
+            dispatch(setTimedAlert("Error while fetching report status", "error"));
+        })
 
-        await axios.get("http://localhost:8080/status", config)
-            .then(res => {
-                setCurrentStatus(res.data);
-            })
-            .catch(err => {
-                // dispatch(setTimedAlert({msg: "Error while fetching notifications", alertType: "error", timeout: 4000}));
-                console.log(err);
-            });
-        };
-
-        // fetchCurrentStatus()
-        //     .catch(err => {
-        //         console.log(err);
-        //     }
-        // );
+        getCompanyStatus(dummyId)
+        .then(res => {
+            setCompanyStatus(res.data);
+        })
+        .catch(err => {
+            dispatch(setTimedAlert("Error while fetching company status", "error"));
+        })
     }, []);
 
     return (
@@ -58,10 +61,21 @@ const CurrentStatus = () => {
                     <p>Bilkent ID: 22001462</p>
                 </div>
             </div>
-            {currentStatus == "studentReportStage" && <StudentReportStage id={dummyId}/>}
-            {currentStatus == "TAEvaluationStage" && <TAEvaluationStage id={dummyId}/>}
-            {currentStatus == "IterationStage" && <IterationStage id={dummyId}/>}
-            {currentStatus == "FinalStage" && <FinalStage id={dummyId}/>}
+                <h3>Company Evaluation Status</h3>
+            <div className={classes.status}>
+                {/* make them buttons */}
+                <h3 className={classes.singleState}>{companyStatus}</h3>
+            </div>
+                <h3>Report Status</h3>
+            <div className={classes.status}>
+                {/* make them buttons */}
+                <h3 className={classes.singleState}>{reportStatus[0]}</h3>
+                <h3 className={classes.activeState}>{reportStatus[1]}</h3>
+                <h3 className={classes.singleState}>{reportStatus[2]}</h3>
+            </div>
+            {role == "Student" && <StudentCurrentStage id={dummyId} currentStatus={reportStatus}/>}
+            {role == "TeachingAssistant" && <TACurrentStage id={dummyId} currentStatus={reportStatus}/>}
+            {role == "BCC_ADMIN" && <InstructorCurrentStage id={dummyId} currentStatus={reportStatus}/>}
         </div>
     );
 }

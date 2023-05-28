@@ -9,8 +9,8 @@ import readyReports from '../Data/ReadyToBeGradedPanel.json'
 
 export default function ReadyToBeGradedPanel(){
 
-    const readyToBeGraded = readyReports.map( report => {
-        return <div className={classes.ready_report} >{report.stage} | {report.studentName}</div>
+    const readyToBeGraded = readyReports.map( (report, index) => {
+        return <div className={classes.ready_report} key={index}>{report.stage} | {report.studentName}</div>
     })
 
     return(
