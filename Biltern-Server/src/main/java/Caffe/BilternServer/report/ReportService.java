@@ -12,11 +12,9 @@ import Caffe.BilternServer.users.TeachingAssistant;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.parser.Entity;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -85,7 +83,12 @@ public class ReportService {
     public void uploadReportPDF(Long reportId, byte[] reportContent){
         Report report = reportRepository.getById(reportId);
         report.setReportPdf(reportContent);
-        report.setReportStats(ReportStats.SUBMITTED);
+        if(report.getReportStats() == ReportStats.ITERATION){
+            report.setReportStats(ReportStats.ITERATION_SUBMITTED);
+        }
+        else{
+            report.setReportStats(ReportStats.SUBMITTED);
+        }
         reportRepository.save(report);
     }
 
@@ -101,6 +104,20 @@ public class ReportService {
     public void deleteReportPDF(Long reportId){
         Report report = reportRepository.findById(reportId).get();
         report.setReportPdf(null);
+        if(report.getReportStats() == ReportStats.ITERATION_SUBMITTED){
+            report.setReportStats(ReportStats.ITERATION);
+        }else{
+            report.setReportStats(ReportStats.NOT_SUBMITTED);
+        }
+        reportRepository.save(report);
+    }
+
+    @Transactional
+    public void deleteReportFeedback(Long reportId){
+        Report report = reportRepository.findById(reportId).get();
+        report.setFeedback(null);
+        feedbackRepository.deleteByReportIdAndReport_isIteration(reportId, false);
+        report.setReportStats(ReportStats.ITERATION_SUBMITTED);
         reportRepository.save(report);
     }
 
@@ -108,13 +125,8 @@ public class ReportService {
     public void addIteration(Long reportId){
         Report report = reportRepository.getById(reportId);
         report.setIteration(true);
-        Report newReport = new Report();
-        newReport.setReportPdf(report.getReportPdf());
-        newReport.setFeedback(report.getFeedback());
-        newReport.setGradingForm(report.getGradingForm());
-        newReport.setDueDate(report.getDueDate().plusDays(Long.valueOf(14)));
-        newReport.setCompanyStats(report.getCompanyStats());
-        newReport.setPreviousIteration(report);
+        Report newReport = new Report(report);
+
 
         newReport.setReportStats(ReportStats.ITERATION);
 
@@ -135,7 +147,7 @@ public class ReportService {
     }
 
     @Transactional
-    public void updateStatus(Long reportId, String formName){
+    public void updateStatusGradingForm(Long reportId, String formName){
         Report report = reportRepository.getById(reportId);
         formName = formName.toLowerCase().strip();
         if(formName.equals("company")){
@@ -164,7 +176,7 @@ public class ReportService {
         Map<ReportStats, Integer> graderStats = new HashMap<>();
 
         for(ReportStats reportStats: ReportStats.values()){
-            graderStats.put(reportStats, reportRepository.countAllByGraderAndReportStats(grader, reportStats));
+            graderStats.put(reportStats, reportRepository.countAllByGraderAndReportStatsAndIsIteration(grader, reportStats,false));
         }
 
         return graderStats;
@@ -175,7 +187,7 @@ public class ReportService {
         Map<ReportStats, Integer> taStats= new HashMap<>();
 
         for(ReportStats reportStats: ReportStats.values()){
-            taStats.put(reportStats, reportRepository.countAllByTAAndReportStats(teachingAssistant, reportStats));
+            taStats.put(reportStats, reportRepository.countAllByTAAndReportStatsAndIsIteration(teachingAssistant, reportStats, false));
         }
 
         return taStats;
@@ -183,7 +195,6 @@ public class ReportService {
 
 
     public List<Map<ReportStats, Integer>> getDepartmentStats(Department department){
-
 
 
         Course course299, course399;
@@ -204,11 +215,11 @@ public class ReportService {
 
 
         for(ReportStats reportStats: ReportStats.values()){
-            courseStats299.put(reportStats, reportRepository.countAllByCourseAndReportStats(
-                    course299, reportStats
+            courseStats299.put(reportStats, reportRepository.countAllByCourseAndReportStatsAndIsIteration(
+                    course299, reportStats, false
             ));
-            courseStats399.put(reportStats, reportRepository.countAllByCourseAndReportStats(
-                    course399, reportStats
+            courseStats399.put(reportStats, reportRepository.countAllByCourseAndReportStatsAndIsIteration(
+                    course399, reportStats, false
             ));
         }
 

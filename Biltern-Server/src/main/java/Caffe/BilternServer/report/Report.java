@@ -26,7 +26,10 @@ public class Report {
     private LocalDate approvalDueDate;
 
     @JsonIgnore
+    private boolean isIteration;
+    @JsonIgnore
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     @Column(columnDefinition = "LONGBLOB")
     private byte[] reportPdf;
     @Enumerated(EnumType.STRING)
@@ -35,7 +38,9 @@ public class Report {
     @Enumerated(EnumType.STRING)
     private CompanyStats companyStats;
 
-    @ManyToOne
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "studentId")
     private Student student;
 
@@ -51,8 +56,6 @@ public class Report {
     @JoinColumn(name = "courseId")
     private Course course;
 
-    @JsonIgnore
-    private boolean isIteration;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "feedbackId")
     private Feedback feedback;
@@ -68,6 +71,23 @@ public class Report {
     public Report(){
         reportStats = ReportStats.NOT_SUBMITTED;
         companyStats = CompanyStats.WAITING;
+    }
+
+
+    public Report(Report newReport) {
+        this.dueDate = newReport.dueDate;
+        this.approvalDueDate = newReport.approvalDueDate;
+        this.isIteration = newReport.isIteration;
+        this.reportPdf = newReport.reportPdf;
+        this.reportStats = newReport.reportStats;
+        this.companyStats = newReport.companyStats;
+        this.student = newReport.student;
+        this.grader = newReport.grader;
+        this.TA = newReport.TA;
+        this.course = newReport.course;
+        this.feedback = newReport.feedback;
+        this.gradingForm = newReport.gradingForm;
+        this.previousIteration = newReport.previousIteration;
     }
     public LocalDate getDueDate() {
         return dueDate;

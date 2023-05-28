@@ -1,5 +1,6 @@
 package Caffe.BilternServer.users;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +34,19 @@ public class StudentService {
             throw new IllegalStateException("A student with that ID does not exist.");
         }
         studentRepository.deleteById(id);
+    }
+
+
+    public StudentDTO getStudentDetails(Long studentId) {
+
+        Student student = studentRepository.findById(studentId).orElseThrow(
+                () -> new EntityNotFoundException()
+        );
+
+        StudentDTO studentDTO = new StudentDTO();
+        studentDTO.setDepartment(student.getDepartment());
+        studentDTO.setReports(student.getReports());
+
+        return studentDTO;
     }
 }

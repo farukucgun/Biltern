@@ -6,31 +6,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import lombok.Data;
+
 import java.util.List;
 
+@Data
 @Entity
 public class TeachingAssistant extends BilternUser {
 
     @Column
     private Long reportCount;
 
+    private Department department;
+
     @OneToMany
     @JsonIgnore
     private List<Report> reports;
 
-    public Long getReportCount() {
-        return reportCount;
-    }
-
-    public void setReportCount(Long reportCount) {
-        this.reportCount = reportCount;
-    }
-
-    public List<Report> getReports() {
-        return reports;
-    }
-
-    public void setReports(List<Report> reports) {
-        this.reports = reports;
-    }
 }
