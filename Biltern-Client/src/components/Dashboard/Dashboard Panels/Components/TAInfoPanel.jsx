@@ -10,25 +10,37 @@ import profileImg from "../images/profile.png"
 
 export default function GraderInfoPanel(){
 
+    const taExists = TAInfo !== undefined;
+
     return(
         <div className={classes.ta_info_panel_container}>
             <h1 > Teaching Assistant </h1>
-            <div className={classes.ta_profile}>
-                <img className={classes.profile_image} src={profileImg}/>
-                <div >
-                    <div className={classes.ta_name}>
-                    <p >
-                        {TAInfo.TAName}
-                    </p>
+            {taExists
+            ?
+            <div>
+                <div className={classes.ta_profile}>
+                    <img className={classes.profile_image} src={profileImg}/>
+                    <div >
+                        <div className={classes.ta_name}>
+                        <p >
+                            {TAInfo.TAName}
+                        </p>
+                        </div>
+                        <p>
+                            Teaching Assistant
+                        </p>
                     </div>
-                    <p>
-                        Teaching Assistant
-                    </p>
                 </div>
+                <p>
+                    Contact: {TAInfo.contactMail}
+                </p>
             </div>
-            <p>
-                Contact: {TAInfo.contactMail}
-            </p>
+            :
+            <div>
+                Teaching Assistant is not initialized yet.
+            </div>
+            }
+            
         </div>
     )
 }

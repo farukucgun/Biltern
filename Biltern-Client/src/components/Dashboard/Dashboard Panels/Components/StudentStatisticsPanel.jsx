@@ -10,6 +10,8 @@ import { Chart } from "react-google-charts"
 
 export default function TAListPanel(){
 
+    const studentsExist = statistics !== undefined;
+
     const data = [["Stages", "Number of Students"], ...statistics.map(stat => [stat.stageNumber, stat.value])]
       
       const options = {
@@ -22,11 +24,20 @@ export default function TAListPanel(){
     return(
         <div className={classes.student_statistics_panel_container}>
             <h1>Student Statistics</h1>
-            <Chart className={classes.student_statistics_chart}
-                chartType="PieChart"
-                data = {data}
-                options={options}
+            {studentsExist
+            ?
+            <Chart 
+              className={classes.student_statistics_chart}
+              chartType="PieChart"
+              data = {data}
+              options={options}
             />
+            :
+            <div>
+              There is no students enrolled for the course
+            </div>
+            }
+
         </div>
     )
 }

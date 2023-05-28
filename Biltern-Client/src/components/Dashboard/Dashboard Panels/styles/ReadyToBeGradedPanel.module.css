@@ -1,15 +1,20 @@
 .ready_to_be_graded_panel_container{
-    width: 400px;
-    height: 300px;
+    width: 525px;
+    height: 325px;
     border: 1px solid black;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     align-items: center;
     box-sizing: border-box;
     margin: 2%;
+    padding: 2%;
     background-color: white;
+    font-size: larger;
+}
+.ready_to_be_graded_panel_container h1{
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 .ready_report{
     box-sizing: border-box;
@@ -20,4 +25,5 @@
     justify-content: center;
     align-items: center;
     border-radius: 10px;
+    margin: 2%;
 }

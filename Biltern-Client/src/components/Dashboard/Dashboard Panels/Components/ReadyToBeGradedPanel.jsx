@@ -9,14 +9,24 @@ import readyReports from '../Data/ReadyToBeGradedPanel.json'
 
 export default function ReadyToBeGradedPanel(){
 
-    const readyToBeGraded = readyReports.map( (report, index) => {
+    const readyReportsExist = readyReports !== undefined;
+
+    const readyToBeGraded = readyReports.slice(0,4).map( (report, index) => {
         return <div className={classes.ready_report} key={index}>{report.stage} | {report.studentName}</div>
     })
 
     return(
         <div className={classes.ready_to_be_graded_panel_container} >
             <h1>Ready to be Graded</h1>
-            {readyToBeGraded}
+            {readyReportsExist
+            ?
+            readyToBeGraded
+            :
+            <div>
+                There is no ready to be graded reports
+            </div>
+            }
+            
         </div>
     )
 }
