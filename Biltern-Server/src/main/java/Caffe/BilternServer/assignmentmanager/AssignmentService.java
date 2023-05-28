@@ -13,7 +13,6 @@ import jakarta.transaction.Transactional;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -56,13 +55,10 @@ public class AssignmentService {
     @Transactional
     public void addStudentToCourse(Long studentId, String courseCode){
 
-        Secretary secretary = (Secretary) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         Report report = new Report();
         Student student = (Student) studentRepository.findById(studentId).get();
         Course course = courseRepository.findByCourseCode(courseCode).orElse(new Course());
         course.setCourseCode(courseCode);
-        course.setSecretary(secretary);
 
         report.setStudent(student);
         report.setCourse(course);
@@ -284,6 +280,7 @@ public class AssignmentService {
                     if(!courseCode.equals("NA")){
                         addStudentToCourse(studentId, courseCode);
                         if(graderId != Long.valueOf(-1)){
+                            System.out.println("-----------what");
                             addReportToGrader(studentId, courseCode, graderId);
                         }
                         if(TAId != Long.valueOf(-1)){
