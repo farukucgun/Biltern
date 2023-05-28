@@ -21,4 +21,11 @@ public class CourseController {
 
     @PostMapping
     public void addCourse(@RequestBody Course course) { courseService.addCourse(course); }
+
+
+    @DeleteMapping
+    public void deleteCourse(){
+        courseService.deleteCourse(3L);
+    }
+
 }
