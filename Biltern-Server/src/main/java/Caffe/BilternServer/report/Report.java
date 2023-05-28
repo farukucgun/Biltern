@@ -35,7 +35,9 @@ public class Report {
     @Enumerated(EnumType.STRING)
     private CompanyStats companyStats;
 
-    @ManyToOne
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "studentId")
     private Student student;
 
