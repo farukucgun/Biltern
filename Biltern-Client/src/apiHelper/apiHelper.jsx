@@ -23,7 +23,7 @@ const _post = async (url, data, contentType) => {
     if (contentType) {
         headers["Content-Type"] = contentType;
     }
-    return await axios.put(url, 
+    return await axios.post(url, 
         data, 
         headers
     )

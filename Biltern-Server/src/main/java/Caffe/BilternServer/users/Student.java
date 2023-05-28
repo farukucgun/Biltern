@@ -3,35 +3,20 @@ package Caffe.BilternServer.users;
 import Caffe.BilternServer.report.Report;
 import Caffe.BilternServer.auth.BilternUser;
 import jakarta.persistence.*;
+import lombok.Data;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import java.util.List;
 
+@Data
 @Entity
 public class Student extends BilternUser {
 
-    @Column
-    private String department;
-
-
-    @OneToMany
-    @JoinColumn(name = "reportId")
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
+    @Cascade(CascadeType.ALL)
     private List<Report> reports;
 
-
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
-    public List<Report> getReports() {
-        return reports;
-    }
-
-    public void setReports(List<Report> reports) {
-        this.reports = reports;
-    }
+    private Department department;
 
 }
