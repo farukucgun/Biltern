@@ -27,6 +27,11 @@ public class GradingForm {
 
     @OneToOne
     private Report report;
+
+    public GradingForm(){};
+    public GradingForm(Report report){
+        this.report = report;
+    }
     public Map<String, String> getGrades() {
         return grades;
     }
