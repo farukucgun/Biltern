@@ -1,10 +1,16 @@
 package Caffe.BilternServer.course;
 
 import Caffe.BilternServer.report.Report;
+import Caffe.BilternServer.users.Secretary;
+import Caffe.BilternServer.users.Student;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
+
+@Data
 @Entity(name = "Course")
 @Table(name = "Course")
 public class Course {
@@ -16,6 +22,12 @@ public class Course {
             updatable = false
     )
     private Long id;
+
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "secretaryId")
+    private Secretary secretary;
 
     @Column(unique = true, nullable = false)
     private String courseCode;
