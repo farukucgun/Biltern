@@ -23,6 +23,6 @@ public class Grader extends BilternUser {
 
     @OneToMany
     @JsonIgnore
-    private List<Report> report;
+    private List<Report> reports;
     private Department department;
 }
