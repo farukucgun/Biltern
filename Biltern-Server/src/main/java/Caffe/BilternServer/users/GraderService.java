@@ -83,7 +83,7 @@ public class GraderService {
             reportDTO.setReportStats(report.getReportStats());
             reportDTO.setReportId(reportDTO.getReportId());
             reportDTO.setDueDate(report.getDueDate());
-            reportDTO.setCourseCode(report.getCourse().getCourseCode());
+            //reportDTO.setCourseCode(report.getCourse().getCourseCode());
 
             reportDTO.setGraderName(grader.getUserName());
             reportDTO.setGraderId(grader.getBilkentId());
