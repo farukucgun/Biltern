@@ -3,7 +3,10 @@ package Caffe.BilternServer.users;
 import Caffe.BilternServer.report.Report;
 import Caffe.BilternServer.auth.BilternUser;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 
 import java.util.List;
@@ -17,7 +20,7 @@ public class TeachingAssistant extends BilternUser {
 
     private Department department;
 
-    @OneToMany(mappedBy = "teachingAssistant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "teachingAssistant", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Report> reports;
 
