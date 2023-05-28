@@ -9,25 +9,37 @@ import profileImg from "../images/profile.png"
  */
 
 export default function CoordinatorInfoPanel(){
+
+    const coordinatorExists = coordinatorInfo !== undefined;
+
     return(
         <div className={classes.coordinator_info_panel_container}>
             <h1> Coordinator </h1>
-            <div className={classes.coordinator_profile}>
-                <img className={classes.coordinator_image} src={profileImg}/>
-                <div >
-                    <div className={classes.coordinator_name}>
-                    <p >
-                        {coordinatorInfo.coordinatorName}
-                    </p>
+            {coordinatorExists
+            ? 
+            <div>
+                <div className={classes.coordinator_profile}>
+                    <img className={classes.coordinator_image} src={profileImg}/>
+                    <div >
+                        <div className={classes.coordinator_name}>
+                            <p >
+                                {coordinatorInfo.coordinatorName}
+                            </p>
+                        </div>
+                        <p>
+                            Course Coordinator
+                        </p>
                     </div>
-                    <p>
-                        Course Coordinator
-                    </p>
                 </div>
+                <p>
+                    Contact: {coordinatorInfo.contactMail}
+                </p>
+            </div>    
+            :  
+            <div>
+                Coordinator is not initialized yet.
             </div>
-            <p>
-                Contact: {coordinatorInfo.contactMail}
-            </p>
+            }
         </div>
     )
 }

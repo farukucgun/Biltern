@@ -24,7 +24,10 @@ import GeneralStatisticsPanel from "./Dashboard Panels/Components/GeneralStatist
  */
 
 
+
 export default function Dashboard(){
+    const role = useSelector(state => state.auth.user.role);
+    console.log(role);
 
     const dashBoardElements = [];
     if( userType[0].currentUser ){

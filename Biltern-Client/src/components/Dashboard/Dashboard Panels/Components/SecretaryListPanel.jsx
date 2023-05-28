@@ -1,6 +1,7 @@
 import React from "react";
 import classes from '../styles/SecretaryListPanel.module.css'
 import SecretaryData from '../Data/SecretaryListPanel.json'
+import compare from '../../../../utils/sorting'
 
 /**
  * @author Enes Bektaş
@@ -9,30 +10,20 @@ import SecretaryData from '../Data/SecretaryListPanel.json'
 
 export default function SecretaryListPanel(){
 
+    const secretariesExist = SecretaryData !== undefined;
+
     let [secretaryData, setTaData] = React.useState(SecretaryData)
 
     function handleSortClick(sortingValue){
-        console.log("clicked")
-
+        const compareFunc = compare(sortingValue);
         setTaData(prevTaData =>{
-            const sortedTaData = prevTaData.sort(compare)
-            console.log("copy", sortedTaData)
-            return [...sortedTaData]
+            const sortedTaData = prevTaData.sort(compareFunc);
+            return [...sortedTaData];
         })
-        function compare(a, b){
-            if(sortingValue === "name"){
-                return a.name > b.name? 1: -1
-            }
-            else if(sortingValue === "department"){
-                return a.department > b.department? 1: -1
-            }
-            else if(sortingValue === "numberOfStudents"){
-                return a.numberOfStudents > b.numberOfStudents? 1: -1
-            }
-        }
+
     }
 
-    const secretaryInfo = secretaryData.map(element => {
+    const secretaryInfo = secretaryData.slice(0,4).map(element => {
         return(
             <tr key={element.name}>
                 <td className={classes.secretary_table_element} >{element.name}</td>
@@ -45,6 +36,8 @@ export default function SecretaryListPanel(){
     return(
         <div className={classes.secretary_list_panel_container}>
             <h1> Secretary List</h1>
+            {secretariesExist
+            ?
             <table >
                 <tr>
                    <th className={classes.secretary_table_element} onClick={() => handleSortClick("name")}>Name</th>
@@ -53,6 +46,12 @@ export default function SecretaryListPanel(){
                 </tr>
                 {secretaryInfo}
             </table>
+            :
+            <div>
+                There are no secretaries at the moment.
+            </div>
+            }
+
         </div>
 
     )
