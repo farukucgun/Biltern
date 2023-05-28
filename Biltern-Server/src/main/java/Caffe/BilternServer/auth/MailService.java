@@ -43,7 +43,7 @@ public class MailService {
                 " <h1> Your Biltern account has been created <h1> " +
                         "\nYou can use your credentials below to login: \n Bilkent ID: "+ bilkentId
                         +"\nPassword: " + password + "\n<a href = \""
-                        + "http://127.0.0.1:5173/home" +
+                        + "http://127.0.0.1:5173/login" +
                         "\" >  Click to open Biltern  </a> \n"
         );
     }
