@@ -15,8 +15,8 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
     List<Report> findAll();
 
     Optional<Report> findReportByStudentBilkentIdAndCourseCourseCode(Long bilkentId, String courseCode);
-    Integer countAllByTAAndReportStats(TeachingAssistant teachingAssistant, ReportStats reportStats);
+    Integer countAllByTAAndReportStatsAndIsIteration(TeachingAssistant teachingAssistant, ReportStats reportStats, boolean isIteration);
 
-    Integer countAllByGraderAndReportStats(Grader grader, ReportStats reportStats);
-    Integer countAllByCourseAndReportStats(Course course, ReportStats reportStats);
+    Integer countAllByGraderAndReportStatsAndIsIteration(Grader grader, ReportStats reportStats, boolean isIteration);
+    Integer countAllByCourseAndReportStatsAndIsIteration(Course course, ReportStats reportStats, boolean isIteration);
 }
