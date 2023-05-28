@@ -10,25 +10,38 @@ import profileImg from "../images/profile.png"
 
 export default function GraderInfoPanel(){
 
+    const graderExists = graderInfo !== undefined;
+
+
     return(
         <div className={classes.grader_info_panel_container}>
             <h1 > Grader </h1>
-            <div className={classes.grader_profile}>
-                <img className={classes.profile_image} src={profileImg}/>
-                <div >
-                    <div className={classes.grader_name}>
-                    <p >
-                        {graderInfo.graderName}
-                    </p>
+            {graderExists
+            ?
+            <div>
+                <div className={classes.grader_profile}>
+                    <img className={classes.profile_image} src={profileImg}/>
+                    <div >
+                        <div className={classes.grader_name}>
+                        <p >
+                            {graderInfo.graderName}
+                        </p>
+                        </div>
+                        <p>
+                            Teaching assistant
+                        </p>
                     </div>
-                    <p>
-                        Teaching assistant
-                    </p>
                 </div>
+                <p>
+                    Contact: {graderInfo.contactMail}
+                </p>
             </div>
-            <p>
-                Contact: {graderInfo.contactMail}
-            </p>
+            :
+            <div>
+                Grader is not initialized yet.
+            </div>
+            }
+            
         </div>
     )
 }
