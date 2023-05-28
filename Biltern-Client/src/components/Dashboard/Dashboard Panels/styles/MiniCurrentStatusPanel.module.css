@@ -1,7 +1,7 @@
 .mini_current_status_panel_container{
     box-sizing: border-box;
-    width: 400px;
-    height: 250px;
+    width: 525px;
+    height: 325px;
     display: grid;
     grid-template-rows: 1fr 1fr 1fr 1fr;
     border: 1px solid black;
@@ -9,10 +9,11 @@
     padding: 2%;
     margin: 2%;
     background-color: white;
+    font-size: larger;
 }
 .mini_current_status_panel_container h1{
     text-align: center;
-    margin: 5px;
+    margin-top: 10px;
 }
 .stage_marker{
     display: grid;
@@ -22,7 +23,7 @@
 }
 
 .mini_current_status_panel_container img{
-    width: 30px;
+    width: 40px;
 }
 
 .stages_container{

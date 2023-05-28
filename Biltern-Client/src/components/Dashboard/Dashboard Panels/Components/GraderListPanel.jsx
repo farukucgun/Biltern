@@ -1,6 +1,7 @@
 import React from "react";
 import classes from '../styles/GraderListPanel.module.css'
 import GraderData from '../Data/GraderListPanel.json'
+import compare from '../../../../utils/sorting'
 
 /**
  * @author Enes Bektaş
@@ -9,30 +10,21 @@ import GraderData from '../Data/GraderListPanel.json'
 
 export default function GraderListPanel(){
 
-    let [graderData, setTaData] = React.useState(GraderData)
+    const gradersExist = GraderData !== undefined;
+
+    let [graderData, setTaData] = React.useState(GraderData);
 
     function handleSortClick(sortingValue){
-        console.log("clicked")
+        const compareFunc = compare(sortingValue);
 
         setTaData(prevTaData =>{
-            const sortedTaData = prevTaData.sort(compare)
-            console.log("copy", sortedTaData)
-            return [...sortedTaData]
+            const sortedTaData = prevTaData.sort(compareFunc);
+            return [...sortedTaData];
         })
-        function compare(a, b){
-            if(sortingValue === "name"){
-                return a.name > b.name? 1: -1
-            }
-            else if(sortingValue === "course"){
-                return a.course > b.course? 1: -1
-            }
-            else if(sortingValue === "numberOfStudents"){
-                return a.numberOfStudents > b.numberOfStudents? 1: -1
-            }
-        }
+
     }
 
-    const graderInfo = graderData.map(element => {
+    const graderInfo = graderData.slice(0,4).map(element => {
         return(
             <tr key={element.name}>
                 <td className={classes.grader_table_element} >{element.name}</td>
@@ -45,6 +37,8 @@ export default function GraderListPanel(){
     return(
         <div className={classes.grader_list_panel_container}>
             <h1> Grader List</h1>
+            {gradersExist
+            ?
             <table >
                 <tr>
                     <th className={classes.grader_table_element} onClick={() => handleSortClick("name")}>Name</th>
@@ -53,6 +47,12 @@ export default function GraderListPanel(){
                 </tr>
                 {graderInfo}
             </table>
+            :
+            <div>
+                There are no graders at the moment.
+            </div>
+            }
+            
         </div>
 
     )
