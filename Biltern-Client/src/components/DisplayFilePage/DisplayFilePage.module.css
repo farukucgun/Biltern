@@ -1,0 +1,10 @@
+.display_file_page_container{
+    height: 100%;
+    max-height: 800px;
+    width: 900px;
+    overflow: auto;
+}
+.page{
+    border: 1px solid black;
+    margin-bottom: 2%;
+}
