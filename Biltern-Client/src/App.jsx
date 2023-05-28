@@ -23,6 +23,7 @@ import Notifications from './components/Notifications/Notifications';
 import GradingFormPage from "./components/GradingFormPage/GradingFormPage";
 import DisplayFilePage from './components/DisplayFilePage/DisplayFilePage';
 import RegisterUser from './components/RoleAssignment/RegisterUser';
+import StudentList from './components/StudentList/StudentList';
 
 import './App.css';
 
@@ -73,6 +74,7 @@ const App = () => {
             <Route path="/semesterinitialization" element={<PrivateRoute component={<SemesterInitialization />}/>}/>
             <Route path="/roleassignment" element={<PrivateRoute component={<RoleAssignment />}/>}/>
             <Route path="/registeruser" element={<PrivateRoute component={<RegisterUser />}/>}/>
+            <Route path="/studentlist" element={<PrivateRoute component={<StudentList />}/>}/>
             <Route path="/settings" element={<PrivateRoute component={<Settings />}/>} />
             <Route path="/settings/changepassword/:resetToken" element={<PrivateRoute component={<ChangePassword />}/>}/>
             <Route path="/gradingformpage" element={<PrivateRoute component={<GradingFormPage />}/>}/>
