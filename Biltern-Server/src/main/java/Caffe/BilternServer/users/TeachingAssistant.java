@@ -5,6 +5,7 @@ import Caffe.BilternServer.auth.BilternUser;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 
@@ -19,7 +20,7 @@ public class TeachingAssistant extends BilternUser {
 
     private Department department;
 
-    @OneToMany
+    @OneToMany(mappedBy = "teachingAssistant", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Report> reports;
 

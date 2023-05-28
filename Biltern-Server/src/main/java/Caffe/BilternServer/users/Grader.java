@@ -5,7 +5,7 @@ import Caffe.BilternServer.auth.BilternUser;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Lob;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 
@@ -19,11 +19,10 @@ public class Grader extends BilternUser {
     @Column
     private Long reportCount;
 
-    @Lob
-    @Column(columnDefinition = "LONGBLOB")
+    @Column
     private byte[] signature;
 
-    @OneToMany
+    @OneToMany(mappedBy = "grader", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Report> reports;
     private Department department;
