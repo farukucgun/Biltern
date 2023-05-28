@@ -49,8 +49,8 @@ public class Report {
     private Grader grader;
 
     @ManyToOne
-    @JoinColumn(name = "TAId")
-    private TeachingAssistant TA;
+    @JoinColumn(name = "teachingAssistantId")
+    private TeachingAssistant teachingAssistant;
 
     @ManyToOne
     @JoinColumn(name = "courseId")
@@ -83,7 +83,7 @@ public class Report {
         this.companyStats = newReport.companyStats;
         this.student = newReport.student;
         this.grader = newReport.grader;
-        this.TA = newReport.TA;
+        this.teachingAssistant = newReport.teachingAssistant;
         this.course = newReport.course;
         this.feedback = newReport.feedback;
         this.gradingForm = newReport.gradingForm;
@@ -185,12 +185,12 @@ public class Report {
         this.grader = grader;
     }
 
-    public TeachingAssistant getTA() {
-        return TA;
+    public TeachingAssistant getTeachingAssistant() {
+        return teachingAssistant;
     }
 
-    public void setTA(TeachingAssistant TA) {
-        this.TA = TA;
+    public void setTeachingAssistant(TeachingAssistant teachingAssistant) {
+        this.teachingAssistant = teachingAssistant;
     }
 
     public Course getCourse() {
