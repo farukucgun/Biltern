@@ -9,7 +9,7 @@ import java.util.List;
 public class GraderDTO {
 
     private Long reportCount;
-    private File signature;
+    private byte[] signature;
     private List<ReportDTO> reports;
     private Department department;
 
