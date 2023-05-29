@@ -12,7 +12,7 @@ import classes from './CurrentStatus.module.css';
  * @todo: witdrawn case
  */
 
-const CurrentStatus = (props) => {
+const CurrentStatus = () => {
 
     const authorizedId = useSelector(state => state.auth.user.id);
     const name = useSelector(state => state.auth.user.name);
@@ -20,16 +20,16 @@ const CurrentStatus = (props) => {
     const role = useSelector(state => state.auth.user.role);
     const {id} = useParams();
     const location = useLocation();
-    const { department, reports, reportId } = location?.state ?? {};
+    const { department, report } = location?.state ?? {};
 
     return (
         <div className={classes.CurrentStatus}>
             {role == "UNDERGRADUATE" && <StudentCurrentStage id={id} authorizedId={authorizedId} 
-            name={name} email={email} role={role} />}
+            name={name} email={email} role={role} department={department} report={report} />}
             {role == "TEACHING_ASSISTANT" && <TACurrentStage id={id} authorizedId={authorizedId} 
-            name={name} email={email} role={role} department={department} reports={reports} reportId={reportId} />}
+            name={name} email={email} role={role} department={department} report={report} />}
             {role == "FACULTY_MEMBER" && <InstructorCurrentStage id={id} authorizedId={authorizedId} 
-            name={name} email={email} role={role} department={department} reports={reports} reportId={reportId}/>}
+            name={name} email={email} role={role} department={department} report={report} />}
         </div>
     );
 }
