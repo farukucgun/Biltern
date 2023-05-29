@@ -15,8 +15,8 @@ public class Grader extends BilternUser {
     private Long reportCount;
 
     @Lob
-    @Column(columnDefinition = "LONGBLOB")
     @Basic(fetch = FetchType.LAZY)
+    @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] signature;
 
     @OneToMany(mappedBy = "grader", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

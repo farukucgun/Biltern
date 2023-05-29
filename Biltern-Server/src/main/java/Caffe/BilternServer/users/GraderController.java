@@ -43,12 +43,13 @@ public class GraderController {
     }
 
     @Transactional
-    @PutMapping(path = "/signature/{graderId}")
-    public void uploadSignature(@PathVariable Long graderId, @RequestBody MultipartFile file) {
+    @PutMapping(path = "/signature")
+    public void uploadSignature(@RequestBody MultipartFile file) {
+        BilternUser grader = (BilternUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (file != null) {
             try {
                 byte[] signatureFile = file.getBytes();
-                graderService.uploadSignature(graderId, signatureFile);
+                graderService.uploadSignature(grader.getBilkentId(), signatureFile);
             }
             catch (IOException e){
                 e.printStackTrace();
@@ -56,11 +57,12 @@ public class GraderController {
         }
     }
 
-    @GetMapping(path = "/signature/{graderId}")
-    public ResponseEntity<ByteArrayResource> displaySignature(@PathVariable Long graderId) {
+    @GetMapping(path = "/signature")
+    public ResponseEntity<ByteArrayResource> displaySignature() {
+        BilternUser grader = (BilternUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.IMAGE_PNG);
 
-        return ResponseEntity.ok().headers(httpHeaders).body(graderService.downloadSignature(graderId));
+        return ResponseEntity.ok().headers(httpHeaders).body(graderService.downloadSignature(grader.getBilkentId()));
     }
 }
