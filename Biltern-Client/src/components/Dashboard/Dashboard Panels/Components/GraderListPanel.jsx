@@ -2,6 +2,7 @@ import React from "react";
 import classes from '../styles/GraderListPanel.module.css'
 import GraderData from '../Data/GraderListPanel.json'
 import compare from '../../../../utils/sorting'
+import { getGraders } from "../../../../apiHelper/backendHelper";
 
 /**
  * @author Enes Bektaş
@@ -9,25 +10,35 @@ import compare from '../../../../utils/sorting'
  */
 
 export default function GraderListPanel(){
+    React.useEffect(()=>{
+        getGraders()
+        .then(res => {
+            console.log(res.data)
+            setGraderData(res.data)
+        })
+        .catch(err => {
+            console.log(err)
 
-    const gradersExist = GraderData !== undefined;
+    });
+    },[])
 
-    let [graderData, setTaData] = React.useState(GraderData);
+    let [graderData, setGraderData] = React.useState([]);
+    const gradersExist = graderData.length !== 0;
 
     function handleSortClick(sortingValue){
         const compareFunc = compare(sortingValue);
 
-        setTaData(prevTaData =>{
-            const sortedTaData = prevTaData.sort(compareFunc);
-            return [...sortedTaData];
+        setGraderData(prevGraderData =>{
+            const sortedGraderData = prevGraderData.sort(compareFunc);
+            return [...sortedGraderData];
         })
 
     }
 
     const graderInfo = graderData.slice(0,4).map(element => {
         return(
-            <tr key={element.name}>
-                <td className={classes.grader_table_element} >{element.name}</td>
+            <tr key={element.bilkentId}>
+                <td className={classes.grader_table_element} >{element.userName}</td>
                 <td className={classes.grader_table_element} >{element.course}</td>
                 <td className={classes.grader_table_element}>{element.numberOfStudents}</td>
             </tr>
