@@ -2,6 +2,7 @@ import React from "react";
 import classes from '../styles/CoordinatorInfoPanel.module.css'
 import coordinatorInfo from '../Data/CoordinatorInfoPanel.json'
 import profileImg from "../images/profile.png"
+import { getSecretaryDetails } from "../../../../apiHelper/backendHelper";
 
 /**
  * @author Enes Bektaş
@@ -9,6 +10,18 @@ import profileImg from "../images/profile.png"
  */
 
 export default function CoordinatorInfoPanel(){
+
+    React.useEffect(()=>{
+        getSecretaryDetails()
+        .then(res => {
+            console.log(res.data)
+            setCoordinatorData(res.data)
+        })
+        .catch(err => {
+            console.log(err)
+
+    });
+    },[])
 
     const coordinatorExists = coordinatorInfo !== undefined;
 

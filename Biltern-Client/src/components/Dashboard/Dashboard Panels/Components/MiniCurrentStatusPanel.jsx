@@ -4,6 +4,7 @@ import currentStatusInfo from "../Data/CurrentStatusPanel.json"
 import userSymbol from "../images/CurrentStatusUser.png"
 import rightArrow from "../images/right-arrow.png"
 import downArrow from "../images/down-arrow.png"
+import { getReportStatus } from "../../../../apiHelper/backendHelper";
 
 /**
  * @author Enes Bektaş
@@ -11,6 +12,16 @@ import downArrow from "../images/down-arrow.png"
  */
 
 export default function CurrentStatusPanel(){
+    React.useEffect(()=>{
+        getReportStatus(3)
+        .then(res => {
+            console.log(res.data)
+        })
+        .catch(err => {
+            console.log(err)
+
+    });
+    },[])
 
     let statusInfo = []
     for(let i = 0; i < currentStatusInfo.length; i++){

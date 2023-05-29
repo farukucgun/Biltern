@@ -12,6 +12,7 @@ export const COMPANY_STATUS_PATH = (reportId) => COMMON_PATH + 'report/companySt
 export const GRADING_FORM_PATH = (reportId) => COMMON_PATH + 'report/gradingForm/' + reportId;
 export const GRADER_REPORT_PATH = (reportId) => COMMON_PATH + 'report/grader/' + reportId;
 export const TA_PATH = (reportId) => COMMON_PATH + 'report/TA' + reportId;
+export const GET_GRADING = (reportId) => COMMON_PATH + 'report/grades/' + reportId;
 
 // coordinator controller
 export const COORDINATOR_PATH = () => COMMON_PATH + 'coordinator';
@@ -21,10 +22,12 @@ export const COORDINATOR_SELECT_PATH = (coordinatorId) => COMMON_PATH + 'coordin
 export const GRADER_PATH = () => COMMON_PATH + 'grader';
 export const GRADER_SELECT_PATH = (graderId) => COMMON_PATH + 'grader/' + graderId;
 export const GRADER_DETAILS_PATH = () => COMMON_PATH + 'grader/details';
+export const GRADER_SIGNATURE_PATH = (graderId) => COMMON_PATH + 'grader/signature/' + graderId;
 
 // secretary controller
 export const SECRETARY_PATH = () => COMMON_PATH + 'secretary';
 export const SECRETARY_SELECT_PATH = (secretaryId) => COMMON_PATH + 'secretary/' + secretaryId;
+export const SECRETARY_DETAILS = () => COMMON_PATH + 'secretary/details';
 
 // student controller
 export const STUDENT_PATH = () => COMMON_PATH + 'student';
@@ -42,7 +45,7 @@ export const ASSIGN_ROLE_PATH = (role) => COMMON_PATH + 'user/administration/ass
 export const REGISTER_USER_PATH = () => COMMON_PATH + 'user/administration/register';
 
 // statistics controller
-export const DEPARTMENT_COURSE_STATISTICS_PATH = () => COMMON_PATH + 'statistics/';
+export const DEPARTMENT_COURSE_STATISTICS_PATH = () => COMMON_PATH + 'statistics';
 export const GRADER_STATISTICS_PATH = (graderId) => COMMON_PATH + 'statistics/grader' + graderId;
 export const TA_STATISTICS_PATH = (taId) => COMMON_PATH + 'statistics/teachingAssistant' + taId;
 
