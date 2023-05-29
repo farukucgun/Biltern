@@ -27,7 +27,7 @@ public class GraderController {
         this.graderService = graderService;
     }
 
-    @GetMapping(path = "/details/what")
+    @GetMapping 
     public List<Grader> getGraders() { return graderService.getGraders(); }
 
     @PostMapping
