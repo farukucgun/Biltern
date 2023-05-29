@@ -59,7 +59,6 @@ export const getCompanyStatus = async (reportId) => {
 }
 
 export const submitGradingForm = async (reportId, data, contentType) => {
-
     return await putFetcher(url.GRADING_FORM_PATH(reportId), JSON.stringify(data), contentType);
 }
 
