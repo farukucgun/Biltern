@@ -68,14 +68,14 @@ public class ReportService {
 
     @Transactional
     public void setDueDate(Long reportId, LocalDate dueDate){
-        Report report = reportRepository.findReportById(reportId);
+        Report report = reportRepository.findReportByIdAndIsIteration(reportId, false);
         report.setDueDate(dueDate);
         reportRepository.save(report);
     }
 
     @Transactional
     public void setApprovalDueDate(Long reportId, LocalDate approvalDueDate){
-        Report report = reportRepository.findReportById(reportId);
+        Report report = reportRepository.findReportByIdAndIsIteration(reportId, false);
         report.setApprovalDueDate(approvalDueDate);
         reportRepository.save(report);
     }
@@ -162,10 +162,10 @@ public class ReportService {
 
 
     public Grader getReportGrader(Long reportId){
-        return reportRepository.findReportById(reportId).getGrader();
+        return reportRepository.findReportByIdAndIsIteration(reportId, false).getGrader();
     }
     public TeachingAssistant getReportTA(Long reportId){
-        return reportRepository.findReportById(reportId).getTeachingAssistant();
+        return reportRepository.findReportByIdAndIsIteration(reportId, false).getTeachingAssistant();
     }
 
     public LocalDate getDueDate(Long reportId){
