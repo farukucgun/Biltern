@@ -13,5 +13,5 @@ import java.util.List;
 public class StudentDTO {
 
     private Department department;
-    private List<Report> reports;
+    private List<ReportDTO> reports;
 }

@@ -1,5 +1,6 @@
 package Caffe.BilternServer.users;
 
+import Caffe.BilternServer.report.Report;
 import Caffe.BilternServer.report.ReportStats;
 import lombok.Data;
 
@@ -12,7 +13,6 @@ import java.time.LocalDate;
 
 @Data
 public class ReportDTO {
-
     private String courseCode;
     private LocalDate dueDate;
     private String studentName;
@@ -25,4 +25,19 @@ public class ReportDTO {
     private Long taId;
     private Long studentId;
     private Long graderId;
+
+    public ReportDTO(Report report) {
+        this.courseCode = report.getCourse().getCourseCode();
+        this.dueDate = report.getDueDate();
+        this.reportStats = report.getReportStats();
+        this.reportId = report.getId();
+        this.taId = report.getTeachingAssistant().getBilkentId();
+        this.studentId = report.getStudent().getBilkentId();
+        this.graderId = report.getGrader().getBilkentId();
+    }
+
+    public  ReportDTO(){
+
+    }
+
 }
