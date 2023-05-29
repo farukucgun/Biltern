@@ -7,6 +7,10 @@ import jakarta.persistence.*;
 import lombok.Data;
 import java.util.List;
 
+/**
+ * This is the entity class for the user with type Grader
+ */
+
 @Data
 @Entity
 public class Grader extends BilternUser {

@@ -5,8 +5,7 @@ import lombok.Data;
 import java.util.Map;
 
 /**
- * @author jmo
- * @date 28.05.2023
+ * This is the DTO (Data Transfer Object) class for the user with type Secretary
  */
 
 @Data

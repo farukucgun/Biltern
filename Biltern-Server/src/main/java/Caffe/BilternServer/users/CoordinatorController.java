@@ -5,6 +5,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * This is the controller class for the user with type Coordinator
+ */
+
 @CrossOrigin(origins = "${client.domain}")
 @RestController
 @RequestMapping("coordinator")

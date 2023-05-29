@@ -5,6 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * This is the repository interface for the user with type Grader
+ */
 @Repository
 public interface GraderRepository extends JpaRepository<Grader, Long> {
 
