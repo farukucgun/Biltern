@@ -286,7 +286,7 @@ public class AssignmentService {
                             addReportToGrader(studentId, courseCode, graderId);
                         }
                         if(TAId != Long.valueOf(-1)){
-                            addReportToTeachingAssistant(studentId, courseCode, graderId);
+                            addReportToTeachingAssistant(studentId, courseCode, TAId);
                         }
                     }
                 }

@@ -1,9 +1,11 @@
 package Caffe.BilternServer.users;
 
+import Caffe.BilternServer.report.Report;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +47,14 @@ public class StudentService {
 
         StudentDTO studentDTO = new StudentDTO();
         studentDTO.setDepartment(student.getDepartment());
-        studentDTO.setReports(student.getReports());
+        List <Report> reports = student.getReports();
+        List<ReportDTO> reportDTOs = new ArrayList<>();
+
+        for(Report report : reports){
+            reportDTOs.add(new ReportDTO(report));
+        }
+
+        studentDTO.setReports(reportDTOs);
 
         return studentDTO;
     }
