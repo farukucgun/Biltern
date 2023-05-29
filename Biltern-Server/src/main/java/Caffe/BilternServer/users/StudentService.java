@@ -3,11 +3,11 @@ package Caffe.BilternServer.users;
 import Caffe.BilternServer.report.Report;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * This is the service class for the user with type Student
@@ -61,5 +61,21 @@ public class StudentService {
         studentDTO.setReports(reportDTOs);
 
         return studentDTO;
+    }
+
+    public Map<String, Long> getIterations(){
+        Student student = ((Student) SecurityContextHolder.getContext().
+                getAuthentication().getPrincipal());
+        List<Report> reports = studentRepository.findById(student.getBilkentId()).get().getReports();
+        Map<String, Long> files = new HashMap<String, Long>();
+        for(Report report : reports){
+            int i = 1;
+            for(Report curReport = report; curReport != null && curReport.getReportPdf() != null; curReport = curReport.getPreviousIteration()){
+                files.put(report.getCourse().getCourseCode() +
+                        "iteration " + i + " report", curReport.getId());
+                i++;
+            }
+        }
+        return files;
     }
 }
