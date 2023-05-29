@@ -1,43 +1,53 @@
 import React, {useState, useEffect} from 'react';
 import StudentItem from './StudentItem';
 import ActionButton from '../../UI/ActionButton';
-import { getGraderDetails } from '../../apiHelper/backendHelper';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getGraderDetails, getTeachingAssistantDetails } from '../../apiHelper/backendHelper';
+import { setTimedAlert } from '../../features/alertSlice';
 
 import classes from "./StudentList.module.css";
 
-const dummyStudents = [
-    {
-        id: 1,
-        studentName: 'Faruk Ucgun',
-        course: 'CS 101',
-        ta: "Furkan Kaya",
-        deadline: '23.05.2023'
-    },
-    {
-        id: 2,
-        studentName: 'Asli Tok',
-        course: 'CS 101',
-        ta: "Ceren Ekinci",
-        deadline: '25.05.2023'
-    }
-]
-
 const StudentList = () => {
-
-    const [students, setStudents] = useState(dummyStudents);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [reports, setReports] = useState([]);
+    const [department, setDepartment] = useState("CS");
+    const role = useSelector(state => state.auth.user.role);
 
     useEffect(() => {
-        getGraderDetails()
-        .then(res => {
-            setStudents(res.data);
-        })
-        .catch(err => {
-            console.log(err);
-        })
+        if (role == "TEACHING_ASSISTANT") {
+            getTeachingAssistantDetails()
+                .then(res => {
+                    console.log(res.data);
+
+                    // DUE DATE CHECKS
+
+                    setReports(res.data.reports);
+                    setDepartment(res.data.department);
+                })
+                .catch(err => {
+                    console.log(err);
+                    dispatch(setTimedAlert("Error while ta details", "error"));
+                })
+        } else if (role == "FACULTY_MEMBER") {
+            getGraderDetails()
+                .then(res => {
+                    setReports(res.data.reports);
+                    setDepartment(res.data.department);
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
     }, []);
 
-    const studentClickHandler = (id) => {
-        console.log(id);
+    const studentClickHandler = (id, reportId) => {
+        navigate(`/currentstatus/${id}`, {state:{department: department, reports: reports, reportId: reportId}});
+    }
+
+    const studentSearchHandler = () => {
+        console.log("searching student");
     }
 
     return (
@@ -53,6 +63,7 @@ const StudentList = () => {
                     <ActionButton 
                         text="Search"
                         className={classes.searchButton}
+                        onClick={studentSearchHandler}
                         
                     />
                 </div>
@@ -67,11 +78,12 @@ const StudentList = () => {
             </div>
 
             <ul className={classes.studentList}>
-                {students.map((student) => 
+                {reports.map((report) => 
                     <StudentItem 
-                        student={student} 
-                        key={student.id}
+                        report={report} 
+                        key={report.studentId}
                         onStudentClicked={studentClickHandler}
+                        department={department}
                     />
                 )}
             </ul>
