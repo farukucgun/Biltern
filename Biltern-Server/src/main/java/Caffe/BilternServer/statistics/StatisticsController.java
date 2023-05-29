@@ -14,7 +14,7 @@ import java.util.Map;
  * This is the controller class for statistics, including grader statistics, TA statistics, and department/course statistics
  */
 
-@PreAuthorize("hasAuthority('ROLE_DEPARTMENT_COORDINATOR')")
+@PreAuthorize("hasAnyAuthority('ROLE_DEPARTMENT_COORDINATOR', 'ROLE_SECRETARY')")
 @CrossOrigin(origins = "${client.domain}")
 @RestController
 @RequestMapping("statistics")
@@ -29,14 +29,13 @@ public class StatisticsController {
     }
 
 
-   @PreAuthorize("hasAuthority('ROLE_DEPARTMENT_COORDINATOR')")
+
    @GetMapping("grader/{graderId}")
     public ResponseEntity<Map<ReportStats, Integer>> getGraderStatistics(@PathVariable Long graderId) throws InvalidObjectException {
 
         return ResponseEntity.ok(statisticsService.getGraderStatistics(graderId));
     }
 
-    @PreAuthorize("hasAuthority('ROLE_DEPARTMENT_COORDINATOR')")
     @GetMapping("teachingAssistant/{teachingAssistantId}")
     public ResponseEntity<Map<ReportStats, Integer>> getTAStatistics(Long teachingAssistantId) throws InvalidObjectException {
 
