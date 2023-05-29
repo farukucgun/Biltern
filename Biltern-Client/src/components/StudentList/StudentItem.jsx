@@ -3,20 +3,21 @@ import React from 'react';
 import classes from "./StudentItem.module.css";
 
 const StudentItem = (props) => {
-    const {id, studentName, course, ta, deadline} = props.student;
-    const {onStudentClicked} = props;
+    const {courseCode, dueDate, studentName, graderName, taName, reportStats, reportId, taId, studentId, graderId} = props.report;
+    const {onStudentClicked, department} = props;
 
     const clickHandler = () => {
-        onStudentClicked(id);
+        onStudentClicked(studentId, reportId);
     }
 
     return (
         <li className={classes.SingleStudent} onClick={clickHandler}>
-            <p className={classes.studentInfoField}>#{id}</p>
+            <p className={classes.studentInfoField}>#{studentId}</p>
             <p className={classes.studentInfoField}>{studentName}</p>
-            <p className={classes.studentInfoField}>{course}</p>
-            <p className={classes.studentInfoField}>{ta}</p>
-            <p className={classes.studentInfoField}>{deadline}</p>
+            <p className={classes.studentInfoField}>{courseCode || "CS-299"}</p>
+            <p className={classes.studentInfoField}>{taName}</p>
+            <p className={classes.studentInfoField}>{dueDate}</p>
+            <p className={classes.studentInfoField}>{reportStats}</p>
         </li>
     )
 }

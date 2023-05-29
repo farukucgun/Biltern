@@ -30,6 +30,7 @@ export const SECRETARY_SELECT_PATH = (secretaryId) => COMMON_PATH + 'secretary/'
 export const STUDENT_PATH = () => COMMON_PATH + 'student';
 export const STUDENT_SELECT_PATH = (studentId) => COMMON_PATH + 'student/' + studentId;
 export const STUDENT_DETAILS_PATH = () => COMMON_PATH + 'student/details';
+export const STUDENT_DETAILS_BY_ID_PATH = (studentId) => COMMON_PATH + 'student/details/' + studentId;
 
 // teaching assistant controller
 export const TEACHING_ASSISTANT_PATH = () => COMMON_PATH + 'teachingassistant';

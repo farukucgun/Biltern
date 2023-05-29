@@ -14,21 +14,25 @@ import classes from "./Navbar.module.css";
  * TODO: handle the active page 
  */
 
-const items = [
-  {to: "/dashboard", name: "Dashboard"},
-  {to: "/uploadedfiles", name: "Uploaded Files"},
-  {to: "/currentstatus", name: "Current Status"},
-  {to: "/settings", name: "Settings"},
-  {to: "/semesterInitialization", name: "Semester Initialization"},
-  {to: "/roleassignment", name: "Role Assignment"},
-  {to: "/gradingformpage", name: "Grading Form"},
-  {to: "/registeruser", name: "Register User"},
-  {to: "/studentlist", name: "Student List"},
-]
+
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const studentId = useSelector(state => state.auth.user?.id);
+
+  const items = [
+    {to: "/dashboard", name: "Dashboard"},
+    {to: "/uploadedfiles", name: "Uploaded Files"},
+    {to: `/currentstatus/${studentId}`, name: "Current Status"},
+    {to: "/settings", name: "Settings"},
+    {to: "/semesterInitialization", name: "Semester Initialization"},
+    {to: "/roleassignment", name: "Role Assignment"},
+    {to: "/gradingformpage", name: "Grading Form"},
+    {to: "/registeruser", name: "Register User"},
+    {to: "/studentlist", name: "Student List"},
+  ]
 
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const userRole = useSelector(state => state.auth.user?.role);

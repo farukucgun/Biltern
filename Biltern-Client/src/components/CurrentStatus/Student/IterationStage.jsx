@@ -11,6 +11,8 @@ import classes from '../CurrentStatus.module.css';
 const IterationStage = (props) => {
     const {id} = props;
     const [dueDate, setDueDate] = useState(null); 
+    const [studentFile, setStudentFile] = useState(null);
+    const [feedbackFile, setFeedbackFile] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -34,16 +36,32 @@ const IterationStage = (props) => {
             .catch(err => {
                 dispatch(setTimedAlert({msg: "Error while fetching due date", alertType: "error", timeout: 4000}));
             });
+
+        getReportContent(id, 'arraybuffer', true)
+            .then(res => {
+                const blob = new Blob([res.data], {type: 'application/pdf'});
+                setStudentFile(blob);
+            })
+            .catch(err => {
+                dispatch(setTimedAlert({msg: "Error while fetching report", alertType: "error", timeout: 4000}));
+            });
+
+        getReportFeedback(id, 'arraybuffer', true)
+            .then(res => {
+                const blob = new Blob([res.data], {type: 'application/pdf'});
+                setFeedbackFile(blob);
+            })
+            .catch(err => {
+                dispatch(setTimedAlert({msg: "Error while fetching feedback", alertType: "error", timeout: 4000}));
+            });
     }, []);
 
     const ViewReportHandler = () => {
-        console.log("navigate to report with id to display report");
-        // navigate("/report/1");
+        navigate("/displayfilepage", {state:{url: URL.createObjectURL(studentFile)}});
     }
 
     const viewFeedbackHandler = () => {
-        console.log("navigate to feedback with id to display feedback");
-        // navigate("/feedback/1");
+        navigate("/displayfilepage", {state:{url: URL.createObjectURL(feedbackFile)}});
     }
 
     const downloadReport = (blob) => {
@@ -65,25 +83,11 @@ const IterationStage = (props) => {
     }
 
     const downloadStudentReportHandler = () => {
-        getReportContent(id, 'arraybuffer', true)
-            .then(res => {
-                const blob = new Blob([res.data], {type: 'application/pdf'});
-                downloadReport(blob);
-            })
-            .catch(err => {
-                dispatch(setTimedAlert({msg: "Error while fetching report", alertType: "error", timeout: 4000}));
-            });
+        downloadReport(studentFile);
     }
 
     const downloadFeedbackHandler = () => {
-        getReportFeedback(id, 'arraybuffer', true)
-            .then(res => {
-                const blob = new Blob([res.data], {type: 'application/pdf'});
-                downloadReport(blob);
-            })
-            .catch(err => {
-                dispatch(setTimedAlert({msg: "Error while fetching feedback", alertType: "error", timeout: 4000}));
-            });
+        downloadReport(feedbackFile);
     }
 
     return (
