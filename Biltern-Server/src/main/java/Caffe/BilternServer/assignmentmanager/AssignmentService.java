@@ -64,9 +64,6 @@ public class AssignmentService {
         course.setCourseCode(courseCode);
         course.setSecretary(secretary);
 
-        report.setStudent(student);
-        report.setCourse(course);
-        report = reportRepository.save(report);
 
         List<Report> studentReports = student.getReports();
         List<Report> courseReports = course.getReports();
@@ -77,8 +74,12 @@ public class AssignmentService {
             courseReports = new ArrayList<Report>();
         }
 
+        report.setCourse(course);
+        report.setStudent(student);
+
         studentReports.add(report);
         courseReports.add(report);
+
 
         courseRepository.save(course);
         studentRepository.save(student);
@@ -86,7 +87,7 @@ public class AssignmentService {
     @Transactional
     public void addReportToGrader(Long studentId, String courseName, Long graderId){
         Report report = reportRepository.
-                findReportByStudentBilkentIdAndCourse_CourseCode(studentId, courseName).get();
+                findReportByStudentBilkentIdAndCourseCourseCodeAndIsIteration(studentId, courseName, false).get();
         Grader grader = graderRepository.findById(graderId).get();
 
         report.setGrader(grader);
@@ -96,14 +97,13 @@ public class AssignmentService {
         }
         graderReports.add(report);
 
-        reportRepository.save(report);
         graderRepository.save(grader);
     }
 
     @Transactional
     public void addReportToTeachingAssistant(Long studentId, String courseName, Long TAId) {
         Report report = reportRepository.
-                findReportByStudentBilkentIdAndCourse_CourseCode(studentId, courseName).get();
+                findReportByStudentBilkentIdAndCourseCourseCodeAndIsIteration(studentId, courseName, false).get();
         TeachingAssistant TA = TARepository.findById(TAId).get();
 
         report.setTeachingAssistant(TA);
@@ -113,7 +113,6 @@ public class AssignmentService {
         }
         TAReports.add(report);
 
-        reportRepository.save(report);
         TARepository.save(TA);
     }
 
