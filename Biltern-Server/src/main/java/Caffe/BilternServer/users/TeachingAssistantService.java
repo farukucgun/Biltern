@@ -65,6 +65,7 @@ public class TeachingAssistantService {
             reportDTO.setDueDate(report.getDueDate());
             //reportDTO.setCourseCode(report.getCourse().getCourseCode());
 
+
             reportDTO.setGraderName(report.getGrader().getUserName());
             reportDTO.setGraderId(report.getGrader().getBilkentId());
 
@@ -73,6 +74,7 @@ public class TeachingAssistantService {
 
             reportDTO.setStudentId(report.getStudent().getBilkentId());
             reportDTO.setStudentName(report.getStudent().getUserName());
+            reportDTO.setStudentMail(report.getStudent().getBilkentMail());
 
             listOfReports.add(reportDTO);
         }

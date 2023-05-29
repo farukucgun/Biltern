@@ -2,13 +2,28 @@ import React from "react";
 import classes from '../styles/StudentStatisticsPanel.module.css'
 import statistics from '../Data/StudentStatisticsPanel.json'
 import { Chart } from "react-google-charts"
-
+import { getDepartmentCourseStatistics } from "../../../../apiHelper/backendHelper";
+import { useDispatch } from 'react-redux';
+import { setTimedAlert } from '../../../../features/alertSlice';
 /**
  * @author Enes Bektaş
  * @date 07.05.2023
  */
 
 export default function TAListPanel(){
+  const dispatch = useDispatch();
+
+  
+  getDepartmentCourseStatistics()
+  .then(res => {
+      console.log(res.data)
+      dispatch(setTimedAlert("Grading form submitted successfully", "success"));
+  })
+  .catch(err => {
+      console.log(err)
+
+      dispatch(setTimedAlert("Grading form submission failed", "error"));
+  });
 
     const studentsExist = statistics !== undefined;
 
