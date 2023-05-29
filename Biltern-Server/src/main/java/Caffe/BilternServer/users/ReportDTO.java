@@ -7,8 +7,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 /**
- * @author jmo
- * @date 28.05.2023
+ * This is the DTO (Data Transfer Object) class for the reports used by the users in the system
  */
 
 @Data

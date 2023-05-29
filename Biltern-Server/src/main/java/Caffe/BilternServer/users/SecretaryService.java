@@ -10,6 +10,10 @@ import java.util.Map;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This is the service class for the user with type Secretary
+ */
+
 @Service
 public class SecretaryService {
 
