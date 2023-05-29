@@ -13,6 +13,9 @@ import java.util.HashMap;
  * @date 4.04.2023
  */
 
+/**
+ * This is the service class for the authentication of users
+ */
 
 @Service
 public class AuthService {

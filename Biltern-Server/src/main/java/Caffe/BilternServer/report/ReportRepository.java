@@ -9,6 +9,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This is the repository interface for the Report object
+ */
+
 @Repository
 public interface ReportRepository extends JpaRepository<Report, Long> {
     Report findReportByIdAndIsIteration(Long reportId, boolean isIteration);

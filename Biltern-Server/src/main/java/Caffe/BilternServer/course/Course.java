@@ -9,6 +9,9 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * This is the entity class for the Course object
+ */
 
 @Data
 @Entity(name = "Course")

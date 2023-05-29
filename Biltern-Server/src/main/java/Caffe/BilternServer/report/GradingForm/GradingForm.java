@@ -8,6 +8,10 @@ import jakarta.persistence.*;
 
 import java.util.Map;
 
+/**
+ * This is the entity class for the GradingForm object
+ */
+
 @Entity(name = "GradingForm")
 @Table(name = "GradingForm")
 public class GradingForm {

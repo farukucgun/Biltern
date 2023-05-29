@@ -15,8 +15,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 /**
- * @author jmo
- * @date 14.03.2023
+ * This is the service class for the JWT (JSON Web Token) objects used to identify authenticated users
  */
 
 

@@ -15,8 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author jmo
- * @date 14.03.2023
+ * This is the service class for the BilternUser object
  */
 
 

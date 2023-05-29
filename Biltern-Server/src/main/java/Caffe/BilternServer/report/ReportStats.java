@@ -1,5 +1,8 @@
 package Caffe.BilternServer.report;
 
+/**
+ * This is the special enum class for ReportStat, containing valid states that are used throughout the system
+ */
 public enum ReportStats {
     NOT_SUBMITTED(" ", "Waiting for submission", "Submitted"),
     SUBMITTED("Submitted", "Waiting for approval", "Approved"),

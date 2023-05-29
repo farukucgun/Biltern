@@ -10,8 +10,7 @@ import javax.management.InstanceAlreadyExistsException;
 import java.util.List;
 
 /**
- * @author jmo
- * @date 6.05.2023
+ * This is the controller class for role administration, which includes the functionality of assigning a role to a user and registering a user
  */
 
 
