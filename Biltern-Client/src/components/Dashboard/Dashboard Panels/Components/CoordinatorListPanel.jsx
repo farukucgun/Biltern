@@ -1,7 +1,7 @@
 import React from "react";
 import classes from '../styles/CoordinatorListPanel.module.css'
-import CoordinatorData from '../Data/CoordinatorListPanel.json'
 import compare from '../../../../utils/sorting'
+import { getCoordinators } from "../../../../apiHelper/backendHelper";
 
 /**
  * @author Enes Bektaş
@@ -10,23 +10,35 @@ import compare from '../../../../utils/sorting'
 
 export default function CoordinatorListPanel(){
 
-    const coordinatorsExist = CoordinatorData !== undefined;
+    React.useEffect(()=>{
+        getCoordinators()
+        .then(res => {
+            console.log(res.data)
+            setCoordinatorData(res.data)
+        })
+        .catch(err => {
+            console.log(err)
 
-    let [coordinatorData, setTaData] = React.useState(CoordinatorData)
+    });
+    },[])
+
+
+    let [coordinatorData, setCoordinatorData] = React.useState([])
+    const coordinatorsExist = coordinatorData.length !== 0;
 
     function handleSortClick(sortingValue){
         const compareFunc = compare(sortingValue);
-        setTaData(prevTaData =>{
-            const sortedTaData = prevTaData.sort(compareFunc);
-            return [...sortedTaData];
+        setCoordinatorData(prevCoordinatorData =>{
+            const sortedCoordinatorData = prevCoordinatorData.sort(compareFunc);
+            return [...sortedCoordinatorData];
         })
 
     }
 
     const coordinatorInfo = coordinatorData.slice(0,4).map(element => {
         return(
-            <tr key={element.name}>
-                <td className={classes.coordinator_table_element} >{element.name}</td>
+            <tr key={element.bilkentId}>
+                <td className={classes.coordinator_table_element} >{element.userName}</td>
                 <td className={classes.coordinator_table_element} >{element.department}</td>
                 <td className={classes.coordinator_table_element} >{element.course}</td>
                 <td className={classes.coordinator_table_element} >{element.numberOfStudents}</td>

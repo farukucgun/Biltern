@@ -59,12 +59,15 @@ export const getCompanyStatus = async (reportId) => {
 }
 
 export const submitGradingForm = async (reportId, data, contentType) => {
-
-    return await putFetcher(url.GRADING_FORM_PATH(reportId), JSON.stringify(data), contentType);
+    return await putFetcher(url.GRADING_FORM_PATH(reportId), data, contentType);
 }
 
 export const getGradingForm = async (reportId, responseType) => {
     return await getFetcher(url.GRADING_FORM_PATH(reportId), responseType);
+}
+
+export const getGrading = async (reportId) => {
+    return await getFetcher(url.GET_GRADING(reportId));
 }
 
 export const getReportGrader = async (reportId) => {
@@ -105,6 +108,14 @@ export const getGraderDetails = async () => {
     return await getFetcher(url.GRADER_DETAILS_PATH());
 }
 
+export const uploadSignature = async (graderId, signature, contentType) => {
+    return await putFetcher(url.GRADER_SIGNATURE_PATH(graderId), signature, contentType);
+}
+
+export const displaySignature = async (graderId, contentType) =>{
+    return await getFetcher(url.GRADER_SIGNATURE_PATH(graderId), contentType);
+}
+
 // secretary controller
 export const getSecretaries = async () => {
     return await getFetcher(url.SECRETARY_PATH());
@@ -117,6 +128,10 @@ export const addSecretary = async (data) => {
 export const deleteSecretary = async (data) => {
     return await deleteFetcher(url.SECRETARY_SELECT_PATH(), data);
 }
+
+export const getSecretaryDetails = async () => {
+    return await getFetcher(url.SECRETARY_DETAILS());
+} 
 
 // student controller
 export const addStudent = async (data) => {
