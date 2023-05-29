@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface ReportRepository extends JpaRepository<Report, Long> {
-    Report findReportById(Long reportId);
+    Report findReportByIdAndIsIteration(Long reportId, boolean isIteration);
     List<Report> findAll();
 
     Optional<Report> findReportByStudentBilkentIdAndCourse_CourseCode(Long bilkentId, String courseCode);
