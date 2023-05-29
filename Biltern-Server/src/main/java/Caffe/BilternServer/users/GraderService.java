@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This is the service class for the user with type Grader
+ */
+
 @Service
 public class GraderService {
 

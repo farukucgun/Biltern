@@ -10,6 +10,10 @@ import org.hibernate.annotations.CascadeType;
 
 import java.util.List;
 
+/**
+ * This is the entity class for the user with type Student
+ */
+
 @Data
 @Entity
 public class Student extends BilternUser {

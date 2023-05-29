@@ -7,6 +7,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+/**
+ * This is the controller class for the user with type TeachingAssistant
+ */
+
 @CrossOrigin(origins = "${client.domain}")
 @RestController
 @RequestMapping("teachingassistant")

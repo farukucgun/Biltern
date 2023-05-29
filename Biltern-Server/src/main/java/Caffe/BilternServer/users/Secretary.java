@@ -12,6 +12,9 @@ import org.hibernate.annotations.CascadeType;
 
 import java.util.List;
 
+/**
+ * This is the entity class for the user with type Secretary
+ */
 
 @Data
 @Entity
