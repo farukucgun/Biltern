@@ -49,6 +49,7 @@ const IterationStage = (props) => {
             })
             .catch(err => {
                 dispatch(setTimedAlert({msg: "Error while fetching report", alertType: "error", timeout: 4000}));
+                
             });
 
         getReportFeedback(id, 'arraybuffer', true)

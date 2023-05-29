@@ -27,7 +27,7 @@ const StudentReportStage = (props) => {
             });
     };
 
-    useEffect(() => {
+    useEffect(() => {   
         getReportDueDate(id)
             .then(res => {
                 setDueDate(res.data);

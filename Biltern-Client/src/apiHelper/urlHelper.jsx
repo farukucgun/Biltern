@@ -42,7 +42,7 @@ export const ASSIGN_ROLE_PATH = (role) => COMMON_PATH + 'user/administration/ass
 export const REGISTER_USER_PATH = () => COMMON_PATH + 'user/administration/register';
 
 // statistics controller
-export const DEPARTMENT_COURSE_STATISTICS_PATH = () => COMMON_PATH + 'statistics/';
+export const DEPARTMENT_COURSE_STATISTICS_PATH = () => COMMON_PATH + 'statistics';
 export const GRADER_STATISTICS_PATH = (graderId) => COMMON_PATH + 'statistics/grader' + graderId;
 export const TA_STATISTICS_PATH = (taId) => COMMON_PATH + 'statistics/teachingAssistant' + taId;
 
