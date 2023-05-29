@@ -18,6 +18,8 @@ public class ReportDTO {
     private String studentName;
     private String graderName;
     private String taName;
+
+    private String studentMail;
     private ReportStats reportStats;
     private Long reportId;
     private Long taId;
