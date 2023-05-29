@@ -41,6 +41,9 @@ const _put = async (url, data, contentType) => {
 }
 
 const _patch = async (url, data, contentType) => {
+    console.log("url: ", url);
+    console.log("data: ", data);
+    console.log("contentType: ", contentType);
     let headers = commonHeader;
     if (contentType) {
         headers["Content-Type"] = contentType;
