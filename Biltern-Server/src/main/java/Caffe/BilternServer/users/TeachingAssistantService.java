@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This is the service class for the user with type TeachingAssistant
+ */
+
 @Service
 public class TeachingAssistantService {
     private final TeachingAssistantRepository teachingAssistantRepository;

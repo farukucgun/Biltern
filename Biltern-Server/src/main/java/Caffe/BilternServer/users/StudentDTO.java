@@ -5,8 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @author jmo
- * @date 28.05.2023
+ * This is the DTO (Data Transfer Object) class for the user with type Student
  */
 
 @Data
