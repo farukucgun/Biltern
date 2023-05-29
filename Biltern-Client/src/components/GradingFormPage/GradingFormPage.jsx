@@ -10,6 +10,7 @@ import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import { submitGradingForm } from "../../apiHelper/backendHelper";
 import { useDispatch } from 'react-redux';
 import { setTimedAlert } from '../../features/alertSlice';
+import axios from 'axios';
 
 
 pdfjs.GlobalWorkerOptions.workerSrc = 
@@ -65,45 +66,47 @@ export default function GradingFormPage(){
     const sumOfItems2_7 = tableAssesment2 + tableAssesment3 + tableAssesment4 + tableAssesment5+ tableAssesment6 +tableAssesment7;
 
     function handleSubmit(){
-        let formData = new FormData();
-        formData.append('input1', stajDegerlendirmeFormu);
-        formData.append('input2', relatedToCS);
-        formData.append('input3', supervisorSimilarBackground);
-        formData.append('input4', partBSatisfactory === "satisfactory"? "choice1": "choice2");
-        formData.append('input5', revisionDate);
-        formData.append('input6', tableAssesment1);
-        formData.append('input7', sumOfItems2_7);
-        formData.append('input8', tableAssesment8);
-        formData.append('input9', reportSatisfactory === "satisfactory"? "choice1": "choice2");
-        formData.append('input10', recommendPlace);
-        formData.append('input11', tableEvidence1);
-        formData.append('input12', tableAssesment1);
-        formData.append('input13', tableEvidence2);
-        formData.append('input14', tableAssesment2);
-        formData.append('input15', tableEvidence3);
-        formData.append('input16', tableAssesment3);
-        formData.append('input17', tableEvidence4);
-        formData.append('input18', tableAssesment4);
-        formData.append('input19', tableEvidence5);
-        formData.append('input20', tableAssesment5);
-        formData.append('input21', tableEvidence6);
-        formData.append('input22', tableAssesment6);
-        formData.append('input23', tableEvidence7);
-        formData.append('input24', tableAssesment7);
-        formData.append('input25', tableEvidence8);
-        formData.append('input26', tableAssesment8);
-        formData.append('formName', "company");
+        let formData = {
+        input1: stajDegerlendirmeFormu.toString(),
+        input2: relatedToCS,
+        input3: supervisorSimilarBackground,
+        input4: partBSatisfactory === "satisfactory"? "choice1": "choice2",
+        input5: revisionDate,
+        input6: tableAssesment1.toString(),
+        input7: sumOfItems2_7.toString(),
+        input8: tableAssesment8.toString(),
+        input9: reportSatisfactory === "satisfactory"? "choice1": "choice2",
+        input10: recommendPlace.toString(),
+        input11: tableEvidence1.toString(),
+        input12: tableAssesment1.toString(),
+        input13: tableEvidence2.toString(),
+        input14: tableAssesment2.toString(),
+        input15: tableEvidence3.toString(),
+        input16: tableAssesment3.toString(),
+        input17: tableEvidence4.toString(),
+        input18: tableAssesment4.toString(),
+        input19: tableEvidence5.toString(),
+        input20: tableAssesment5.toString(),
+        input21: tableEvidence6.toString(),
+        input22: tableAssesment6.toString(),
+        input23: tableEvidence7.toString(),
+        input24: tableAssesment7.toString(),
+        input25: tableEvidence8.toString(),
+        input26: tableAssesment8.toString(),
+        formName: "company"};
 
-        submitGradingForm(3, formData, "multipart/form-data")
-            .then(res => {
-                console.log(res.data)
-                dispatch(setTimedAlert("Grading form submitted successfully", "success"));
-            })
-            .catch(err => {
-                console.log(err)
+        const objectData = JSON.stringify(formData)
 
-                dispatch(setTimedAlert("Grading form submission failed", "error"));
-            });
+         submitGradingForm(3, objectData)
+             .then(res => {
+                 console.log(res.data)
+                 dispatch(setTimedAlert("Grading form submitted successfully", "success"));
+             })
+             .catch(err => {
+                 console.log(err)
+
+                 dispatch(setTimedAlert("Grading form submission failed", "error"));
+             });
     }
 
     return (
