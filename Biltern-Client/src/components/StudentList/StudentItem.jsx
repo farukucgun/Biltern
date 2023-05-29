@@ -3,11 +3,11 @@ import React from 'react';
 import classes from "./StudentItem.module.css";
 
 const StudentItem = (props) => {
-    const {courseCode, dueDate, studentName, graderName, taName, reportStats, reportId, taId, studentId, graderId, key} = props.report;
-    const {onStudentClicked, department} = props;
+    const {courseCode, dueDate, studentName, graderName, taName, reportStats, reportId, taId, studentId, graderId} = props.report;
+    const {onStudentClicked, department, index} = props;
 
     const clickHandler = () => {
-        onStudentClicked(studentId, key);
+        onStudentClicked(studentId, index);
     }
 
     return (

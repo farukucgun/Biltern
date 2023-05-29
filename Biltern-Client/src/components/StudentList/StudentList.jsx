@@ -20,8 +20,7 @@ const StudentList = () => {
         if (role == "TEACHING_ASSISTANT") {
             getTeachingAssistantDetails()
                 .then(res => {
-                    console.log(res.data);
-
+                    
                     // DUE DATE CHECKS
 
                     setReports(res.data.reports);
@@ -84,6 +83,7 @@ const StudentList = () => {
                     <StudentItem 
                         report={report} 
                         key={index}
+                        index={index}
                         onStudentClicked={studentClickHandler}
                         department={department}
                     />
