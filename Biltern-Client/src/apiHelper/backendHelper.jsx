@@ -102,7 +102,7 @@ export const deleteGrader = async (data) => {
 }
 
 export const getGraderDetails = async () => {
-    return await getFetcher(url.GRADER_PATH());
+    return await getFetcher(url.GRADER_DETAILS_PATH());
 }
 
 // secretary controller
@@ -130,6 +130,10 @@ export const deleteStudent = async (data) => {
 export const getStudentDetails = async () => {
     return await getFetcher(url.STUDENT_DETAILS_PATH());
 }
+
+export const getStudentDetailsById = async (studentId) => {
+    return await getFetcher(url.STUDENT_DETAILS_BY_ID_PATH(studentId));
+}  
 
 // teaching assistant controller
 export const getTeachingAssistants = async () => {

@@ -70,7 +70,7 @@ const App = () => {
             <Route path="/login/newpassword" element={<NewPassword />}/>
             <Route path="/dashboard" element={<PrivateRoute component={<Dashboard />}/>}/>   
             <Route path="/uploadedfiles" element={<PrivateRoute component={<UploadedFiles />}/>}/>
-            <Route path="/currentstatus" element={<PrivateRoute component={<CurrentStatus />}/>}/>
+            <Route path="/currentstatus/:id" element={<PrivateRoute component={<CurrentStatus />}/>}/>
             <Route path="/semesterinitialization" element={<PrivateRoute component={<SemesterInitialization />}/>}/>
             <Route path="/roleassignment" element={<PrivateRoute component={<RoleAssignment />}/>}/>
             <Route path="/registeruser" element={<PrivateRoute component={<RegisterUser />}/>}/>

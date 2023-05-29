@@ -12,6 +12,8 @@ const StudentReportStage = (props) => {
     const {id} = props;
     const [dueDate, setDueDate] = useState(null);
     const [datePickerOpen, setDatePickerOpen] = useState(false);
+    const [studentFile, setStudentFile] = useState(null);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -23,41 +25,39 @@ const StudentReportStage = (props) => {
             .catch(err => {
                 dispatch(setTimedAlert({msg: "Error while fetching due date", alertType: "error", timeout: 4000}));
             });
+
+        getReportContent(id, 'arraybuffer', true)
+        .then(res => {
+            const blob = new Blob([res.data], {type: 'application/pdf'});
+
+            setStudentFile(blob);
+
+        })
+        .catch(err => {
+            dispatch(setTimedAlert({msg: "Error while fetching report", alertType: "error", timeout: 4000}));
+        });
     }, []);
 
     const ViewReportHandler = async () => {
-        console.log("navigate to report with id to display report");
-        // navigate(`/report/${id}`);
+        navigate("/displayfilepage", {state:{url: URL.createObjectURL(studentFile)}});
     }
 
     const downloadReportHandler = async () => {
-
-        const onFetchReport = (blob) => {
-            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                window.navigator.msSaveOrOpenBlob(blob, 'file.pdf');
-            } 
-            else {
-                const url = window.URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = 'file.pdf';
-                link.click();
-            
-                setTimeout(() => {
-                    window.URL.revokeObjectURL(url);
-                    link.remove();
-                }, 0);
-            }
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+            window.navigator.msSaveOrOpenBlob(studentFile, 'file.pdf');
+        } 
+        else {
+            const url = window.URL.createObjectURL(studentFile);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'file.pdf';
+            link.click();
+        
+            setTimeout(() => {
+                window.URL.revokeObjectURL(url);
+                link.remove();
+            }, 0);
         }
-    
-        getReportContent(id, 'arraybuffer', true)
-            .then(res => {
-                const blob = new Blob([res.data], {type: 'application/pdf'});
-                onFetchReport(blob);
-            })
-            .catch(err => {
-                dispatch(setTimedAlert({msg: "Error while fetching report", alertType: "error", timeout: 4000}));
-            });
     }
 
     const showExtendDeadline = () => {
@@ -75,6 +75,10 @@ const StudentReportStage = (props) => {
                 dispatch(setTimedAlert({msg: "Error while extending deadline", alertType: "error", timeout: 4000}));
             });
         setDatePickerOpen(false);
+    }
+
+    const gradeHandler = () => {
+        navigate("/gradingformpage", {state:{url: URL.createObjectURL(studentFile)}});
     }
 
     return (
@@ -98,6 +102,11 @@ const StudentReportStage = (props) => {
                         className=""
                         text="Extend Deadline"
                         onClick={showExtendDeadline}
+                    />
+                    <ActionButton
+                        className=""
+                        text="Grade"
+                        onClick={gradeHandler}
                     />
                 </div>
             </div>
