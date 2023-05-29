@@ -6,7 +6,6 @@ import { setTimedAlert } from '../../../features/alertSlice';
 import { getReportStatus, getCompanyStatus } from '../../../apiHelper/backendHelper'; 
 
 import classes from '../CurrentStatus.module.css';
-import IterationStage from '../Student/IterationStage';
 
 /**
  * @author Faruk Uçgun
@@ -14,7 +13,7 @@ import IterationStage from '../Student/IterationStage';
  */
 
 const TACurrentStage = (props) => {
-    const { id, authorizedId, role, name, email, department, reports, reportId } = props;
+    const { id, authorizedId, name, email, role, department, report }= props;
     const dispatch = useDispatch();
     const dummyId = 1;
 
@@ -35,7 +34,7 @@ const TACurrentStage = (props) => {
     ];
 
     useEffect(() => {
-        getReportStatus(reportId || dummyId)
+        getReportStatus(report.reportId || 1)
         .then(res => {
             setReportStatus(res.data);
             for (const status of allStats) {
@@ -49,33 +48,29 @@ const TACurrentStage = (props) => {
             }
         })
         .catch(err => {
-            dispatch(setTimedAlert("Error while fetching report status", "error"));
+            dispatch(setTimedAlert({msg: "Error while fetching report status", alertType: "error", timeout: 4000}));
         })
 
-        getCompanyStatus(reportId || dummyId)
+        getCompanyStatus(report.reportId || 1)
         .then(res => {
             setCompanyStatus(res.data);
         })
         .catch(err => {
-            dispatch(setTimedAlert("Error while fetching company status", "error"));
+            dispatch(setTimedAlert({msg: "Error while fetching company status", alertType: "error", timeout: 4000}));
         })
     }, []);
-
-    const nameDisplayed = id == authorizedId ? name : reports[0].studentName;
-    const emailDisplayed = id == authorizedId ? email : reports[0].studentMail;
-    const idDisplayed = id == authorizedId ? id : reports[0].studentId;
 
     return (
         <div className={classes.currentStatusPage}>
             <div className={classes.infoPane}>
                 <div className={classes.infoPaneLeft}>
-                    <h2>{nameDisplayed}</h2>
+                    <h2>{report.studentName}</h2>
                     <p>{department}</p>
                 </div>
                 <div className={classes.infoPaneRight}>
-                    <p>Contact: {emailDisplayed}</p>
-                    <p>Courses: {reports[0].courseCode || "CS-299"}</p>
-                    <p>Bilkent ID: {idDisplayed}</p>
+                    <p>Contact: {report.studentMail || email}</p>
+                    <p>Courses: {report.courseCode || "CS-299"}</p>
+                    <p>Bilkent ID: {report.studentId || id}</p>
                 </div>
             </div>
                 <h3>Company Evaluation Status</h3>
@@ -89,9 +84,9 @@ const TACurrentStage = (props) => {
                 <h3 className={classes.singleState}>{reportStatus[2]}</h3>
             </div>
             {curStatus == "SUBMITTED" ? 
-            <TAEvaluationStage id={reportId || dummyId}/>
+            <TAEvaluationStage id={report.reportId || 1}/>
             :
-            <StudentReportStage id={reportId || dummyId}/>}
+            <StudentReportStage id={report.reportId || 1}/>}
         </div>
     );
 }
