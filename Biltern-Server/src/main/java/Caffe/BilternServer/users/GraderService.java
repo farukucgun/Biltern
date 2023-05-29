@@ -74,6 +74,8 @@ public class GraderService {
             reportDTO.setTaId(report.getTeachingAssistant().getBilkentId());
             reportDTO.setTaName(report.getTeachingAssistant().getUserName());
 
+
+            reportDTO.setStudentMail(report.getStudent().getBilkentMail());
             reportDTO.setStudentId(report.getStudent().getBilkentId());
             reportDTO.setStudentName(report.getStudent().getUserName());
 
