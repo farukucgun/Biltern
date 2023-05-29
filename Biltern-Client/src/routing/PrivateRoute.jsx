@@ -17,14 +17,14 @@ const PrivateRoute = (props) => {
     const loading = useSelector(state => state.auth.loading);
 
     useEffect(() => {
-        if (props.role && props.role !== role) {
+        if (props.notAllowed && props.notAllowed == role) {
             dispatch(setTimedAlert({msg: 'You are not authorized to view this page.', alertType: 'warning', timeout: 4000}));
         }
-    }, [dispatch, props.role, role]);
+    }, [dispatch, props.notAllowed, role]);
         
     if (loading) return <Spinner />;
     if (isAuthenticated) {
-        if (props.role && props.role !== role) {
+        if (props.notAllowed && props.notAllowed == role) {
             return <Navigate to='/dashboard' />;
         }
         return Component;

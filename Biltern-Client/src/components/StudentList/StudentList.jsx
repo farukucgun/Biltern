@@ -3,8 +3,9 @@ import StudentItem from './StudentItem';
 import ActionButton from '../../UI/ActionButton';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getGraderDetails, getTeachingAssistantDetails } from '../../apiHelper/backendHelper';
+import { getGraderDetails, getTeachingAssistantDetails, getSecretaries } from '../../apiHelper/backendHelper';
 import { setTimedAlert } from '../../features/alertSlice';
+import axios from 'axios';
 
 import classes from "./StudentList.module.css";
 
@@ -33,6 +34,7 @@ const StudentList = () => {
         } else if (role == "FACULTY_MEMBER") {
             getGraderDetails()
                 .then(res => {
+                    console.log(res.data);
                     setReports(res.data.reports);
                     setDepartment(res.data.department);
                 })
@@ -42,8 +44,8 @@ const StudentList = () => {
         }
     }, []);
 
-    const studentClickHandler = (id, reportId) => {
-        navigate(`/currentstatus/${id}`, {state:{department: department, reports: reports, reportId: reportId}});
+    const studentClickHandler = (id, index) => {
+        navigate(`/currentstatus/${id}`, {state:{department: department, report: reports[index]}});
     }
 
     const studentSearchHandler = () => {
@@ -78,10 +80,10 @@ const StudentList = () => {
             </div>
 
             <ul className={classes.studentList}>
-                {reports.map((report) => 
+                {reports.map((report, index) => 
                     <StudentItem 
                         report={report} 
-                        key={report.studentId}
+                        key={index}
                         onStudentClicked={studentClickHandler}
                         department={department}
                     />
