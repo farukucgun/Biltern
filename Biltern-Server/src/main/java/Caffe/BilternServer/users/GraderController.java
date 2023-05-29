@@ -14,6 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * This is the controller class for the user with type Grader
+ */
 
 @CrossOrigin("${client.domain}")
 @RestController

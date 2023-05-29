@@ -6,6 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * This is the controller class for the user with type Student
+ */
 
 @CrossOrigin(origins = "${client.domain}")
 @RestController

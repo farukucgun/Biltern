@@ -8,6 +8,10 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * This is the entity class for the user with type TeachingAssistant
+ */
+
 @Data
 @Entity
 public class TeachingAssistant extends BilternUser {
