@@ -39,18 +39,21 @@ public class Report {
     private CompanyStats companyStats;
 
 
-    @JsonIgnore
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "studentId")
     private Student student;
+
 
     @ManyToOne
     @JoinColumn(name = "graderId")
     private Grader grader;
 
+
     @ManyToOne
     @JoinColumn(name = "teachingAssistantId")
     private TeachingAssistant teachingAssistant;
+
 
     @ManyToOne
     @JoinColumn(name = "courseId")
