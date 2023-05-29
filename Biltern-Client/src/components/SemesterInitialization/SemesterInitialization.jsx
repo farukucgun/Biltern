@@ -24,13 +24,14 @@ const SemesterInitialization = () => {
                 dispatch(setTimedAlert("Semester initialized successfully", "success"));
             })
             .catch(err => {
+                console.log(err);
                 dispatch(setTimedAlert("Semester initialization failed", "error"));
             });
     }
 
     return (
         <div className={classes.semesterInit_container}>
-            <h1>System Initialization</h1>
+            <h1>Semester Initialization</h1>
             <FileUpload 
                 accept=".xlsx" 
                 multiple={false}
