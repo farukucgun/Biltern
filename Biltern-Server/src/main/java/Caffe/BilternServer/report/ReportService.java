@@ -125,18 +125,25 @@ public class ReportService {
     public void addIteration(Long reportId){
         Report report = reportRepository.getById(reportId);
         report.setIteration(true);
+
         Report newReport = new Report(report);
+        Feedback feedback = new Feedback(newReport);
 
+        if(report.getFeedback() != null){
+            feedback.setPdfData(report.getFeedback().getPdfData());
+        }
+
+
+        newReport.setFeedback(feedback);
+
+        newReport.setGradingForm(report.getGradingForm());
+        newReport.getGradingForm().setReport(newReport);
         newReport.setPreviousIteration(report);
-
+        newReport.setIteration(false);
+        report.setGradingForm(null);
         newReport.setReportStats(ReportStats.ITERATION);
-
-        newReport = reportRepository.save(newReport);
-        report.setId(newReport.getId());
-        newReport.setId(reportId);
-
-        reportRepository.save(newReport);
         reportRepository.save(report);
+        reportRepository.save(newReport);
     }
 
     public ReportStats getReportStatus(Long reportId){
@@ -232,5 +239,13 @@ public class ReportService {
 
     public LocalDate getapprovalDueDate(Long reportId){
         return reportRepository.getById(reportId).getApprovalDueDate();
+    }
+
+    public ByteArrayResource downloadIteration(Long reportId){
+        Report report = reportRepository.getById(reportId);
+        byte[] reportPdf = report.getReportPdf();
+        ByteArrayResource byteArrayResource = new ByteArrayResource(reportPdf);
+
+        return byteArrayResource;
     }
 }
