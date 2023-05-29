@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This is the service class for the user with type Coordinator
+ */
 @Service
 public class CoordinatorService {
 
