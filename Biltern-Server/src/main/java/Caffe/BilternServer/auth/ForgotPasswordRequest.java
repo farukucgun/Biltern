@@ -7,8 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author jmo
- * @date 8.05.2023
+ * This is the entity class for the forgot password request from a user in case they forget it
  */
 
 

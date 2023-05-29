@@ -3,6 +3,10 @@ package Caffe.BilternServer.report.Feedback;
 import Caffe.BilternServer.report.Report;
 import jakarta.persistence.*;
 
+/**
+ * This is the entity class for the Feedback object
+ */
+
 @Entity(name = "Feedback")
 public class Feedback {
 

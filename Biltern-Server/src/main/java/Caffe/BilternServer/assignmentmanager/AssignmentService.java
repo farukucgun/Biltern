@@ -25,6 +25,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * This is the service class for the assignment of users
+ */
+
 @Service
 public class AssignmentService {
 
