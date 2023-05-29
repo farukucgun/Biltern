@@ -13,6 +13,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 import java.util.Map;
 
 /**
@@ -54,15 +55,18 @@ public class GradingFormService {
             String formattedDate = currentDate.format(formatter);
             formFields.setField("date", formattedDate);
 
-            PdfDictionary fieldDict = formFields.getFieldItem("sig").getMerged(0);
-            PdfDictionary widgetDict = fieldDict.getAsDict(PdfName.AP);
-            PdfDictionary normalDict = widgetDict.getAsDict(PdfName.N);
+//            PdfDictionary fieldDict = formFields.getFieldItem("sig").getMerged(0);
+//            PdfDictionary widgetDict = fieldDict.getAsDict(PdfName.AP);
+//            PdfDictionary normalDict = widgetDict.getAsDict(PdfName.N);
+//
+//
+//            PdfImage image = new PdfImage(Image.getInstance(report.getGrader().getSignature()), "", null);
+//            image.put(PdfName.TYPE, PdfName.XOBJECT);
+//            image.put(PdfName.SUBTYPE, PdfName.IMAGE);
+//            normalDict.put(PdfName.RESOURCES, image);
 
-
-            PdfImage image = new PdfImage(Image.getInstance(report.getGrader().getSignature()), "", null);
-            image.put(PdfName.TYPE, PdfName.XOBJECT);
-            image.put(PdfName.SUBTYPE, PdfName.IMAGE);
-            normalDict.put(PdfName.RESOURCES, image);
+            String base64Image = Base64.getEncoder().encodeToString(report.getGrader().getSignature());
+            formFields.setField("sig", base64Image);
 
             for (Map.Entry<String, String> entry : grades.entrySet()) {
                 formFields.setField(entry.getKey().toLowerCase().trim(),entry.getValue());

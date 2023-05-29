@@ -6,10 +6,9 @@ import Caffe.BilternServer.report.ReportStats;
 import Caffe.BilternServer.auth.BilternUser;
 import Caffe.BilternServer.auth.BilternUserRole;
 import Caffe.BilternServer.auth.BilternUserService;
-import Caffe.BilternServer.users.Coordinator;
-import Caffe.BilternServer.users.Grader;
-import Caffe.BilternServer.users.TeachingAssistant;
+import Caffe.BilternServer.users.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -64,10 +63,24 @@ public class StatisticsService {
 
     public List<Map<ReportStats, Integer>> getDepartmentCourseStatistics(){
 
-        Coordinator coordinator =
-                (Coordinator) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Department department;
+        BilternUserRole bilternUserRole = ((BilternUser)
+                SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getBilternUserRole();
 
-        return reportService.getDepartmentStats(coordinator.getDepartment());
+
+        if(bilternUserRole == BilternUserRole.DEPARTMENT_COORDINATOR){
+            department = ((Coordinator) SecurityContextHolder.getContext()
+                    .getAuthentication().getPrincipal()).getDepartment();
+        }
+        else{
+            department = ((Secretary)
+                    SecurityContextHolder.getContext()
+                            .getAuthentication().getPrincipal()).getDepartment();
+        }
+
+
+
+        return reportService.getDepartmentStats(department);
     }
 
 }

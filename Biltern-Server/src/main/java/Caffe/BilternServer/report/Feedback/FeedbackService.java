@@ -23,7 +23,7 @@ public class FeedbackService {
 
     @Transactional
     public void saveReportFeedback(Long reportId, byte[] feedbackPDF){
-        Feedback feedback = feedbackRepository.findByReportIdAndAndIsPrev(reportId, false).get();
+        Feedback feedback = feedbackRepository.findByReportId(reportId);
         if(feedback == null){
             feedback = new Feedback();
             feedback.setReport(reportRepository.findById(reportId).orElse(null));
