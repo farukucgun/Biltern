@@ -7,10 +7,9 @@ import pdf from "./CS319_AnalysisReport_Iter1_Caffe (2).pdf";
 import { pdfjs } from 'react-pdf';
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
-import { submitGradingForm } from "../../apiHelper/backendHelper";
-import { useDispatch } from 'react-redux';
-import { setTimedAlert } from '../../features/alertSlice';
-import axios from 'axios';
+import { submitGradingForm, getGrading, getGradingForm } from "../../apiHelper/backendHelper";
+import FileUpload from '../../UI/FileUpload';
+import { uploadSignature, displaySignature } from "../../apiHelper/backendHelper";
 
 
 pdfjs.GlobalWorkerOptions.workerSrc = 
@@ -18,7 +17,6 @@ pdfjs.GlobalWorkerOptions.workerSrc =
 
 export default function GradingFormPage(){
 
-    const dispatch = useDispatch();
 
     const [numPages, setNumPages] = React.useState(null);
 
@@ -38,75 +36,181 @@ export default function GradingFormPage(){
     }
 
 
-    const [stajDegerlendirmeFormu, setStajDegerlendirmeFormu] = React.useState(0);
-    const [relatedToCS, setRelatedToCS] = React.useState("N");
-    const [supervisorSimilarBackground, setSupervisorSimilarBackground] = React.useState("N");
-    const [partBSatisfactory, setPartBSatisfactory] = React.useState("");
-    const [revisionDate, setRevisionDate] = React.useState("")
-    const [tableEvidence1, setTableEvidence1] = React.useState("");
-    const [tableEvidence2, setTableEvidence2] = React.useState("");
-    const [tableEvidence3, setTableEvidence3] = React.useState("");
-    const [tableEvidence4, setTableEvidence4] = React.useState("");
-    const [tableEvidence5, setTableEvidence5] = React.useState("");
-    const [tableEvidence6, setTableEvidence6] = React.useState("");
-    const [tableEvidence7, setTableEvidence7] = React.useState("");
-    const [tableEvidence8, setTableEvidence8] = React.useState("");
-    const [tableAssesment1, setTableAssesment1] = React.useState(0);
-    const [tableAssesment2, setTableAssesment2] = React.useState(0);
-    const [tableAssesment3, setTableAssesment3] = React.useState(0);
-    const [tableAssesment4, setTableAssesment4] = React.useState(0);
-    const [tableAssesment5, setTableAssesment5] = React.useState(0);
-    const [tableAssesment6, setTableAssesment6] = React.useState(0);
-    const [tableAssesment7, setTableAssesment7] = React.useState(0);
-    const [tableAssesment8, setTableAssesment8] = React.useState(0);
-    const [reportSatisfactory, setReportSatisfactory] = React.useState("");
-    const [recommendPlace, setRecommendPlace] = React.useState("");
-    const [signature, setSignature] = React.useState("");
+    const [stajDegerlendirmeFormu, setStajDegerlendirmeFormu] = React.useState(undefined);
+    const [relatedToCS, setRelatedToCS] = React.useState(undefined);
+    const [supervisorSimilarBackground, setSupervisorSimilarBackground] = React.useState(undefined);
+    const [partBSatisfactory, setPartBSatisfactory] = React.useState(undefined);
+    const [revisionDate, setRevisionDate] = React.useState(undefined)
+    const [tableEvidence1, setTableEvidence1] = React.useState(undefined);
+    const [tableEvidence2, setTableEvidence2] = React.useState(undefined);
+    const [tableEvidence3, setTableEvidence3] = React.useState(undefined);
+    const [tableEvidence4, setTableEvidence4] = React.useState(undefined);
+    const [tableEvidence5, setTableEvidence5] = React.useState(undefined);
+    const [tableEvidence6, setTableEvidence6] = React.useState(undefined);
+    const [tableEvidence7, setTableEvidence7] = React.useState(undefined);
+    const [tableEvidence8, setTableEvidence8] = React.useState(undefined);
+    const [tableAssesment1, setTableAssesment1] = React.useState(undefined);
+    const [tableAssesment2, setTableAssesment2] = React.useState(undefined);
+    const [tableAssesment3, setTableAssesment3] = React.useState(undefined);
+    const [tableAssesment4, setTableAssesment4] = React.useState(undefined);
+    const [tableAssesment5, setTableAssesment5] = React.useState(undefined);
+    const [tableAssesment6, setTableAssesment6] = React.useState(undefined);
+    const [tableAssesment7, setTableAssesment7] = React.useState(undefined);
+    const [tableAssesment8, setTableAssesment8] = React.useState(undefined);
+    const [reportSatisfactory, setReportSatisfactory] = React.useState(undefined);
+    const [recommendPlace, setRecommendPlace] = React.useState(undefined);
+    const [signature, setSignature] = React.useState(undefined);
 
     const sumOfItems2_7 = tableAssesment2 + tableAssesment3 + tableAssesment4 + tableAssesment5+ tableAssesment6 +tableAssesment7;
 
+    function handleSubmitPartA(){
+        let formData = {
+            input1: stajDegerlendirmeFormu,
+            input2: relatedToCS,
+            input3: supervisorSimilarBackground,
+            input9: reportSatisfactory === "satisfactory"? "choice1": "choice2",
+            input10: recommendPlace,
+            formName: "company"
+        }
+        submitGradingForm(3, formData)
+        .then(res => {
+            console.log(res.data)
+        })
+        .catch(err => {
+            console.log(err)
+        });
+    }
     function handleSubmit(){
         let formData = {
-        input1: stajDegerlendirmeFormu.toString(),
+        input1: stajDegerlendirmeFormu,
         input2: relatedToCS,
         input3: supervisorSimilarBackground,
         input4: partBSatisfactory === "satisfactory"? "choice1": "choice2",
         input5: revisionDate,
-        input6: tableAssesment1.toString(),
-        input7: sumOfItems2_7.toString(),
-        input8: tableAssesment8.toString(),
+        input6: tableAssesment1,
+        input7: sumOfItems2_7,
+        input8: tableAssesment8,
         input9: reportSatisfactory === "satisfactory"? "choice1": "choice2",
-        input10: recommendPlace.toString(),
-        input11: tableEvidence1.toString(),
-        input12: tableAssesment1.toString(),
-        input13: tableEvidence2.toString(),
-        input14: tableAssesment2.toString(),
-        input15: tableEvidence3.toString(),
-        input16: tableAssesment3.toString(),
-        input17: tableEvidence4.toString(),
-        input18: tableAssesment4.toString(),
-        input19: tableEvidence5.toString(),
-        input20: tableAssesment5.toString(),
-        input21: tableEvidence6.toString(),
-        input22: tableAssesment6.toString(),
-        input23: tableEvidence7.toString(),
-        input24: tableAssesment7.toString(),
-        input25: tableEvidence8.toString(),
-        input26: tableAssesment8.toString(),
-        formName: "company"};
+        input10: recommendPlace,
+        input11: tableEvidence1,
+        input12: tableAssesment1,
+        input13: tableEvidence2,
+        input14: tableAssesment2,
+        input15: tableEvidence3,
+        input16: tableAssesment3,
+        input17: tableEvidence4,
+        input18: tableAssesment4,
+        input19: tableEvidence5,
+        input20: tableAssesment5,
+        input21: tableEvidence6,
+        input22: tableAssesment6,
+        input23: tableEvidence7,
+        input24: tableAssesment7,
+        input25: tableEvidence8,
+        input26: tableAssesment8,
+        formName: (tableEvidence1 === undefined? "iteration": "final") 
+        }
 
-        const objectData = JSON.stringify(formData)
-
-         submitGradingForm(3, objectData)
+         submitGradingForm(3, formData)
              .then(res => {
                  console.log(res.data)
-                 dispatch(setTimedAlert("Grading form submitted successfully", "success"));
              })
              .catch(err => {
                  console.log(err)
-
-                 dispatch(setTimedAlert("Grading form submission failed", "error"));
              });
+    }
+    React.useEffect(() =>{
+        getGrading(3)
+        .then(res => {
+            console.log(res.data);
+            setReportSatisfactory(res.data.input9 === "choice1"? "satisfactory": "unsatisfactory" );
+            setRecommendPlace(res.data.input10);
+            if(res.data.input1 !== undefined ){
+                setStajDegerlendirmeFormu(parseInt(res.data.input1));
+                setRelatedToCS(res.data.input2);
+                setSupervisorSimilarBackground(res.data.input3);
+            }
+            if( res.data.input4 !== undefined){
+                setPartBSatisfactory(res.data.input4 === "choice1"? "satisfactory": "revisionRequired");
+                setRevisionDate(res.data.input5);
+                if( res.data.input6 !== undefined){
+                    setTableEvidence1(res.data.input11);
+                    setTableAssesment1(parseInt(res.data.input12));
+                    setTableEvidence2(res.data.input13);
+                    setTableAssesment2(parseInt(res.data.input14));
+                    setTableEvidence3(res.data.input15);
+                    setTableAssesment3(parseInt(res.data.input16));
+                    setTableEvidence4(res.data.input17);
+                    setTableAssesment4(parseInt(res.data.input18));
+                    setTableEvidence5(res.data.input19);
+                    setTableAssesment5(parseInt(res.data.input20));
+                    setTableEvidence6(res.data.input21);
+                    setTableAssesment6(parseInt(res.data.input22));
+                    setTableEvidence7(res.data.input23);
+                    setTableAssesment7(parseInt(res.data.input24));
+                    setTableEvidence8(res.data.input25);
+                    setTableAssesment8(parseInt(res.data.input26));
+                }
+            }
+
+
+        })
+        .catch(err => {
+            console.log(err)
+        });
+    },[])
+
+
+    const uploadSignatureHandler = (files) => {
+        console.log(files[0]);
+        const formData = new FormData();
+        formData.append('file', files[0]);
+        uploadSignature(2222, formData, "multipart/form-data")
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch(err => {
+                // console.log(err)
+            });
+    }
+/*
+    React.useEffect(()=>{
+        displaySignature(2222, "image/png")
+        .then(res => {
+            console.log(res.data)
+        })
+        .catch(err => {
+            // console.log(err)
+    });
+    },[])
+*/
+
+    const downloadReport = (blob) => {
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+            window.navigator.msSaveOrOpenBlob(blob, 'file.pdf');
+        } 
+        else {
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'file.pdf';
+            link.click();
+        
+            setTimeout(() => {
+                window.URL.revokeObjectURL(url);
+                link.remove();
+            }, 0);
+        }
+    }
+    function downloadGradingFormHandler(){
+        getGradingForm(3, 'arraybuffer', true)
+        .then(res => {
+            const blob = new Blob([res.data], {type: 'application/pdf'});
+            downloadReport(blob);
+        })
+        .catch(err => {
+            console.log(err);
+        });
     }
 
     return (
@@ -118,21 +222,23 @@ export default function GradingFormPage(){
                 onDragEnd={(ev)=>onSlide(ev)}
             >
 
-            
-                <div className={classes.student_report}>
-                    <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess} >
-                        {Array.from(new Array(numPages), (el, index) => (
-                            <Page 
-                                className={classes.page} 
-                                key={`page_${index + 1}`} 
-                                pageNumber={index + 1} 
-                                scale={scale} 
-                            />
-                        ))}
-                    </Document>
-                </div>
                 <div>
-                        <div className={classes.part_a}>
+                    <div className={classes.student_report}>
+                        <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess} >
+                            {Array.from(new Array(numPages), (el, index) => (
+                                <Page 
+                                    className={classes.page} 
+                                    key={`page_${index + 1}`} 
+                                    pageNumber={index + 1} 
+                                    scale={scale} 
+                                />
+                            ))}
+                        </Document>
+                    </div>
+                </div>
+
+                <div className={classes.grading}>
+                        <div className={classes.grading_parts}>
                             <h3>
                                 Part-A: Work Place
                             </h3>
@@ -144,6 +250,7 @@ export default function GradingFormPage(){
                                     (Staj değerlendirme formu) filled by employer:
                                     <input 
                                         type="number"  
+                                        defaultValue={stajDegerlendirmeFormu}
                                         onChange={(ev)=>setStajDegerlendirmeFormu(ev.target.valueAsNumber)}
                                     />
                                 </label>
@@ -156,8 +263,9 @@ export default function GradingFormPage(){
                                     <select
                                         onChange={(choice)=>setRelatedToCS(choice.target.value)}    
                                     >
-                                        <option value="N">N</option>
-                                        <option value="Y">Y</option>
+                                        <option>Select</option>
+                                        <option value="N" selected={relatedToCS === "N"}>N</option>
+                                        <option value="Y" selected={relatedToCS === "Y"}>Y</option>
                                     </select>
                                 </label>
                                 <label><br/>
@@ -165,11 +273,17 @@ export default function GradingFormPage(){
                                     <select
                                         onChange={(choice)=>setSupervisorSimilarBackground(choice.target.value)} 
                                     >
-                                        <option value="N">N</option>
-                                        <option value="Y">Y</option>
+                                        <option>Select</option>
+                                        <option value="N" selected={supervisorSimilarBackground === "N"}>N</option>
+                                        <option value="Y" selected={supervisorSimilarBackground === "Y"}>Y</option>
                                     </select>
                                 </label>
-                            </form>
+                            </form><br/>
+                            <button
+                                onClick={handleSubmitPartA}
+                            >
+                                Submit Part-A
+                            </button>
                         </div>
                         <p className={classes.explaining_information}>
                             ...... If all conditions in Part-A are satisfied, continue to Part-B,
@@ -177,7 +291,7 @@ export default function GradingFormPage(){
                         </p>
 
 
-                        <div className={classes.part_a}>
+                        <div className={classes.grading_parts}>
                             <h3>
                                 Part-B: Report
                             </h3>
@@ -208,6 +322,7 @@ export default function GradingFormPage(){
                                     <input 
                                         type="date" 
                                         style={{width: 100}}
+                                        defaultValue={revisionDate}
                                         onChange={(event)=>setRevisionDate(event.target.value)}
                                     />
                                 </label>
@@ -220,8 +335,10 @@ export default function GradingFormPage(){
                             ...... If the report in Part-B is Satisfactory, continue to Part-C,
                             else return it to the student for Revision ......
                         </p>
-
-                        <div className={classes.part_a}>
+                        {
+                            revisionDate !== undefined &&
+                            <div>
+                                <div className={classes.grading_parts}>
                             <table>
                                 <tr>
                                     <th> Evaluation of the Work </th>
@@ -237,12 +354,14 @@ export default function GradingFormPage(){
                                     <td>
                                         <input 
                                             type="text"
+                                            defaultValue={tableEvidence1}
                                             onChange={(event)=>setTableEvidence1(event.target.value)} 
                                         />
                                     </td>
                                     <td>
                                         <input 
                                             type="number" 
+                                            defaultValue={tableAssesment1}
                                             onChange={(event)=>setTableAssesment1(event.target.valueAsNumber)}
                                         />
                                     </td>
@@ -255,12 +374,14 @@ export default function GradingFormPage(){
                                     <td>
                                         <input 
                                             type="text"
+                                            defaultValue={tableEvidence2}
                                             onChange={(event)=>setTableEvidence2(event.target.value)} 
                                         />
                                     </td>
                                     <td>
                                         <input 
                                             type="number" 
+                                            defaultValue={tableAssesment2}
                                             onChange={(event)=>setTableAssesment2(event.target.valueAsNumber)}
                                         />
                                     </td>
@@ -272,12 +393,14 @@ export default function GradingFormPage(){
                                     <td>
                                         <input 
                                             type="text"
+                                            defaultValue={tableEvidence3}
                                             onChange={(event)=>setTableEvidence3(event.target.value)} 
                                         />
                                     </td>
                                     <td>
                                         <input 
                                             type="number" 
+                                            defaultValue={tableAssesment3}
                                             onChange={(event)=>setTableAssesment3(event.target.valueAsNumber)}
                                         />
                                     </td>
@@ -290,12 +413,14 @@ export default function GradingFormPage(){
                                     <td>
                                         <input 
                                             type="text"
+                                            defaultValue={tableEvidence4}
                                             onChange={(event)=>setTableEvidence4(event.target.value)} 
                                         />
                                     </td>
                                     <td>
                                         <input 
                                             type="number" 
+                                            defaultValue={tableAssesment4}
                                             onChange={(event)=>setTableAssesment4(event.target.valueAsNumber)}
                                         />
                                     </td>
@@ -308,12 +433,14 @@ export default function GradingFormPage(){
                                     <td>
                                         <input 
                                             type="text"
+                                            defaultValue={tableEvidence5}
                                             onChange={(event)=>setTableEvidence5(event.target.value)} 
                                         />
                                     </td>
                                     <td>
                                         <input 
                                             type="number" 
+                                            defaultValue={tableAssesment5}
                                             onChange={(event)=>setTableAssesment5(event.target.valueAsNumber)}
                                         />
                                     </td>
@@ -325,12 +452,14 @@ export default function GradingFormPage(){
                                     <td>
                                         <input 
                                             type="text"
+                                            defaultValue={tableEvidence6}
                                             onChange={(event)=>setTableEvidence6(event.target.value)} 
                                         />
                                     </td>
                                     <td>
                                         <input 
                                             type="number" 
+                                            defaultValue={tableAssesment6}
                                             onChange={(event)=>setTableAssesment6(event.target.valueAsNumber)}
                                         />
                                     </td>
@@ -342,19 +471,21 @@ export default function GradingFormPage(){
                                     <td>
                                         <input 
                                             type="text" 
+                                            defaultValue={tableEvidence7}
                                             onChange={(event)=>setTableEvidence7(event.target.value)}
                                         />
                                     </td>
                                     <td>
                                         <input 
                                             type="number" 
+                                            defaultValue={tableAssesment7}
                                             onChange={(event)=>setTableAssesment7(event.target.valueAsNumber)}
                                         />
                                     </td>
                                 </tr>
                             </table>
                         </div>
-                        <div className={classes.part_a}>
+                        <div className={classes.grading_parts}>
                             <table>
                                 <tr>
                                     <th> Evaluation of Report </th>
@@ -370,12 +501,14 @@ export default function GradingFormPage(){
                                     <td>
                                         <input 
                                             type="text"
+                                            defaultValue={tableEvidence8}
                                             onChange={(event)=>setTableEvidence8(event.target.value)} 
                                         />
                                     </td>
                                     <td>
                                         <input 
                                             type="number" 
+                                            defaultValue={tableAssesment8}
                                             onChange={(event)=>setTableAssesment8(event.target.valueAsNumber)}
                                         />
                                     </td>
@@ -384,7 +517,7 @@ export default function GradingFormPage(){
                         </div>
 
 
-                        <div className={classes.part_a}>
+                        <div className={classes.grading_parts}>
                             <h3>
                                 Part-C: Final Version of the Report
                             </h3>
@@ -424,7 +557,10 @@ export default function GradingFormPage(){
                                 </p>
                             </form>
                         </div>
-                        <div className={classes.part_a}>
+                            </div>
+                        }
+                        
+                        <div className={classes.grading_parts}>
                             <h3> Overall Evaluation</h3>
                             <label>
                                 Satisfactory
@@ -445,49 +581,65 @@ export default function GradingFormPage(){
                                 />
                             </label>
                         </div>
-                        <div className={classes.part_a}>
+                        <div className={classes.grading_parts}>
                             <label>
                                 <input 
                                     type="radio"
                                     value="choice1"
-                                    checked={reportSatisfactory === "choice1"}
+                                    checked={recommendPlace === "choice1"}
                                     onChange={(event)=>setRecommendPlace(event.target.value)}
                                 />
                                 I strongly recommend this place for future students
-                            </label>
+                            </label><br/>
                             <label>
                                 <input 
                                     type="radio"
                                     value="choice2"
-                                    checked={reportSatisfactory === "choice2"}
+                                    checked={recommendPlace === "choice2"}
                                     onChange={(event)=>setRecommendPlace(event.target.value)}
                                 />
                                 I am satisfied with this place 
-                            </label>
+                            </label><br/>
                             <label>
                                 <input 
                                     type="radio"
                                     value="choice3"
-                                    checked={reportSatisfactory === "choice3"}
+                                    checked={recommendPlace === "choice3"}
                                     onChange={(event)=>setRecommendPlace(event.target.value)}
                                 />
                                 Unsatisfactory
                             </label>
                         </div>
-                        <button 
-                            className={classes.submit_button}
-                            onClick={handleSubmit}
-                        >
-                            Submit
-                        </button>
-                        <button
+                        <div className={classes.buttons}>
+                            <div className={classes.upload_signature}>
+                            {signature === undefined
+                                ?
+                                <FileUpload 
+                                    accept=".png" 
+                                    multiple={false}
+                                    dragMessage="Drag and drop an png file here or click"
+                                    uploadMessage="Upload an png file"    
+                                    buttonMessage="Upload signature"
+                                    onSubmit={uploadSignatureHandler}
+                                />
+                                :
+                                <img src={signature} />
+                            }
 
-                        >
-                            Download Grading Form
-                        </button>
+                            </div>
+                            <button 
+                                onClick={handleSubmit}
+                            >
+                                Submit
+                            </button>
+                            <button
+                                onClick={downloadGradingFormHandler}
+                            >
+                                Download Grading Form
+                            </button>
+                        </div>
                     </div>
             </SplitPane>          
-
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import classes from '../styles/TAListPanel.module.css'
-import TaData from '../Data/TAList.json'
 import compare from '../../../../utils/sorting'
+import { getTeachingAssistants } from "../../../../apiHelper/backendHelper";
 
 /**
  * @author Enes Bektaş
@@ -10,9 +10,21 @@ import compare from '../../../../utils/sorting'
 
 export default function TAListPanel(){
 
-    const teachingAssitantsExist = TaData !== undefined;
+    React.useEffect(()=>{
+        getTeachingAssistants()
+        .then(res => {
+            console.log(res.data)
+            setTaData(res.data)
+        })
+        .catch(err => {
+            console.log(err)
 
-    let [taData, setTaData] = React.useState(TaData);
+    });
+    },[])
+
+
+    let [taData, setTaData] = React.useState([]);
+    const teachingAssitantsExist = taData.length !== 0;
 
     function handleSortClick(sortingValue){
         const compareFunc = compare(sortingValue);
@@ -25,8 +37,8 @@ export default function TAListPanel(){
 
     const taInfo = taData.slice(0,4).map(element => {
         return(
-            <tr key={element.name}>
-                <td className={classes.ta_table_element} >{element.name}</td>
+            <tr key={element.bilkentId}>
+                <td className={classes.ta_table_element} >{element.userName}</td>
                 <td className={classes.ta_table_element} >{element.course}</td>
                 <td className={classes.ta_table_element} >{element.numberOfStudents}</td>
                 <td className={classes.ta_table_element} >{element.grader}</td>

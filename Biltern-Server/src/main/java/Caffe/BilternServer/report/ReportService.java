@@ -127,6 +127,7 @@ public class ReportService {
         report.setIteration(true);
         Report newReport = new Report(report);
 
+        newReport.setPreviousIteration(report);
 
         newReport.setReportStats(ReportStats.ITERATION);
 
