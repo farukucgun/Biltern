@@ -89,6 +89,7 @@ public class ReportController {
     public void saveReportFeedback(@PathVariable Long reportId,@RequestBody MultipartFile file) {
         try {
             feedbackService.saveReportFeedback(reportId, file.getBytes());
+            reportService.addIteration(reportId);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -122,12 +123,6 @@ public class ReportController {
         return ResponseEntity.ok()
                 .headers(headers)
                 .body(feedbackService.downloadReportFeedback(reportId));
-    }
-
-
-    @PostMapping("/iteration/{reportId}")
-    public void addIteration(@PathVariable Long reportId){
-        reportService.addIteration(reportId);
     }
 
     @GetMapping("/reportStatus/{reportId}")
@@ -172,11 +167,21 @@ public class ReportController {
         return ResponseEntity.ok(reportService.getReportTA(reportId));
     }
 
-    @PostMapping
-    public void addReport(){
-        reportService.addNewReport();
-    }
+//    @PostMapping
+//    public void addReport(){
+//        reportService.addNewReport();
+//    }
 
+    @GetMapping("/iterations/{reportId}")
+    public ResponseEntity<ByteArrayResource> getspecificIteration(@PathVariable Long reportId){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "pdf_file.pdf");
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(reportService.downloadIteration(reportId));
+    }
 
 }
 
