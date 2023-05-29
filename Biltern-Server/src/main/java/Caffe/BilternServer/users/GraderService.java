@@ -45,7 +45,6 @@ public class GraderService {
 
         GraderDTO graderDTO = new GraderDTO();
         graderDTO.setReportCount(grader.getReportCount());
-        graderDTO.setSignature(grader.getSignature());
         graderDTO.setReports(getGradersReports(grader.getBilkentId()));
         graderDTO.setDepartment(grader.getDepartment());
 
@@ -61,24 +60,7 @@ public class GraderService {
         List<ReportDTO> listOfReports = new ArrayList<>();
 
         for(Report report: grader.getReports()){
-            ReportDTO reportDTO = new ReportDTO();
-
-            reportDTO.setReportStats(report.getReportStats());
-            reportDTO.setReportId(reportDTO.getReportId());
-            reportDTO.setDueDate(report.getDueDate());
-            //reportDTO.setCourseCode(report.getCourse().getCourseCode());
-
-            reportDTO.setGraderName(grader.getUserName());
-            reportDTO.setGraderId(grader.getBilkentId());
-
-            reportDTO.setTaId(report.getTeachingAssistant().getBilkentId());
-            reportDTO.setTaName(report.getTeachingAssistant().getUserName());
-
-
-            reportDTO.setStudentMail(report.getStudent().getBilkentMail());
-            reportDTO.setStudentId(report.getStudent().getBilkentId());
-            reportDTO.setStudentName(report.getStudent().getUserName());
-
+            ReportDTO reportDTO = new ReportDTO(report);
             listOfReports.add(reportDTO);
         }
 
