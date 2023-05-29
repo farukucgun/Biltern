@@ -1,7 +1,7 @@
 import React from "react";
 import classes from '../styles/SecretaryListPanel.module.css'
-import SecretaryData from '../Data/SecretaryListPanel.json'
 import compare from '../../../../utils/sorting'
+import { getSecretaries } from "../../../../apiHelper/backendHelper";
 
 /**
  * @author Enes Bektaş
@@ -10,23 +10,35 @@ import compare from '../../../../utils/sorting'
 
 export default function SecretaryListPanel(){
 
-    const secretariesExist = SecretaryData !== undefined;
 
-    let [secretaryData, setTaData] = React.useState(SecretaryData)
+    React.useEffect(()=>{
+        getSecretaries()
+        .then(res => {
+            setSecretaryData(res.data)
+        })
+        .catch(err => {
+            console.log(err)
+
+    });
+    },[])
+
+
+    let [secretaryData, setSecretaryData] = React.useState([])
+    const secretariesExist = secretaryData.length !== 0;
 
     function handleSortClick(sortingValue){
         const compareFunc = compare(sortingValue);
-        setTaData(prevTaData =>{
-            const sortedTaData = prevTaData.sort(compareFunc);
-            return [...sortedTaData];
+        setSecretaryData(prevSecretaryData =>{
+            const sortedSecretaryData = prevSecretaryData.sort(compareFunc);
+            return [...sortedSecretaryData];
         })
 
     }
 
     const secretaryInfo = secretaryData.slice(0,4).map(element => {
         return(
-            <tr key={element.name}>
-                <td className={classes.secretary_table_element} >{element.name}</td>
+            <tr key={element.bilkentId}>
+                <td className={classes.secretary_table_element} >{element.userName}</td>
                 <td className={classes.secretary_table_element} >{element.department}</td>
                 <td className={classes.secretary_table_element} >{element.numberOfStudents}</td>
             </tr>

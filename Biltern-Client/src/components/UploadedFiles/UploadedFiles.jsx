@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./UploadedFiles.module.css";
 import UploadedFilesItem from "./UploadedFilesItem";
 import axios from 'axios';
-
+import { getStudentDetailsById } from "../../apiHelper/backendHelper";
 /**
  * @author Enes Bektaş
  * @date 07.05.2023
@@ -12,6 +12,17 @@ import axios from 'axios';
 const UploadedFiles = () => {
 
     const [url, setUrl] = React.useState("");
+
+
+    React.useEffect(()=>{
+        getStudentDetailsById(12)
+        .then(res => {
+            console.log(res.data)
+        })
+        .catch(err => {
+            console.log(err)
+        });
+    },[])
 
     React.useEffect(() => {
         const fetchReport = async () => {
