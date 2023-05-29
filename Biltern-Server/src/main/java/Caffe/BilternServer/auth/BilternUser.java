@@ -16,8 +16,7 @@ import org.hibernate.annotations.CascadeType;
 import java.util.Collection;
 
 /**
- * @author jmo
- * @date 14.03.2023
+ * This is the entity superclass for the BilternUser object
  */
 
 @Data

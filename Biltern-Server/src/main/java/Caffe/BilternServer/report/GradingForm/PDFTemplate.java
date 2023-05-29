@@ -4,6 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.*;
 
+/**
+ * This is the entity class for the PDFTemplate object
+ */
+
 @Entity(name = "PDFTemplate")
 @Table(name = "PDFTemplate")
 public class PDFTemplate {

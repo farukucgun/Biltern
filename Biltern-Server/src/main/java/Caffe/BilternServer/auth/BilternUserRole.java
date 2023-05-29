@@ -1,8 +1,7 @@
 package Caffe.BilternServer.auth;
 
 /**
- * @author jmo
- * @date 14.03.2023
+ * This is the special enum class for the BilternUser object containing the valid roles for a Biltern User used in the system
  */
 public enum BilternUserRole {
     UNDERGRADUATE,

@@ -8,8 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
- * @author jmo
- * @date 9.05.2023
+ * This is the entity class for the user registration request object
  */
 
 @Data

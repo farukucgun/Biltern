@@ -8,8 +8,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 /**
- * @author jmo
- * @date 4.04.2023
+ * This is the service class for the emailing functionality in the system, used to email users when they are registered or when they receive a new password
  */
 
 @Service

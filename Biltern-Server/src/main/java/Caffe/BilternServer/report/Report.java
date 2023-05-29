@@ -10,6 +10,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
+/**
+ * This is the entity class for the Report object
+ */
 
 @Entity(name = "Report")
 @Table(name = "Report")

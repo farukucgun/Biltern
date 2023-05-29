@@ -18,6 +18,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This is the controller class for report objects, including functionalities to upload/download/delete reports, set and get due dates,
+ * download/upload feedback, adding iterations, and getting users associated with the report
+ */
 @RestController
 @CrossOrigin(origins = "${client.domain}")
 @RequestMapping("report")
