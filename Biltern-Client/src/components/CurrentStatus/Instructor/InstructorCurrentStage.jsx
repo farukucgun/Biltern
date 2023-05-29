@@ -16,6 +16,7 @@ import classes from '../CurrentStatus.module.css';
 
 const InstructorCurrentStage = (props) => {
     const { id, authorizedId, name, email, role, department, report }= props;
+    console.log(report);
     const dispatch = useDispatch();
 
     const [reportStatus, setReportStatus] = useState([]);
@@ -58,10 +59,6 @@ const InstructorCurrentStage = (props) => {
             dispatch(setTimedAlert({msg: "Error while fetching company status", alertType: "error", timeout: 4000}));
         })
     }, []);
-
-    const nameDisplayed = id == authorizedId ? name : reports[0].studentName;
-    const emailDisplayed = id == authorizedId ? email : reports[0].studentMail;
-    const idDisplayed = id == authorizedId ? id : reports[0].studentId;
 
     return (
         <div className={classes.currentStatusPage}>
