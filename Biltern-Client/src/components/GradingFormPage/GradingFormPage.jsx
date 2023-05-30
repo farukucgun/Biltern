@@ -72,7 +72,7 @@ export default function GradingFormPage(){
             input10: recommendPlace,
             formName: "company"
         }
-        submitGradingForm(3, formData)
+        submitGradingForm(6, formData)
         .then(res => {
             console.log(res.data)
         })
@@ -111,7 +111,7 @@ export default function GradingFormPage(){
         formName: (tableEvidence1 === undefined? "iteration": "final") 
         }
 
-         submitGradingForm(3, formData)
+         submitGradingForm(6, formData)
              .then(res => {
                  console.log(res.data)
              })
@@ -120,7 +120,7 @@ export default function GradingFormPage(){
              });
     }
     React.useEffect(() =>{
-        getGrading(3)
+        getGrading(6)
         .then(res => {
             console.log(res.data);
             setReportSatisfactory(res.data.input9 === "choice1"? "satisfactory": "unsatisfactory" );
@@ -165,7 +165,7 @@ export default function GradingFormPage(){
         console.log(files[0]);
         const formData = new FormData();
         formData.append('file', files[0]);
-        uploadSignature(2222, formData, "multipart/form-data")
+        uploadSignature( formData, "multipart/form-data")
             .then(res => {
                 console.log(res.data)
             })
@@ -173,17 +173,19 @@ export default function GradingFormPage(){
                 // console.log(err)
             });
     }
-/*
+
     React.useEffect(()=>{
-        displaySignature(2222, "image/png")
+        displaySignature( 'arraybuffer')
         .then(res => {
             console.log(res.data)
+            var blob = new Blob( [ res.data ], { type: "image/jpeg" } );
+            setSignature(window.URL.createObjectURL(blob))
         })
         .catch(err => {
-            // console.log(err)
+            console.log(err)
     });
     },[])
-*/
+
 
     const downloadReport = (blob) => {
         if (window.navigator && window.navigator.msSaveOrOpenBlob) {
@@ -203,7 +205,7 @@ export default function GradingFormPage(){
         }
     }
     function downloadGradingFormHandler(){
-        getGradingForm(3, 'arraybuffer', true)
+        getGradingForm(6, 'arraybuffer', true)
         .then(res => {
             const blob = new Blob([res.data], {type: 'application/pdf'});
             downloadReport(blob);
@@ -611,9 +613,10 @@ export default function GradingFormPage(){
                             </label>
                         </div>
                         <div className={classes.buttons}>
-                            <div className={classes.upload_signature}>
-                            {signature === undefined
-                                ?
+                            { signature !== undefined &&
+                                    <img src={signature} style={ {width: "150px", border:"1px solid black"}}/>
+                                }
+                            <div className={classes.upload_signature}>           
                                 <FileUpload 
                                     accept=".png" 
                                     multiple={false}
@@ -622,10 +625,6 @@ export default function GradingFormPage(){
                                     buttonMessage="Upload signature"
                                     onSubmit={uploadSignatureHandler}
                                 />
-                                :
-                                <img src={signature} />
-                            }
-
                             </div>
                             <button 
                                 onClick={handleSubmit}

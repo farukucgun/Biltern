@@ -23,7 +23,7 @@ export const COORDINATOR_SELECT_PATH = (coordinatorId) => COMMON_PATH + 'coordin
 export const GRADER_PATH = () => COMMON_PATH + 'grader';
 export const GRADER_SELECT_PATH = (graderId) => COMMON_PATH + 'grader/' + graderId;
 export const GRADER_DETAILS_PATH = () => COMMON_PATH + 'grader/details';
-export const GRADER_SIGNATURE_PATH = (graderId) => COMMON_PATH + 'grader/signature/' + graderId;
+export const GRADER_SIGNATURE_PATH = () => COMMON_PATH + 'grader/signature';
 
 // secretary controller
 export const SECRETARY_PATH = () => COMMON_PATH + 'secretary';

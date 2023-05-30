@@ -18,8 +18,8 @@ export const getApprovalDueDate = async (reportId) => {
     return await getFetcher(url.APPROVAL_DUEDATE_PATH(reportId));
 }
 
-export const uploadReportContent = async (reportId, data, contentType) => {
-    return await putFetcher(url.REPORT_CONTENT_PATH(reportId), data, contentType);
+export const uploadReportContent = async ( data, contentType) => {
+    return await putFetcher(url.REPORT_CONTENT_PATH(), data, contentType);
 }
 
 export const getReportContent = async (reportId, responseType) => {
@@ -112,12 +112,12 @@ export const getGraderDetails = async () => {
     return await getFetcher(url.GRADER_DETAILS_PATH());
 }
 
-export const uploadSignature = async (graderId, signature, contentType) => {
-    return await putFetcher(url.GRADER_SIGNATURE_PATH(graderId), signature, contentType);
+export const uploadSignature = async ( signature, contentType) => {
+    return await putFetcher(url.GRADER_SIGNATURE_PATH(), signature, contentType);
 }
 
-export const displaySignature = async (graderId, contentType) =>{
-    return await getFetcher(url.GRADER_SIGNATURE_PATH(graderId), contentType);
+export const displaySignature = async (responseType) =>{
+    return await getFetcher(url.GRADER_SIGNATURE_PATH(), responseType);
 }
 
 // secretary controller
