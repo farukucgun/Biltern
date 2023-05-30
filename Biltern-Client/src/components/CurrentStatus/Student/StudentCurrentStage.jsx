@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import FinalStage from './FinalStage';
 import IterationStage from './IterationStage';
 import TAEvaluationStage from './TAEvaluationStage';
@@ -25,6 +25,12 @@ const StudentCurrentStatus = (props) => {
     const [curStatus, setCurStatus] = useState();
     const [companyStatus, setCompanyStatus] = useState();
 
+    const [departmentA, setDepartmentA] = useState();
+    const [lastReport, setLastReport] = useState();
+
+    const departmentUsed = department ? department : departmentA;
+    const reportUsed = report ? report : lastReport;
+
     const allStats = [
         {"NOT_SUBMITTED": [" ", "Waiting for submission", "Submitted"]},
         {"SUBMITTED": ["Submitted", "Waiting for approval", "Approved"]},
@@ -35,8 +41,10 @@ const StudentCurrentStatus = (props) => {
         {"WITHDRAWN": [" ", "Withdrawn", " "]},
     ];
 
+    console.log(departmentUsed, reportUsed);
+
     useEffect(() => {
-        getReportStatus(report.reportId || 1)
+        getReportStatus(report?.reportId || 6)
             .then(res => {
                 setReportStatus(res.data);
                 for (const status of allStats) {
@@ -53,43 +61,38 @@ const StudentCurrentStatus = (props) => {
                 dispatch(setTimedAlert({msg: "Error while fetching report status", alertType: "error", timeout: 4000}));
             })
 
-        getCompanyStatus(report.reportId || 1)
+        getCompanyStatus(report?.reportId || 6)
             .then(res => {
                 setCompanyStatus(res.data);
             })
             .catch(err => {
                 dispatch(setTimedAlert({msg: "Error while fetching company status", alertType: "error", timeout: 4000}));
             })
-
-        // getStudentDetails()
-        // .then(res => {
-        //     console.log(res.data);
-        //     setDepartment(res.data.department);
-        //     setFirstReport(res.data.reports[0]);
-        // })
-        // .catch(err => {
-        //     console.log(err);
-        //     dispatch(setTimedAlert("Error while fetching grader details", "error"));
-        // })
+        if (role == "UNDERGRADUATE") {
+            getStudentDetails()
+                .then(res => {
+                    // console.log(res.data);
+                    setDepartmentA(res.data.department);
+                    setLastReport(res.data.reports[res.data.reports.length - 1]);
+                })
+                .catch(err => {
+                    console.log(err);
+                    dispatch(setTimedAlert("Error while fetching grader details", "error"));
+            })
+        }
     }, []);
-
-    // const departmentDisplayed = id == authorizedId ? : ;
-    // const nameDisplayed = id == authorizedId ? name : "diff";
-    // const emailDisplayed = id == authorizedId ? email : "diff";
-    // const courseDisplayed = id == authorizedId ? "same" : "diff";
-    // const idDisplayed = id == authorizedId ? authorizedId : "diff";
 
     return (
         <div className={classes.currentStatusPage}>
             <div className={classes.infoPane}>
                 <div className={classes.infoPaneLeft}>
-                    <h2>{report.studentName}</h2>
-                    <p>{department}</p>
+                    <h2>{reportUsed?.studentName || "NAME"}</h2>
+                    <p>{departmentUsed || "CS"}</p>
                 </div>
                 <div className={classes.infoPaneRight}>
-                    <p>Contact: {report.studentMail || email}</p>
-                    <p>Courses: {report.courseCode || "CS-299"}</p>
-                    <p>Bilkent ID: {report.studentId || id}</p>
+                    <p>Contact: {reportUsed?.studentMail || email}</p>
+                    <p>Courses: {reportUsed?.courseCode || "CS-299"}</p>
+                    <p>Bilkent ID: {reportUsed?.studentId || id}</p>
                 </div>
             </div>
                 <h3>Company Evaluation Status</h3>
@@ -102,11 +105,14 @@ const StudentCurrentStatus = (props) => {
                 <h3 className={classes.activeState}>{reportStatus[1]}</h3>
                 <h3 className={classes.singleState}>{reportStatus[2]}</h3>
             </div>
-            {curStatus == "NOT_SUBMITTED" && <StudentReportStage id={report.reportId || 1}/>}
-            {curStatus == "SUBMITTED" && <TAEvaluationStage id={report.reportId || 1}/>}
-            {(curStatus=="APPROVED" || curStatus=="ITERATION" || curStatus=="ITERATION_SUBMITTED") 
-            && <IterationStage id={report.reportId || 1}/>}
-            {curStatus == "GRADED" && <FinalStage id={report.reportId || 1}/>}
+            {reportUsed?.reportId && 
+            <>
+                {curStatus == "NOT_SUBMITTED" && <StudentReportStage id={reportUsed?.reportId || 6}/>}
+                {curStatus == "SUBMITTED" && <TAEvaluationStage id={reportUsed?.reportId || 6}/>}
+                {(curStatus=="APPROVED" || curStatus=="ITERATION" || curStatus=="ITERATION_SUBMITTED") 
+                && <IterationStage id={reportUsed?.reportId || 6}/>}
+                {curStatus == "GRADED" && <FinalStage id={reportUsed?.reportId || 6}/>}
+            </>}
         </div>
     );
 }
