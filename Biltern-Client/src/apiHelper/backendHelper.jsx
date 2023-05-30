@@ -1,6 +1,12 @@
 import { getFetcher, postFetcher, putFetcher, patchFetcher, deleteFetcher } from "./apiHelper";
 import * as url from "./urlHelper";
 
+/**
+ * @author Faruk Uçgun
+ * @date 25.05.2023
+ * @abstract: This is the helper file for the backend api calls.
+ */
+
 // report controller
 export const changeReportDueDate = async (reportId, data) => {
     return await putFetcher(url.REPORT_DUEDATE_PATH(reportId), data);

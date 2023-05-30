@@ -1,5 +1,11 @@
 export const COMMON_PATH = 'http://localhost:8080/'
 
+/**
+ * @author Faruk Uçgun
+ * @date 25.05.2023
+ * @abstract: This is a helper file to create the url paths for the backend api calls.
+ */
+
 // report controller
 export const REPORT_DUEDATE_PATH = (reportId) => COMMON_PATH + 'report/dueDate/' + reportId;
 export const APPROVAL_DUEDATE_PATH = (reportId) => COMMON_PATH + 'report/approvalDueDate/' + reportId;
