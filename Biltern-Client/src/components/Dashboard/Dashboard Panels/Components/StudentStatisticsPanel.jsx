@@ -3,7 +3,7 @@ import classes from '../styles/StudentStatisticsPanel.module.css'
 import statistics from '../Data/StudentStatisticsPanel.json'
 import { Chart } from "react-google-charts"
 import { getDepartmentCourseStatistics } from "../../../../apiHelper/backendHelper";
-import { useDispatch } from 'react-redux';
+import axios from "axios";
 
 /**
  * @author Enes Bektaş
@@ -12,15 +12,25 @@ import { useDispatch } from 'react-redux';
 
 export default function StudentStatisticsPanel(){
 
-  
-  getDepartmentCourseStatistics()
-  .then(res => {
-      console.log(res.data)
-  })
-  .catch(err => {
-      console.log(err)
+  React.useEffect(()=>{
 
-  });
+
+
+    const config = {
+      headers: {
+          'Content-Type': 'application/json',
+          "Authorization": localStorage.getItem("token"),
+      }
+  };
+
+  axios.get("http://localhost:8080/statistics", config)
+      .then(res => {
+          console.log(res.data);
+      })
+      .catch(err => {
+          console.log(err);
+      });
+  },[])
 
     const studentsExist = statistics !== undefined;
 
@@ -34,7 +44,9 @@ export default function StudentStatisticsPanel(){
       };
 
     return(
+      
         <div className={classes.student_statistics_panel_container}>
+          
             <h1>Student Statistics</h1>
             {studentsExist
             ?

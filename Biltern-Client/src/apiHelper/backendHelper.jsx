@@ -78,6 +78,10 @@ export const getReportTA = async (reportId) => {
     return await getFetcher(url.TA_PATH(reportId));
 }
 
+export const getSpecificIteration = async (reportId, responseType) =>{
+    return await getFetcher(url.GET_SPECIFIC_ITERATION_PATH(reportId), responseType);
+}
+
 // coordinator controller
 export const getCoordinators = async () => {
     return await getFetcher(url.COORDINATOR_PATH());
@@ -149,6 +153,10 @@ export const getStudentDetails = async () => {
 export const getStudentDetailsById = async (studentId) => {
     return await getFetcher(url.STUDENT_DETAILS_BY_ID_PATH(studentId));
 }  
+
+export const getIterations = async () => {
+    return await getFetcher(url.STUDENT_ITERATIONS_PATH());
+}
 
 // teaching assistant controller
 export const getTeachingAssistants = async () => {
