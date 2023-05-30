@@ -41,10 +41,8 @@ const StudentCurrentStatus = (props) => {
         {"WITHDRAWN": [" ", "Withdrawn", " "]},
     ];
 
-    console.log(departmentUsed, reportUsed);
-
     useEffect(() => {
-        getReportStatus(report?.reportId || 6)
+        getReportStatus(reportUsed?.reportId || 6)
             .then(res => {
                 setReportStatus(res.data);
                 for (const status of allStats) {
@@ -61,7 +59,7 @@ const StudentCurrentStatus = (props) => {
                 dispatch(setTimedAlert({msg: "Error while fetching report status", alertType: "error", timeout: 4000}));
             })
 
-        getCompanyStatus(report?.reportId || 6)
+        getCompanyStatus(reportUsed?.reportId || 6)
             .then(res => {
                 setCompanyStatus(res.data);
             })
@@ -71,7 +69,7 @@ const StudentCurrentStatus = (props) => {
         if (role == "UNDERGRADUATE") {
             getStudentDetails()
                 .then(res => {
-                    // console.log(res.data);
+                    console.log(res.data);
                     setDepartmentA(res.data.department);
                     setLastReport(res.data.reports[res.data.reports.length - 1]);
                 })
