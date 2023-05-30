@@ -1,13 +1,17 @@
+/**
+ * @author Enes Bektaş
+ * @date 07.05.2023
+ */
 import React from "react";
 import classes from '../styles/GraderInfo.module.css'
 import graderInfo from '../Data/GraderInfo.json'
 import profileImg from "../images/profile.png"
 
-/**
- * @author Enes Bektaş
- * @date 07.05.2023
- */
 
+/**
+ * Gets grader data from database and displays necessary information.
+ * @returns grader information panel
+ */
 export default function GraderInfoPanel(){
 
     const graderExists = graderInfo !== undefined;

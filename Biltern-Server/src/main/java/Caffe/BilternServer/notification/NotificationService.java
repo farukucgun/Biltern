@@ -30,7 +30,6 @@ public class NotificationService {
 
     private BilternUser getUser(Long bilkentId){
 
-        System.out.println(bilkentId);
 
         return bilternUserService.loadUserById(bilkentId);
     }
@@ -69,7 +68,6 @@ public class NotificationService {
             String courseCode){
         Notification notification = new Notification();
 
-        System.out.println("working");
 
         notification.setBody("Due date has changed for your " + courseCode + " course report");
         notification.setType("Report due date changed");

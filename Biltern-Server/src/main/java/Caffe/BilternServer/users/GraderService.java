@@ -44,7 +44,9 @@ public class GraderService {
 
     public GraderDTO getGraderDetails(Long id) {
         Grader grader = graderRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException()
+                () -> new EntityNotFoundException(
+                        "Grader with id " + id + " can't be found"
+                )
         );
 
         GraderDTO graderDTO = new GraderDTO();
