@@ -5,9 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGraderDetails, getTeachingAssistantDetails, getSecretaries } from '../../apiHelper/backendHelper';
 import { setTimedAlert } from '../../features/alertSlice';
-import axios from 'axios';
 
 import classes from "./StudentList.module.css";
+
+/**
+ * @author Faruk Uçgun
+ * @date 25.05.2023
+ * @abstract: This component is responsible for displaying student list
+ */
 
 const StudentList = () => {
     const navigate = useNavigate();

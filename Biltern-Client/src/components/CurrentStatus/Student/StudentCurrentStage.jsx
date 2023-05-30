@@ -12,9 +12,8 @@ import classes from '../CurrentStatus.module.css';
 
 /**
  * @author Faruk Uçgun
- * @date 07.05.2023
- * @todo: witdrawn case
- * @todo: deadline geçince söyle
+ * @date 25.05.2023
+ * @abstract: This component is responsible for displaying general student stage for student
  */
 
 const StudentCurrentStatus = (props) => {

@@ -8,6 +8,12 @@ import DatePicker from '../../../UI/datePicker';
 
 import classes from '../CurrentStatus.module.css';
 
+/**
+ * @author Faruk Uçgun
+ * @date 25.05.2023
+ * @abstract: This component is responsible for displaying student TA evaluation stage for instructor
+ */
+
 const TAEvaluationStage = (props) => {
     const {id} = props;
     const [dueDate, setDueDate] = useState(null);

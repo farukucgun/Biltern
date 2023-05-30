@@ -11,7 +11,8 @@ import classes from '../CurrentStatus.module.css';
 
 /**
  * @author Faruk Uçgun
- * @date 07.05.2023
+ * @date 25.05.2023
+ * @abstract: This component is responsible for displaying general student final stage for instructor
  */
 
 const InstructorCurrentStage = (props) => {
@@ -83,11 +84,12 @@ const InstructorCurrentStage = (props) => {
                 <h3 className={classes.activeState}>{reportStatus[1]}</h3>
                 <h3 className={classes.singleState}>{reportStatus[2]}</h3>
             </div>
-            {curStatus == "NOT_SUBMITTED" && <StudentReportStage id={report.reportId || 1}/>}
+            {/* {curStatus == "NOT_SUBMITTED" && <StudentReportStage id={report.reportId || 1}/>}
             {curStatus == "SUBMITTED" && <TAEvaluationStage id={report.reportId || 1}/>}
             {(curStatus=="APPROVED" || curStatus=="ITERATION" || curStatus=="ITERATION_SUBMITTED") 
             && <IterationStage id={report.reportId || 1}/>}
-            {curStatus == "GRADED" && <FinalStage id={report.reportId || 1}/>}
+            {curStatus == "GRADED" && <FinalStage id={report.reportId || 1}/>} */}
+            {<FinalStage id={report.reportId}/>}
         </div>
     );
 }

@@ -1,5 +1,11 @@
 import axios from 'axios';
 
+/**
+ * @author Faruk Uçgun
+ * @date 25.05.2023
+ * @abstract: This is a helper file for api calls
+ */
+
 const _handleError = async (res) => {
     if (res.status !== 200) {
         throw new Error("Something went wrong")
