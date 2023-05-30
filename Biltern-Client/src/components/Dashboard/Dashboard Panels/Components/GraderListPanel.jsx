@@ -42,7 +42,7 @@ export default function GraderListPanel(){
         return(
             <tr key={element.bilkentId}>
                 <td className={classes.grader_table_element} >{element.userName}</td>
-                <td className={classes.grader_table_element} >{element.course}</td>
+                <td className={classes.grader_table_element} >{element.department}</td>
                 <td className={classes.grader_table_element}>{element.numberOfStudents}</td>
             </tr>
         )
@@ -56,7 +56,7 @@ export default function GraderListPanel(){
             <table >
                 <tr>
                     <th className={classes.grader_table_element} onClick={() => handleSortClick("name")}>Name</th>
-                    <th className={classes.grader_table_element} onClick={() => handleSortClick("course")}>Course</th>
+                    <th className={classes.grader_table_element} onClick={() => handleSortClick("department")}>Department</th>
                     <th className={classes.grader_table_element} onClick={() => handleSortClick("numberOfStudents")}>Number of Students</th>
                 </tr>
                 {graderInfo}
