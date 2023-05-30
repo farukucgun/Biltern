@@ -1,14 +1,17 @@
-import React from "react";
-import classes from '../styles/GraderListPanel.module.css'
-import GraderData from '../Data/GraderListPanel.json'
-import compare from '../../../../utils/sorting'
-import { getGraders } from "../../../../apiHelper/backendHelper";
-
 /**
  * @author Enes Bektaş
  * @date 07.05.2023
  */
+import React from "react";
+import classes from '../styles/GraderListPanel.module.css'
+import compare from '../../../../utils/sorting'
+import { getGraders } from "../../../../apiHelper/backendHelper";
 
+
+/**
+ * Gets graders of a department and displays necessary information of them in a table.
+ * @returns Grader list panel
+ */
 export default function GraderListPanel(){
     React.useEffect(()=>{
         getGraders()

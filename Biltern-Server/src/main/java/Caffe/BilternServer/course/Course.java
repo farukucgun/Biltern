@@ -35,7 +35,7 @@ public class Course {
     @Column(unique = true, nullable = false)
     private String courseCode;
 
-    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Report> reports;
 
     public Long getId() {

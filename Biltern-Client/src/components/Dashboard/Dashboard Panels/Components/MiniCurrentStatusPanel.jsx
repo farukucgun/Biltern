@@ -1,3 +1,7 @@
+/**
+ * @author Enes Bektaş
+ * @date 07.05.2023
+ */
 import React from "react";
 import classes from '../styles/MiniCurrentStatusPanel.module.css'
 import currentStatusInfo from "../Data/CurrentStatusPanel.json"
@@ -7,11 +11,10 @@ import downArrow from "../images/down-arrow.png"
 import { getReportStatus } from "../../../../apiHelper/backendHelper";
 
 /**
- * @author Enes Bektaş
- * @date 07.05.2023
+ * Gets necessary information from database and displays the stage that a student is in.
+ * @returns mini current status panel
  */
-
-export default function CurrentStatusPanel(){
+export default function MiniCurrentStatusPanel(){
     React.useEffect(()=>{
         getReportStatus(3)
         .then(res => {

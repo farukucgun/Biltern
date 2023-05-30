@@ -1,13 +1,17 @@
+/**
+ * @author Enes Bektaş
+ * @date 07.05.2023
+ */
 import React from "react";
 import classes from '../styles/CoordinatorListPanel.module.css'
 import compare from '../../../../utils/sorting'
 import { getCoordinators } from "../../../../apiHelper/backendHelper";
 
-/**
- * @author Enes Bektaş
- * @date 07.05.2023
- */
 
+/**
+ * Gets coordinators of a department and displays necessary information of them in a table.
+ * @returns Coordinator list panel
+ */
 export default function CoordinatorListPanel(){
 
     React.useEffect(()=>{
@@ -24,7 +28,7 @@ export default function CoordinatorListPanel(){
 
 
     let [coordinatorData, setCoordinatorData] = React.useState([])
-    const coordinatorsExist = coordinatorData.length !== 0;
+    const coordinatorsExist = coordinatorData.length !== 0;     // Check if any coordinator exists.
 
     function handleSortClick(sortingValue){
         const compareFunc = compare(sortingValue);
