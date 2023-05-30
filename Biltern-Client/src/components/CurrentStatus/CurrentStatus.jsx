@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useSelector } from 'react-redux';
 import StudentCurrentStage from './Student/StudentCurrentStage';
 import TACurrentStage from './TA/TACurrentStage';
 import InstructorCurrentStage from "./Instructor/InstructorCurrentStage";
 import { useParams, useLocation } from 'react-router-dom';
+import { getStudentDetails } from '../../apiHelper/backendHelper';
 
 import classes from './CurrentStatus.module.css';
 /**
@@ -22,10 +23,16 @@ const CurrentStatus = () => {
     const location = useLocation();
     const { department, report } = location?.state ?? {};
 
+    const [departmentA, setDepartmentA] = useState();
+    const [lastReport, setLastReport] = useState();
+
+    const departmentUsed = department ? department : departmentA;
+    const reportUsed = report ? report : lastReport;
+
     return (
         <div className={classes.CurrentStatus}>
             {role == "UNDERGRADUATE" && <StudentCurrentStage id={id} authorizedId={authorizedId} 
-            name={name} email={email} role={role} department={department} report={report} />}
+            name={name} email={email} role={role} department={departmentUsed} report={reportUsed} />}
             {role == "TEACHING_ASSISTANT" && <TACurrentStage id={id} authorizedId={authorizedId} 
             name={name} email={email} role={role} department={department} report={report} />}
             {role == "FACULTY_MEMBER" && <InstructorCurrentStage id={id} authorizedId={authorizedId} 
