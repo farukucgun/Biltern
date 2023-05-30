@@ -38,7 +38,7 @@ const Navbar = () => {
       items.push({to: "/studentlist", name: "Student List"});
     } 
     else if (userRole === "FACULTY_MEMBER") {
-      items.push({to: "studentlist", name: "Student List"});
+      items.push({to: "/studentlist", name: "Student List"});
     } 
     else if (userRole === "BCC_ADMIN") {
       items.push({to: "/registeruser", name: "Register User"});
