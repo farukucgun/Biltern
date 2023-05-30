@@ -1,3 +1,7 @@
+/**
+ * @author Enes Bektaş
+ * @date 07.05.2023
+ */
 import React from 'react'
 import { useSelector } from 'react-redux';
 import classes from './DashBoard.module.css';
@@ -15,13 +19,13 @@ import CoordinatorInfoPanel from "./Dashboard Panels/Components/CoordinatorInfoP
 import MiniStudentListPanel from "./Dashboard Panels/Components/MiniStudentListPanel"
 import GeneralStatisticsPanel from "./Dashboard Panels/Components/GeneralStatisticsPanel";
 
+
+
+
 /**
- * @author Enes Bektaş
- * @date 07.05.2023
+ * Conditionally renders dashboard panels according to the user role.
+ * @returns dashboard page
  */
-
-
-
 export default function Dashboard(){
     const role = useSelector(state => state.auth.user.role);
     console.log(role);
@@ -30,30 +34,30 @@ export default function Dashboard(){
     if( role === "UNDERGRADUATE"){
         dashBoardElements.push( <MiniCurrentStatusPanel /> )
         dashBoardElements.push( <GraderInfoPanel /> )
-        dashBoardElements.push( <RemindersPanel /> )
+        //dashBoardElements.push( <RemindersPanel /> )
         dashBoardElements.push( <TAInfoPanel /> )
     }
     else if( role === "TEACHING_ASSISTANT"){
         dashBoardElements.push( <ReadyToBeGradedPanel />)
-        dashBoardElements.push( <RemindersPanel /> )
+        //dashBoardElements.push( <RemindersPanel /> )
         dashBoardElements.push( <MiniStudentListPanel />)
     }
     else if( role === "FACULTY_MEMBER"){
         dashBoardElements.push( <ReadyToBeGradedPanel />)
-        dashBoardElements.push( <RemindersPanel /> )
+        //dashBoardElements.push( <RemindersPanel /> )
         dashBoardElements.push( <MiniStudentListPanel />)
     }
     else if( role === "DEPARTMENT_COORDINATOR"){
         dashBoardElements.push( <StudentStatisticsPanel />)
         dashBoardElements.push( <GraderListPanel />)
-        dashBoardElements.push( <RemindersPanel /> )
+        //dashBoardElements.push( <RemindersPanel /> )
         dashBoardElements.push( <TAListPanel />)
     }
     else if( role === "SECRETARY"){
         dashBoardElements.push( <StudentStatisticsPanel />)
         dashBoardElements.push( <CoordinatorInfoPanel />)
         dashBoardElements.push( <GraderListPanel />)
-        dashBoardElements.push( <RemindersPanel /> )
+        //dashBoardElements.push( <RemindersPanel /> )
         dashBoardElements.push( <TAListPanel />)
     }
     else if( role === "BCC_ADMIN"){

@@ -1,14 +1,18 @@
+/**
+ * @author Enes Bektaş
+ * @date 07.05.2023
+ */
 import React from "react";
 import classes from '../styles/TAInfoPanel.module.css'
 import TAInfo from '../Data/TAInfo.json'
 import profileImg from "../images/profile.png"
 
-/**
- * @author Enes Bektaş
- * @date 07.05.2023
- */
 
-export default function GraderInfoPanel(){
+/**
+ * Gets teaching assistant data from database and displays necessary information.
+ * @returns teaching assistant information panel
+ */
+export default function TAInfoPanel(){
 
     const taExists = TAInfo !== undefined;
 

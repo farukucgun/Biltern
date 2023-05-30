@@ -1,14 +1,18 @@
+/**
+ * @author Enes Bektaş
+ * @date 07.05.2023
+ */
 import React from "react";
 import classes from '../styles/CoordinatorInfoPanel.module.css'
 import coordinatorInfo from '../Data/CoordinatorInfoPanel.json'
 import profileImg from "../images/profile.png"
 import { getSecretaryDetails } from "../../../../apiHelper/backendHelper";
 
-/**
- * @author Enes Bektaş
- * @date 07.05.2023
- */
 
+/**
+ * Gets coordinator data from database and displays necessary information.
+ * @returns coordinator information panel
+ */
 export default function CoordinatorInfoPanel(){
 
     React.useEffect(()=>{
@@ -23,7 +27,7 @@ export default function CoordinatorInfoPanel(){
     });
     },[])
 
-    const coordinatorExists = coordinatorInfo !== undefined;
+    const coordinatorExists = coordinatorInfo !== undefined; // Check if the coordinator exists
 
     return(
         <div className={classes.coordinator_info_panel_container}>

@@ -1,3 +1,7 @@
+/**
+ * @author Enes Bektaş
+ * @date 25.05.2023
+ */
 import React from "react";
 import classes from "./GradingFormPage.module.css";
 import SplitPane, { Pane } from 'split-pane-react';
@@ -11,34 +15,36 @@ import FileUpload from '../../UI/FileUpload';
 import { uploadSignature, displaySignature } from "../../apiHelper/backendHelper";
 import { useLocation } from "react-router-dom";
 
-
 pdfjs.GlobalWorkerOptions.workerSrc = 
 `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
+/**
+ * A page for filling grading form of a student.
+ * @returns grading form page
+ */
 export default function GradingFormPage(){
 
+    // Get props
     const location = useLocation();
     const reportId = location.state.id;
     const reportUrl = location.state.url;
 
+    // Necessary components for 'Document' element
     const [numPages, setNumPages] = React.useState(null);
-
     function onDocumentLoadSuccess({ numPages }) {
       setNumPages(numPages);
     }
-
     const [sizes, setSizes] = React.useState([
         630,
         'auto'
     ]);
-    
     const [scale, setScale] = React.useState(1)
     function onSlide(event){
         console.log(sizes[0])
         setScale((event.pageX-220)/630)
     }
 
-
+    // Input elements
     const [stajDegerlendirmeFormu, setStajDegerlendirmeFormu] = React.useState(undefined);
     const [relatedToCS, setRelatedToCS] = React.useState(undefined);
     const [supervisorSimilarBackground, setSupervisorSimilarBackground] = React.useState(undefined);
@@ -66,6 +72,7 @@ export default function GradingFormPage(){
 
     const sumOfItems2_7 = tableAssesment2 + tableAssesment3 + tableAssesment4 + tableAssesment5+ tableAssesment6 +tableAssesment7;
 
+    // Handles submitting only the information of part-a of grading form
     function handleSubmitPartA(){
         let formData = {
             input1: stajDegerlendirmeFormu,
@@ -83,6 +90,8 @@ export default function GradingFormPage(){
             console.log(err)
         });
     }
+
+    // Handles submitting the whole report
     function handleSubmit(){
         let formData = {
         input1: stajDegerlendirmeFormu,
@@ -122,6 +131,8 @@ export default function GradingFormPage(){
                  console.log(err)
              });
     }
+
+    // Gets previous grading of a report from database and sets the values as default values of input elements
     React.useEffect(() =>{
         getGrading(reportId)
         .then(res => {
@@ -161,7 +172,7 @@ export default function GradingFormPage(){
         });
     },[])
 
-
+    // Handles uploading signature of current grader
     const uploadSignatureHandler = (files) => {
         console.log(files[0]);
         const formData = new FormData();
@@ -175,6 +186,7 @@ export default function GradingFormPage(){
             });
     }
 
+    // Gets the signature of current grader from database
     React.useEffect(()=>{
         displaySignature( 'arraybuffer')
         .then(res => {
@@ -187,7 +199,7 @@ export default function GradingFormPage(){
     });
     },[])
 
-
+    // Helper method for downloading grading form
     const downloadReport = (blob) => {
         if (window.navigator && window.navigator.msSaveOrOpenBlob) {
             window.navigator.msSaveOrOpenBlob(blob, 'file.pdf');
@@ -205,6 +217,8 @@ export default function GradingFormPage(){
             }, 0);
         }
     }
+
+    // Handles download operation of the grading form
     function downloadGradingFormHandler(){
         getGradingForm(reportId, 'arraybuffer', true)
         .then(res => {
@@ -218,15 +232,14 @@ export default function GradingFormPage(){
 
     return (
         <div className={classes.grading_form_page_container}>
-            <SplitPane
+            <SplitPane          // So that the size of student report and grading form can be changed
                 split='vertical'
                 sizes={sizes}
                 onChange={setSizes}
                 onDragEnd={(ev)=>onSlide(ev)}
             >
-
                 <div>
-                    <div className={classes.student_report}>
+                    <div className={classes.student_report}>    {/* Displays student report */}
                         <Document file={reportUrl} onLoadSuccess={onDocumentLoadSuccess} >
                             {Array.from(new Array(numPages), (el, index) => (
                                 <Page 
@@ -240,8 +253,8 @@ export default function GradingFormPage(){
                     </div>
                 </div>
 
-                <div className={classes.grading}>
-                        <div className={classes.grading_parts}>
+                <div className={classes.grading}>               {/* Grading form */}
+                        <div className={classes.grading_parts}> {/* Grading form part-a */}
                             <h3>
                                 Part-A: Work Place
                             </h3>
@@ -294,7 +307,7 @@ export default function GradingFormPage(){
                         </p>
 
 
-                        <div className={classes.grading_parts}>
+                        <div className={classes.grading_parts}> {/* Grading form part-b */}
                             <h3>
                                 Part-B: Report
                             </h3>
@@ -340,9 +353,9 @@ export default function GradingFormPage(){
                         </p>
                         {
                             revisionDate !== undefined &&
-                            <div>
-                                <div className={classes.grading_parts}>
-                            <table>
+                            <div>                                       {/* Grading form part-c */}
+                                <div className={classes.grading_parts}> 
+                                <table>                                 {/* Grading form table */}
                                 <tr>
                                     <th> Evaluation of the Work </th>
                                     <th> On what page(s) of the report is the evidence of this found? </th>
@@ -488,7 +501,7 @@ export default function GradingFormPage(){
                                 </tr>
                             </table>
                         </div>
-                        <div className={classes.grading_parts}>
+                        <div className={classes.grading_parts}>             {/* Grading form table */}
                             <table>
                                 <tr>
                                     <th> Evaluation of Report </th>
@@ -520,7 +533,7 @@ export default function GradingFormPage(){
                         </div>
 
 
-                        <div className={classes.grading_parts}>
+                        <div className={classes.grading_parts}>                 {/* Grading form part-c */}
                             <h3>
                                 Part-C: Final Version of the Report
                             </h3>
@@ -563,7 +576,7 @@ export default function GradingFormPage(){
                             </div>
                         }
                         
-                        <div className={classes.grading_parts}>
+                        <div className={classes.grading_parts}>             {/* Grading form report satisfactory part */}
                             <h3> Overall Evaluation</h3>
                             <label>
                                 Satisfactory
@@ -584,7 +597,7 @@ export default function GradingFormPage(){
                                 />
                             </label>
                         </div>
-                        <div className={classes.grading_parts}>
+                        <div className={classes.grading_parts}>         {/* Grading form recommend company part */}
                             <label>
                                 <input 
                                     type="radio"
@@ -613,7 +626,7 @@ export default function GradingFormPage(){
                                 Unsatisfactory
                             </label>
                         </div>
-                        <div className={classes.buttons}>
+                        <div className={classes.buttons}>                   {/* Grading form submitting part */}
                             { signature !== undefined &&
                                     <img src={signature} style={ {width: "150px", border:"1px solid black"}}/>
                                 }
