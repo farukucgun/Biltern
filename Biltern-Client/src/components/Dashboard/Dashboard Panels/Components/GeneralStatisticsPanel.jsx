@@ -1,13 +1,17 @@
+/**
+ * @author Enes Bektaş
+ * @date 07.05.2023
+ */
 import React from "react";
 import Chart from "react-google-charts";
 import classes from "../styles/GeneralStatisticsPanel.module.css"
 import GeneralStatistics from "../Data/GeneralStatisticsPanel.json"
 
-/**
- * @author Enes Bektaş
- * @date 07.05.2023
- */
 
+/**
+ * Gets general statistics about students from all courses and displays them in charts.
+ * @returns general statistics panel
+ */
 export default function GeneralStatisticsPanel(){
     let csStudents = 0
     let meStudents = 0

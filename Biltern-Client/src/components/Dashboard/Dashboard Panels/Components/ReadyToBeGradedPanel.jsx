@@ -12,7 +12,7 @@ export default function ReadyToBeGradedPanel(){
     const readyReportsExist = readyReports !== undefined;
 
     const readyToBeGraded = readyReports.slice(0,4).map( (report, index) => {
-        return <div className={classes.ready_report} key={index}>{report.stage} | {report.studentName}</div>
+        return <div className={classes.ready_report} key={index}> {report.stage} | {report.studentName}</div>
     })
 
     return(

@@ -1,3 +1,7 @@
+/**
+ * @author Enes Bektaş
+ * @date 25.05.2023
+ */
 import React, {useState} from 'react';
 import {useLocation} from 'react-router-dom';
 import { Document, Page, pdfjs } from 'react-pdf';
@@ -6,19 +10,19 @@ import 'react-pdf/dist/esm/Page/TextLayer.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-
-export default function DisplayFilePage( props ) {
+/**
+ * Takes a report url and displays that report
+ * @returns display file page
+ */
+export default function DisplayFilePage(  ) {
 
     const location = useLocation();
 
     const [numPages, setNumPages] = useState(null);
-    const [pageNumber, setPageNumber] = useState(1);
 
     const onDocumentLoadSuccess = ({ numPages }) => {
         setNumPages(numPages);
     }
-
-
 
     return (
         <div className={classes.display_file_page_container}>
