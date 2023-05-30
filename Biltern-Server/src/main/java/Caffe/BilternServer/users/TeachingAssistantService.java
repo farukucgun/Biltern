@@ -62,6 +62,11 @@ public class TeachingAssistantService {
         List<ReportDTO> listOfReports = new ArrayList<>();
 
         for(Report report: teachingAssistant.getReports()){
+
+            if(report.isIteration()){
+                continue;
+            }
+
             ReportDTO reportDTO = new ReportDTO();
 
             reportDTO.setReportStats(report.getReportStats());
