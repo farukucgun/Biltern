@@ -29,7 +29,6 @@ const StudentReportStage = (props) => {
         getReportContent(id, 'arraybuffer', true)
         .then(res => {
             const blob = new Blob([res.data], {type: 'application/pdf'});
-
             setStudentFile(blob);
 
         })
@@ -78,7 +77,7 @@ const StudentReportStage = (props) => {
     }
 
     const gradeHandler = () => {
-        navigate("/gradingformpage", {state:{url: URL.createObjectURL(studentFile)}});
+        navigate("/gradingformpage", {state:{url: URL.createObjectURL(studentFile), id: id}});
     }
 
     return (
