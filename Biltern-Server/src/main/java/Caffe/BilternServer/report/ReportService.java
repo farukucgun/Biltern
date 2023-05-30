@@ -183,6 +183,7 @@ public class ReportService {
             report.setCompanyStats(CompanyStats.GRADED);
         } else if (formName.equals("iteration")) {
             report.setReportStats(ReportStats.ITERATION);
+            addIteration(reportId);
         } else if (formName.equals("final")) {
             report.setReportStats(ReportStats.GRADED);
         }
