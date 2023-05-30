@@ -1,8 +1,7 @@
 import React from "react";
 import classes from "./UploadedFiles.module.css";
 import UploadedFilesItem from "./UploadedFilesItem";
-import axios from 'axios';
-import { getStudentDetailsById } from "../../apiHelper/backendHelper";
+import { getIterations } from "../../apiHelper/backendHelper";
 /**
  * @author Enes Bektaş
  * @date 07.05.2023
@@ -11,55 +10,31 @@ import { getStudentDetailsById } from "../../apiHelper/backendHelper";
 
 const UploadedFiles = () => {
 
-    const [url, setUrl] = React.useState("");
-
+    const [reports, setReports] = React.useState([])
 
     React.useEffect(()=>{
-        getStudentDetailsById(12)
+        getIterations()
         .then(res => {
-            console.log(res.data)
+            console.log(typeof res.data)
+            for(const key in res.data){
+                if(res.data.hasOwnProperty(key)){
+                    setReports(prevReports =>{
+                        console.log({to: "/displayfilepage", reportName: key, reportId: res.data[key] })
+                        return [...prevReports, {to: "/displayfilepage", reportName: key, reportId: res.data[key] }]
+                    })
+                }
+            }
         })
         .catch(err => {
             console.log(err)
         });
     },[])
-
-    React.useEffect(() => {
-        const fetchReport = async () => {
-            const config = {
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": localStorage.getItem("token") || ""
-                }
-            };
-
-            await axios.get("http://localhost:8080/report/reportContent/1", {config, responseType: 'arraybuffer'})
-                .then(res => {
-                    const blob = new Blob([res.data], {type: 'application/pdf'});
-                    setUrl(URL.createObjectURL(blob));
-                })
-                .catch(err => {
-                    // dispatch(setTimedAlert({msg: "Error while fetching notifications", alertType: "error", timeout: 4000}));
-                    console.log(err);
-                });
-        };
-
-        fetchReport();
-    }, []);
-
-    console.log(url)
-
-    const items = [
-        {to: "/displayfilepage", fileURL: url, fileName: "CS319_AnalysisReport_Iter1_Caffe (2).pdf"},
-        {to: "/displayfilepage", fileURL: url, fileName: "...pdf"},
-        {to: "/displayfilepage", fileURL: url, fileName: "...pdf"},
-        {to: "/displayfilepage", fileURL: url, fileName: "...pdf"}
-    ]
+    console.log(reports)
 
 
     return (
         <div className={classes.uploaded_files_container}>
-            {items.map((item, index) => <UploadedFilesItem to={item.to} fileURL={item.fileURL} fileName={item.fileName} index={index} key={index} />)}
+            {reports.map((item) => <UploadedFilesItem to={item.to} reportName={item.reportName} reportId={item.reportId} key={item.reportId} />)}
         </div>
     );
 }
