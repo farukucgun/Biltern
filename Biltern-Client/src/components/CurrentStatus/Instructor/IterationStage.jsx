@@ -146,7 +146,7 @@ const IterationStage = (props) => {
                     />
                     <ActionButton
                         className=""
-                        text="Extend Deadline"
+                        text="Set Deadline"
                         onClick={showExtendDeadline}
                     />
                     <ActionButton

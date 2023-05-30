@@ -14,7 +14,7 @@ const commonHeader = {
 const _get = async (url, responseType) => {
     return await axios.get(url, {
         headers: commonHeader,
-        responseType
+        responseType: responseType
     })
 }
 
