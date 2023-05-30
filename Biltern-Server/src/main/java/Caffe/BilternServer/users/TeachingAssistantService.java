@@ -62,12 +62,17 @@ public class TeachingAssistantService {
         List<ReportDTO> listOfReports = new ArrayList<>();
 
         for(Report report: teachingAssistant.getReports()){
+
+            if(report.isIteration()){
+                continue;
+            }
+
             ReportDTO reportDTO = new ReportDTO();
 
             reportDTO.setReportStats(report.getReportStats());
-            reportDTO.setReportId(reportDTO.getReportId());
+            reportDTO.setReportId(report.getId());
             reportDTO.setDueDate(report.getDueDate());
-            //reportDTO.setCourseCode(report.getCourse().getCourseCode());
+            reportDTO.setCourseCode(report.getCourse().getCourseCode());
 
 
             reportDTO.setGraderName(report.getGrader().getUserName());

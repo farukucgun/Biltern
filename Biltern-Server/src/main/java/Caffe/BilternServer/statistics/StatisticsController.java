@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author jmo
- * @date 26.05.2023
+ * This is the controller class for statistics, including grader statistics, TA statistics, and department/course statistics
  */
 
 @PreAuthorize("hasAnyAuthority('ROLE_DEPARTMENT_COORDINATOR', 'ROLE_SECRETARY')")

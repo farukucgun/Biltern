@@ -21,6 +21,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
+/**
+ * This is the service class for the Report object
+ */
+
 @Service
 public class ReportService {
     private final ReportRepository reportRepository;

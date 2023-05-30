@@ -104,7 +104,8 @@ const StudentCurrentStatus = (props) => {
             </div>
             {curStatus == "NOT_SUBMITTED" && <StudentReportStage id={report.reportId || 1}/>}
             {curStatus == "SUBMITTED" && <TAEvaluationStage id={report.reportId || 1}/>}
-            {curStatus == ("APPROVED" || "ITERATION" || "ITERATION_SUBMITTED") && <IterationStage id={report.reportId || 1}/>}
+            {(curStatus=="APPROVED" || curStatus=="ITERATION" || curStatus=="ITERATION_SUBMITTED") 
+            && <IterationStage id={report.reportId || 1}/>}
             {curStatus == "GRADED" && <FinalStage id={report.reportId || 1}/>}
         </div>
     );

@@ -64,6 +64,9 @@ public class GraderService {
         List<ReportDTO> listOfReports = new ArrayList<>();
 
         for(Report report: grader.getReports()){
+            if(report.isIteration()){
+                continue;
+            }
             ReportDTO reportDTO = new ReportDTO(report);
             listOfReports.add(reportDTO);
         }
