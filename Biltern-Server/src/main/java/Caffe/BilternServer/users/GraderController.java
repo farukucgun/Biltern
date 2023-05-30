@@ -30,7 +30,7 @@ public class GraderController {
         this.graderService = graderService;
     }
 
-    @GetMapping 
+    @GetMapping
     public List<Grader> getGraders() { return graderService.getGraders(); }
 
     @PostMapping

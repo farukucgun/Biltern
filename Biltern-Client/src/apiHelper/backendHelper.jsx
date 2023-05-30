@@ -18,8 +18,8 @@ export const getApprovalDueDate = async (reportId) => {
     return await getFetcher(url.APPROVAL_DUEDATE_PATH(reportId));
 }
 
-export const uploadReportContent = async (reportId, data, contentType) => {
-    return await putFetcher(url.REPORT_CONTENT_PATH(reportId), data, contentType);
+export const uploadReportContent = async ( data, contentType) => {
+    return await putFetcher(url.REPORT_CONTENT_PATH(), data, contentType);
 }
 
 export const getReportContent = async (reportId, responseType) => {
@@ -78,6 +78,10 @@ export const getReportTA = async (reportId) => {
     return await getFetcher(url.TA_PATH(reportId));
 }
 
+export const getSpecificIteration = async (reportId, responseType) =>{
+    return await getFetcher(url.GET_SPECIFIC_ITERATION_PATH(reportId), responseType);
+}
+
 // coordinator controller
 export const getCoordinators = async () => {
     return await getFetcher(url.COORDINATOR_PATH());
@@ -108,12 +112,12 @@ export const getGraderDetails = async () => {
     return await getFetcher(url.GRADER_DETAILS_PATH());
 }
 
-export const uploadSignature = async (graderId, signature, contentType) => {
-    return await putFetcher(url.GRADER_SIGNATURE_PATH(graderId), signature, contentType);
+export const uploadSignature = async ( signature, contentType) => {
+    return await putFetcher(url.GRADER_SIGNATURE_PATH(), signature, contentType);
 }
 
-export const displaySignature = async (graderId, contentType) =>{
-    return await getFetcher(url.GRADER_SIGNATURE_PATH(graderId), contentType);
+export const displaySignature = async (responseType) =>{
+    return await getFetcher(url.GRADER_SIGNATURE_PATH(), responseType);
 }
 
 // secretary controller
@@ -149,6 +153,10 @@ export const getStudentDetails = async () => {
 export const getStudentDetailsById = async (studentId) => {
     return await getFetcher(url.STUDENT_DETAILS_BY_ID_PATH(studentId));
 }  
+
+export const getIterations = async () => {
+    return await getFetcher(url.STUDENT_ITERATIONS_PATH());
+}
 
 // teaching assistant controller
 export const getTeachingAssistants = async () => {
