@@ -10,6 +10,7 @@ import classes from '../CurrentStatus.module.css';
 
 const IterationStage = (props) => {
     const {id} = props;
+    console.log(id);
     const [dueDate, setDueDate] = useState(null); 
     const [studentFile, setStudentFile] = useState(null);
     const [feedbackFile, setFeedbackFile] = useState(null);
