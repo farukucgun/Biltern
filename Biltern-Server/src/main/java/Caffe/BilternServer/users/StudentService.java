@@ -55,7 +55,9 @@ public class StudentService {
         List<ReportDTO> reportDTOs = new ArrayList<>();
 
         for(Report report : reports){
-            reportDTOs.add(new ReportDTO(report));
+            if (!report.isIteration()){
+                reportDTOs.add(new ReportDTO(report));
+            }
         }
 
         studentDTO.setReports(reportDTOs);
