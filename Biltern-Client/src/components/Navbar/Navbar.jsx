@@ -24,50 +24,49 @@ const Navbar = () => {
   const userRole = useSelector(state => state.auth.user?.role);
   const userName = useSelector(state => state.auth.user?.name);
 
-  // const items = [
-  //   {to: "/dashboard", name: "Dashboard"},
-  //   {to: "/settings", name: "Settings"},
-  // ]
-  // 
-  // if (userRole) {
-  //   if (userRole === "UNDERGRADUATE") {
-  //     items.push({to: `/currentstatus/${studentId}`, name: "Current Status"});
-  //     items.push({to: "/uploadedfiles", name: "Uploaded Files"});
-  //   } 
-  //   else if (userRole === "TEACHING_ASSISTANT") {
-  //     items.push({to: "studentlist", name: "Student List"});
-  //   } 
-  //   else if (userRole === "FACULTY_MEMBER") {
-  //     items.push({to: "studentlist", name: "Student List"});
-  //   } 
-  //   else if (userRole === "BCC_ADMIN") {
-  //     items.push({to: "/registeruser", name: "Register User"});
-  //     items.push({to: "/studentlist", name: "Student List"});
-  //     // grader list will be added
-  //   } 
-  //   else if (userRole && userRole === "SECRETARY") {
-  //     items.push({to: "/semesterInitialization", name: "Semester Initialization"});
-  //     items.push({to: "/studentlist", name: "Student List"});
-  //     // grader list will be added
-  //   } 
-  //   else if (userRole && userRole === "COURSE_COORDINATOR") {
-  //     items.push({to: "/studentlist", name: "Student List"});
-  //     // grader list will be added
-  //   } 
-  // }
-  
   const items = [
     {to: "/dashboard", name: "Dashboard"},
-    {to: "/uploadedfiles", name: "Uploaded Files"},
-    {to: `/currentstatus/${studentId}`, name: "Current Status"},
     {to: "/settings", name: "Settings"},
-    {to: "/semesterInitialization", name: "Semester Initialization"},
-    {to: "/roleassignment", name: "Role Assignment"},
-    {to: "/gradingformpage", name: "Grading Form"},
-    {to: "/registeruser", name: "Register User"},
-    {to: "/studentlist", name: "Student List"},
   ]
-
+  
+  if (userRole) {
+    if (userRole === "UNDERGRADUATE") {
+      items.push({to: `/currentstatus/${studentId}`, name: "Current Status"});
+      items.push({to: "/uploadedfiles", name: "Uploaded Files"});
+    } 
+    else if (userRole === "TEACHING_ASSISTANT") {
+      items.push({to: "/studentlist", name: "Student List"});
+    } 
+    else if (userRole === "FACULTY_MEMBER") {
+      items.push({to: "/studentlist", name: "Student List"});
+    } 
+    else if (userRole === "BCC_ADMIN") {
+      items.push({to: "/registeruser", name: "Register User"});
+      items.push({to: "/studentlist", name: "Student List"});
+      // grader list will be added
+    } 
+    else if (userRole && userRole === "SECRETARY") {
+      items.push({to: "/semesterInitialization", name: "Semester Initialization"});
+      items.push({to: "/studentlist", name: "Student List"});
+      // grader list will be added
+    } 
+    else if (userRole && userRole === "COURSE_COORDINATOR") {
+      items.push({to: "/studentlist", name: "Student List"});
+      // grader list will be added
+    } 
+  }
+  
+  // const items = [
+  //   {to: "/dashboard", name: "Dashboard"},
+  //   {to: "/uploadedfiles", name: "Uploaded Files"},
+  //   {to: `/currentstatus/${studentId}`, name: "Current Status"},
+  //   {to: "/settings", name: "Settings"},
+  //   {to: "/semesterInitialization", name: "Semester Initialization"},
+  //   {to: "/roleassignment", name: "Role Assignment"},
+  //   {to: "/gradingformpage", name: "Grading Form"},
+  //   {to: "/registeruser", name: "Register User"},
+  //   {to: "/studentlist", name: "Student List"},
+  // ]
 
   const logoutHandler = () => {
     dispatch(logout());
