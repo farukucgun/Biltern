@@ -8,10 +8,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author jmo
- * @date 9.05.2023
+ * This is the controller class for the Notification object, including functionalities to add notifications, mark them as read, get notifications
+ * and get recent notifications
  */
-
 @CrossOrigin(origins = "${client.domain}")
 @RestController
 @RequestMapping("notification")

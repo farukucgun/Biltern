@@ -11,8 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author jmo
- * @date 6.05.2023
+ * This is the service class for the Notification object
  */
 
 @Service

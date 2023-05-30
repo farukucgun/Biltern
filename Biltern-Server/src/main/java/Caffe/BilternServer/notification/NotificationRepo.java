@@ -8,8 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author jmo
- * @date 8.05.2023
+ * This is the repository interface for the Notification object
  */
 
 @Repository

@@ -9,10 +9,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.util.Date;
 
 /**
- * @author jmo
- * @date 6.05.2023
+ * This is the entity class for the Notification object
  */
-
 
 @Table(name = "biltern_notification")
 @Entity
