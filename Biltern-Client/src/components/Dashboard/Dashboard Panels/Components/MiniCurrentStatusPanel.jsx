@@ -4,11 +4,10 @@
  */
 import React from "react";
 import classes from '../styles/MiniCurrentStatusPanel.module.css'
-import currentStatusInfo from "../Data/CurrentStatusPanel.json"
 import userSymbol from "../images/CurrentStatusUser.png"
 import rightArrow from "../images/right-arrow.png"
 import downArrow from "../images/down-arrow.png"
-import { getReportStatus } from "../../../../apiHelper/backendHelper";
+import { getReportStatus, getStudentDetails } from "../../../../apiHelper/backendHelper";
 
 /**
  * Gets necessary information from database and displays the stage that a student is in.
@@ -16,46 +15,28 @@ import { getReportStatus } from "../../../../apiHelper/backendHelper";
  */
 export default function MiniCurrentStatusPanel(){
     React.useEffect(()=>{
-        getReportStatus(3)
+        getStudentDetails()
         .then(res => {
-            console.log(res.data)
+            console.log(res.data.reports)
+
         })
         .catch(err => {
             console.log(err)
 
     });
-    },[])
+    getReportStatus(3)
+    .then(res => {
+        console.log(res.data)
+        setStatusInfo(res.data)
+    })
+    .catch(err => {
+        console.log(err)
+});
+},[])
 
-    let statusInfo = []
-    for(let i = 0; i < currentStatusInfo.length; i++){
-        if( currentStatusInfo[ i ].currentStage ){
-            if( i === 0 ){
-                statusInfo.push(currentStatusInfo[0])
-                statusInfo.push(currentStatusInfo[1])
-                statusInfo.push(currentStatusInfo[2])
-            }
-            else if( i === currentStatusInfo.length - 1 ){
-                statusInfo.push(currentStatusInfo[currentStatusInfo.length - 3])
-                statusInfo.push(currentStatusInfo[currentStatusInfo.length - 2])
-                statusInfo.push(currentStatusInfo[currentStatusInfo.length - 1])
-            }
-            else{
-                statusInfo.push(currentStatusInfo[i-1])
-                statusInfo.push(currentStatusInfo[i])
-                statusInfo.push(currentStatusInfo[i+1])
-            }
-        }
-    }
-    let markerStyle;
-    if( statusInfo[0].currentStage ){
-        markerStyle = { justifyContent: 'left' }
-    }
-    else if( statusInfo[1].currentStage ){
-        markerStyle = { justifyContent: 'center' }
-    }
-    else{
-        markerStyle = { justifyContent: 'right' }
-    }
+    const [statusInfo, setStatusInfo] = React.useState([]);
+
+
 
     const currentStageStyle = {
         backgroundColor: '#A9FF65',
@@ -65,26 +46,26 @@ export default function MiniCurrentStatusPanel(){
     return(
         <div className={classes.mini_current_status_panel_container} >
             <h1>Current Status</h1>
-            <div className={classes.stage_marker} style={markerStyle} >
+            <div className={classes.stage_marker} style={{justifyContent: 'center'}} >
                 <img src={userSymbol}/>
                 <img src={downArrow} />
             </div>
             <div className={classes.stages_container}>
-                <div className={classes.stage} style={statusInfo[0].currentStage ? currentStageStyle: {}}>
+                <div className={classes.stage} >
                     <p>
-                        {statusInfo[0].stageName}
+                        {statusInfo[0]}
                     </p>
                 </div>
                 <img src={rightArrow} />
-                <div className={classes.stage} style={statusInfo[1].currentStage ? currentStageStyle: {}}>
+                <div className={classes.stage} style={currentStageStyle}>
                     <p>
-                        {statusInfo[1].stageName}
+                        {statusInfo[1]}
                     </p>
                 </div>
                 <img src={rightArrow} />
-                <div className={classes.stage} style={statusInfo[2].currentStage ? currentStageStyle: {}}>
+                <div className={classes.stage} >
                     <p>
-                        {statusInfo[2].stageName}
+                        {statusInfo[2]}
                     </p>
                 </div>
             </div>
