@@ -101,7 +101,7 @@ const IterationStage = (props) => {
     }
 
     const gradeHandler = () => {
-        navigate("/gradingformpage", {state:{url: URL.createObjectURL(studentFile)}});
+        navigate("/gradingformpage", {state:{url: URL.createObjectURL(studentFile), id: id}});
     }
 
     const extendDeadlineHandler = (date) => {
