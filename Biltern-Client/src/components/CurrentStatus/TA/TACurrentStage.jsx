@@ -83,10 +83,9 @@ const TACurrentStage = (props) => {
                 <h3 className={classes.activeState}>{reportStatus[1]}</h3>
                 <h3 className={classes.singleState}>{reportStatus[2]}</h3>
             </div>
-            {curStatus == "SUBMITTED" ? 
-            <TAEvaluationStage id={report.reportId || 1}/>
-            :
-            <StudentReportStage id={report.reportId || 1}/>}
+            {curStatus == "SUBMITTED" && <TAEvaluationStage id={report.reportId || 1}/>} 
+            {(curStatus=="APPROVED" || curStatus=="ITERATION" ||curStatus=="ITERATION_SUBMITTED" ||
+             curStatus=="GRADED") && <StudentReportStage id={report.reportId || 1}/>}
         </div>
     );
 }
