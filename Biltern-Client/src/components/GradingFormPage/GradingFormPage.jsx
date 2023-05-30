@@ -3,13 +3,13 @@ import classes from "./GradingFormPage.module.css";
 import SplitPane, { Pane } from 'split-pane-react';
 import 'split-pane-react/esm/themes/default.css'
 import { Document, Page } from 'react-pdf';
-import pdf from "./CS319_AnalysisReport_Iter1_Caffe (2).pdf";
 import { pdfjs } from 'react-pdf';
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import { submitGradingForm, getGrading, getGradingForm } from "../../apiHelper/backendHelper";
 import FileUpload from '../../UI/FileUpload';
 import { uploadSignature, displaySignature } from "../../apiHelper/backendHelper";
+import { useLocation } from "react-router-dom";
 
 
 pdfjs.GlobalWorkerOptions.workerSrc = 
@@ -17,6 +17,9 @@ pdfjs.GlobalWorkerOptions.workerSrc =
 
 export default function GradingFormPage(){
 
+    const location = useLocation();
+    const reportId = location.state.id;
+    const reportUrl = location.state.url;
 
     const [numPages, setNumPages] = React.useState(null);
 
@@ -72,7 +75,7 @@ export default function GradingFormPage(){
             input10: recommendPlace,
             formName: "company"
         }
-        submitGradingForm(6, formData)
+        submitGradingForm(reportId, formData)
         .then(res => {
             console.log(res.data)
         })
@@ -111,7 +114,7 @@ export default function GradingFormPage(){
         formName: (tableEvidence1 === undefined? "iteration": "final") 
         }
 
-         submitGradingForm(6, formData)
+         submitGradingForm(reportId, formData)
              .then(res => {
                  console.log(res.data)
              })
@@ -120,7 +123,7 @@ export default function GradingFormPage(){
              });
     }
     React.useEffect(() =>{
-        getGrading(6)
+        getGrading(reportId)
         .then(res => {
             console.log(res.data);
             setReportSatisfactory(res.data.input9 === "choice1"? "satisfactory": "unsatisfactory" );
@@ -152,8 +155,6 @@ export default function GradingFormPage(){
                     setTableAssesment8(parseInt(res.data.input26));
                 }
             }
-
-
         })
         .catch(err => {
             console.log(err)
@@ -170,7 +171,7 @@ export default function GradingFormPage(){
                 console.log(res.data)
             })
             .catch(err => {
-                // console.log(err)
+                console.log(err)
             });
     }
 
@@ -205,7 +206,7 @@ export default function GradingFormPage(){
         }
     }
     function downloadGradingFormHandler(){
-        getGradingForm(6, 'arraybuffer', true)
+        getGradingForm(reportId, 'arraybuffer', true)
         .then(res => {
             const blob = new Blob([res.data], {type: 'application/pdf'});
             downloadReport(blob);
@@ -226,7 +227,7 @@ export default function GradingFormPage(){
 
                 <div>
                     <div className={classes.student_report}>
-                        <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess} >
+                        <Document file={reportUrl} onLoadSuccess={onDocumentLoadSuccess} >
                             {Array.from(new Array(numPages), (el, index) => (
                                 <Page 
                                     className={classes.page} 
