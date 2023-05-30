@@ -1,3 +1,7 @@
+/**
+ * @author Enes Bektaş
+ * @date 25.05.2023
+ */
 import React from "react";
 import classes from "./UploadedFilesItem.module.css";
 import fileSymbol from "./files.png"
@@ -8,12 +12,16 @@ import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import { useNavigate } from 'react-router-dom';
 import { getSpecificIteration } from "../../apiHelper/backendHelper";
 
-
-
 pdfjs.GlobalWorkerOptions.workerSrc = 
 `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-export default function UploadedFilexItem(props){
+
+/**
+ * Shows mockup for a report of a student.
+ * @param {*} props navigate address, report name, report id
+ * @returns uploded files item
+ */
+export default function UploadedFilesItem(props){
     const { to, reportName, reportId } = props;
     const navigate = useNavigate();
 

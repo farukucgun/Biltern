@@ -1,3 +1,7 @@
+/**
+ * @author Enes Bektaş
+ * @date 07.05.2023
+ */
 import React from "react";
 import classes from '../styles/StudentStatisticsPanel.module.css'
 import statistics from '../Data/StudentStatisticsPanel.json'
@@ -5,11 +9,11 @@ import { Chart } from "react-google-charts"
 import { getDepartmentCourseStatistics } from "../../../../apiHelper/backendHelper";
 import axios from "axios";
 
-/**
- * @author Enes Bektaş
- * @date 07.05.2023
- */
 
+/**
+ * Gets general statistics about students from one course and displays them in a chart.
+ * @returns student statistics panel
+ */
 export default function StudentStatisticsPanel(){
 
   React.useEffect(()=>{

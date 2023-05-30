@@ -1,13 +1,17 @@
-import React from "react";
-import classes from "./UploadedFiles.module.css";
-import UploadedFilesItem from "./UploadedFilesItem";
-import { getIterations } from "../../apiHelper/backendHelper";
 /**
  * @author Enes Bektaş
  * @date 07.05.2023
  */
+import React from "react";
+import classes from "./UploadedFiles.module.css";
+import UploadedFilesItem from "./UploadedFilesItem";
+import { getIterations } from "../../apiHelper/backendHelper";
 
 
+/**
+ * Displays all reports uploaded by a student.
+ * @returns uploaded files page
+ */
 const UploadedFiles = () => {
 
     const [reports, setReports] = React.useState([])

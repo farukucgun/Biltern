@@ -1,13 +1,17 @@
+/**
+ * @author Enes Bektaş
+ * @date 07.05.2023
+ */
 import React from "react";
 import classes from '../styles/SecretaryListPanel.module.css'
 import compare from '../../../../utils/sorting'
 import { getSecretaries } from "../../../../apiHelper/backendHelper";
 
-/**
- * @author Enes Bektaş
- * @date 07.05.2023
- */
 
+/**
+ * Gets secretaries of all departments and displays necessary information of them in a table.
+ * @returns Secretary list panel
+ */
 export default function SecretaryListPanel(){
 
 
