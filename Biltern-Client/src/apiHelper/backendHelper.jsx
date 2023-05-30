@@ -18,8 +18,8 @@ export const getApprovalDueDate = async (reportId) => {
     return await getFetcher(url.APPROVAL_DUEDATE_PATH(reportId));
 }
 
-export const uploadReportContent = async ( data, contentType) => {
-    return await putFetcher(url.REPORT_CONTENT_PATH(), data, contentType);
+export const uploadReportContent = async (reportId, data, contentType) => {
+    return await putFetcher(url.REPORT_CONTENT_PATH(reportId), data, contentType);
 }
 
 export const getReportContent = async (reportId, responseType) => {

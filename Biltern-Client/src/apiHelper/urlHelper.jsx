@@ -14,6 +14,7 @@ export const GRADER_REPORT_PATH = (reportId) => COMMON_PATH + 'report/grader/' +
 export const TA_PATH = (reportId) => COMMON_PATH + 'report/TA' + reportId;
 export const GET_GRADING = (reportId) => COMMON_PATH + 'report/grades/' + reportId;
 export const GET_SPECIFIC_ITERATION_PATH = (reportId) => COMMON_PATH + "report/iterations/" + reportId;
+export const SEMESTER_PATH = () => COMMON_PATH + "init"
 
 // coordinator controller
 export const COORDINATOR_PATH = () => COMMON_PATH + 'coordinator';

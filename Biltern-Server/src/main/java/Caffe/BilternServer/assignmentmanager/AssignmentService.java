@@ -81,6 +81,8 @@ public class AssignmentService {
         report.setCourse(course);
         report.setStudent(student);
 
+        report.setCourse(course);
+        report.setStudent(student);
         studentReports.add(report);
         courseReports.add(report);
 
