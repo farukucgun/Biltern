@@ -28,8 +28,11 @@ public class NotificationService {
         this.bilternUserService = bilternUserService;
     }
 
-    private BilternUser getUser(Long studentId){
-        return bilternUserService.loadUserById(studentId);
+    private BilternUser getUser(Long bilkentId){
+
+        System.out.println(bilkentId);
+
+        return bilternUserService.loadUserById(bilkentId);
     }
 
     public void createPreviewFeedbackGivenNotification(
@@ -66,6 +69,8 @@ public class NotificationService {
             String courseCode){
         Notification notification = new Notification();
 
+        System.out.println("working");
+
         notification.setBody("Due date has changed for your " + courseCode + " course report");
         notification.setType("Report due date changed");
         notification.setBilternUser(getUser(studentId));
@@ -74,13 +79,13 @@ public class NotificationService {
     }
 
     public void dueDateChangedForPreviewFeedbackNotification(
-            Long studentId,
-            String courseCode){
+            Long taId,
+            String studentName){
         Notification notification = new Notification();
 
-        notification.setBody("Preview due date has changed for your " + courseCode  + " course reports");
+        notification.setBody("Preview due date has changed for report of student " + studentName + "'s course report");
         notification.setType("Preview due date changed");
-        notification.setBilternUser(getUser(studentId));
+        notification.setBilternUser(getUser(taId));
         notificationRepo.save(notification);
     }
 
