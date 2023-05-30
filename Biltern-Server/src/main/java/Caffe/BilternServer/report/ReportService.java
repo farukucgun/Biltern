@@ -2,6 +2,7 @@ package Caffe.BilternServer.report;
 
 import Caffe.BilternServer.course.Course;
 import Caffe.BilternServer.course.CourseService;
+import Caffe.BilternServer.notification.NotificationService;
 import Caffe.BilternServer.report.Feedback.Feedback;
 import Caffe.BilternServer.report.Feedback.FeedbackRepository;
 import Caffe.BilternServer.report.GradingForm.GradingForm;
@@ -31,17 +32,20 @@ public class ReportService {
     private final FeedbackRepository feedbackRepository;
     private final GradingFormRepository gradingFormRepository;
     private final CourseService courseService;
+    private final NotificationService notificationService;
 
     @Autowired
     public ReportService(
             ReportRepository reportRepository,
             FeedbackRepository feedbackRepository,
             GradingFormRepository gradingFormRepository,
-            CourseService courseService) {
+            CourseService courseService,
+            NotificationService notificationService) {
         this.reportRepository = reportRepository;
         this.feedbackRepository = feedbackRepository;
         this.gradingFormRepository = gradingFormRepository;
         this.courseService = courseService;
+        this.notificationService = notificationService;
     }
 
 
@@ -74,14 +78,27 @@ public class ReportService {
     public void setDueDate(Long reportId, LocalDate dueDate){
         Report report = reportRepository.findReportByIdAndIsIteration(reportId, false);
         report.setDueDate(dueDate);
+
+
         reportRepository.save(report);
+
+        notificationService.dueDateChangedForReportNotification(
+                report.getStudent().getBilkentId(),
+                report.getId(),
+                report.getCourse().getCourseCode());
+
     }
 
     @Transactional
     public void setApprovalDueDate(Long reportId, LocalDate approvalDueDate){
         Report report = reportRepository.findReportByIdAndIsIteration(reportId, false);
         report.setApprovalDueDate(approvalDueDate);
+
         reportRepository.save(report);
+
+        notificationService.dueDateChangedForPreviewFeedbackNotification(
+                report.getTeachingAssistant().getBilkentId(), report.getStudent().getUserName()
+        );
     }
     @Transactional
     public void uploadReportPDF(Long reportId, byte[] reportContent){

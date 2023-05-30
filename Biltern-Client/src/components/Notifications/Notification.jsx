@@ -14,6 +14,9 @@ const Notification = (props) => {
     const {type, body, date, seen, reportId, notificationId, onDeleteNotification} = props;
     const dispatch = useDispatch();
 
+    const notificationDate = new Date(date)
+ 
+
     const activeClasses = `notification ${seen ? "notification-seen" : ""}`;
 
     const deleteNotificationHandler = () => {
@@ -39,7 +42,7 @@ const Notification = (props) => {
             <button className="delete-notification" onClick={deleteNotificationHandler}>X</button>
             <h3>{type}</h3>
             <p>{body}</p>
-            <p>{date}</p>
+            <p>{notificationDate.toString()}</p>
         </li>
     );    
 };
