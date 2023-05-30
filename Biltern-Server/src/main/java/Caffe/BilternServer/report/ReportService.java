@@ -228,32 +228,39 @@ public class ReportService {
 
         Course course299, course399;
 
-        try {
-            course299 = courseService.getCourseByCode(department + "299");
-            course399 = courseService.getCourseByCode(department + "399");
-
-        }
-        catch (EntityNotFoundException entityNotFoundException){
-            return List.of(new HashMap<>(), new HashMap<>());
-        }
-
         List<Map<ReportStats, Integer>> departmentStats = new ArrayList<>();
 
-        Map<ReportStats, Integer> courseStats299 = new HashMap<>();
-        Map<ReportStats, Integer> courseStats399 = new HashMap<>();
+        try {
+            course299 = courseService.getCourseByCode(department + "299");
+            Map<ReportStats, Integer> courseStats299 = new HashMap<>();
 
 
-        for(ReportStats reportStats: ReportStats.values()){
-            courseStats299.put(reportStats, reportRepository.countAllByCourseAndReportStatsAndIsIteration(
-                    course299, reportStats, false
-            ));
-            courseStats399.put(reportStats, reportRepository.countAllByCourseAndReportStatsAndIsIteration(
-                    course399, reportStats, false
-            ));
+            for(ReportStats reportStats: ReportStats.values()){
+
+                courseStats299.put(reportStats, reportRepository.countAllByCourseAndReportStatsAndIsIteration(
+                        course299, reportStats, false
+                ));
+            }
+            departmentStats.add(courseStats299);
+
+            course399 = courseService.getCourseByCode(department + "399");
+
+            Map<ReportStats, Integer> courseStats399 = new HashMap<>();
+            for(ReportStats reportStats: ReportStats.values()){
+                courseStats399.put(reportStats, reportRepository.countAllByCourseAndReportStatsAndIsIteration(
+                        course399, reportStats, false
+                ));
+            }
+
+            departmentStats.add(courseStats399);
+        }
+        catch (EntityNotFoundException entityNotFoundException){
+            if(departmentStats.size() == 0){
+                return List.of(new HashMap<>(), new HashMap<>());
+            }
+            departmentStats.add(new HashMap<>());
         }
 
-        departmentStats.add(courseStats299);
-        departmentStats.add(courseStats399);
 
         return departmentStats;
     }
