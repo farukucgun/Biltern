@@ -100,7 +100,7 @@ const StudentReportStage = (props) => {
                     />
                     <ActionButton
                         className=""
-                        text="Extend Deadline"
+                        text="Set Deadline"
                         onClick={showExtendDeadline}
                     />
                     <ActionButton
