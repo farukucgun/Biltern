@@ -7,6 +7,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.management.InstanceAlreadyExistsException;
 import java.io.IOException;
+
+/**
+ * This is the controller class for the assignment of users, including a functionality to initialize lists of users into the system
+ */
 @CrossOrigin(origins = "${client.domain}")
 @RestController
 @RequestMapping("/init")

@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Service;
 
+/**
+ * This is the service class for the Feedback object
+ */
 
 @Service
 public class FeedbackService {

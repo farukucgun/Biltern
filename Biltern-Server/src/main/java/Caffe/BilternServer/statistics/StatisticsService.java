@@ -17,8 +17,7 @@ import java.util.Map;
 import java.util.List;
 
 /**
- * @author jmo
- * @date 26.05.2023
+ * This is the service class for statistics, including grader statistics, TA statistics, and department/course statistics
  */
 
 @Service
