@@ -35,7 +35,7 @@ const Navbar = () => {
       items.push({to: "/uploadedfiles", name: "Uploaded Files"});
     } 
     else if (userRole === "TEACHING_ASSISTANT") {
-      items.push({to: "studentlist", name: "Student List"});
+      items.push({to: "/studentlist", name: "Student List"});
     } 
     else if (userRole === "FACULTY_MEMBER") {
       items.push({to: "studentlist", name: "Student List"});
