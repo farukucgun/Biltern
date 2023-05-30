@@ -43,9 +43,8 @@ export default function TAListPanel(){
         return(
             <tr key={element.bilkentId}>
                 <td className={classes.ta_table_element} >{element.userName}</td>
-                <td className={classes.ta_table_element} >{element.course}</td>
+                <td className={classes.ta_table_element} >{element.department}</td>
                 <td className={classes.ta_table_element} >{element.numberOfStudents}</td>
-                <td className={classes.ta_table_element} >{element.grader}</td>
             </tr>
         )
     })
@@ -58,9 +57,8 @@ export default function TAListPanel(){
             <table >
                 <tr>
                     <th className={classes.ta_table_element} onClick={() => handleSortClick("name")}>Name</th>
-                    <th className={classes.ta_table_element} onClick={() => handleSortClick("course")}>Course</th>
+                    <th className={classes.ta_table_element} onClick={() => handleSortClick("department")}>Department</th>
                     <th className={classes.ta_table_element} onClick={() => handleSortClick("numberOfStudents")}>Number of Students</th>
-                    <th className={classes.ta_table_element} onClick={() => handleSortClick("grader")}> Grader</th>
                 </tr>
                 {taInfo}
             </table>
