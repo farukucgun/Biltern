@@ -8,7 +8,11 @@ import DatePicker from '../../../UI/datePicker';
 import { getReportDueDate, getReportContent, uploadReportFeedback, 
     getReportFeedback, changeReportDueDate} from '../../../apiHelper/backendHelper';
 
-// @todo: iteration logic is not implemented yet 
+/**
+ * @author Faruk Uçgun
+ * @date 25.05.2023
+ * @abstract: This component is responsible for displaying student iteration stage for instructor
+ */
 
 import classes from '../CurrentStatus.module.css';
 

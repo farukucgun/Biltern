@@ -47,6 +47,7 @@ const Navbar = () => {
     } 
     else if (userRole && userRole === "SECRETARY") {
       items.push({to: "/semesterInitialization", name: "Semester Initialization"});
+      items.push({to: "/registeruser", name: "Register User"});
       items.push({to: "/studentlist", name: "Student List"});
       // grader list will be added
     } 

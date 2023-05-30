@@ -8,6 +8,12 @@ import { getReportDueDate, getReportContent, uploadReportContent, getReportFeedb
 
 import classes from '../CurrentStatus.module.css';
 
+/**
+ * @author Faruk Uçgun
+ * @date 25.05.2023
+ * @abstract: This component is responsible for displaying student iteration stage for a student
+ */
+
 const IterationStage = (props) => {
     const {id} = props;
     console.log(id);
