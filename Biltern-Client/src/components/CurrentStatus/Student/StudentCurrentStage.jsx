@@ -28,8 +28,10 @@ const StudentCurrentStatus = (props) => {
     const [departmentA, setDepartmentA] = useState();
     const [lastReport, setLastReport] = useState();
 
-    const departmentUsed = department ? department : departmentA;
-    const reportUsed = report ? report : lastReport;
+    // const departmentUsed = department ? department : departmentA;
+    // const reportUsed = report ? report : lastReport;
+    const departmentUsed = departmentA;
+    const reportUsed = lastReport;
 
     const allStats = [
         {"NOT_SUBMITTED": [" ", "Waiting for submission", "Submitted"]},
