@@ -6,10 +6,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 /**
- * @author jmo
- * @date 8.05.2023
+ * This is the repository interface for the BilternUser object
  */
-
 @Repository
 public interface BilternUserRepo extends JpaRepository<BilternUser, Long> {
 

@@ -8,8 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @author jmo
- * @date 17.03.2023
+ * This is the controller class for the authentication of users, including a functionality to login, get token, and change password
  */
 
 
@@ -25,6 +24,7 @@ public class AuthController {
     public AuthController(AuthService authService) {
         this.authService = authService;
     }
+
 
     @PostMapping("login")
     public ResponseEntity<AuthenticationDTO> login(@Valid @RequestBody UserLoginRequest userLoginRequest){
@@ -61,13 +61,6 @@ public class AuthController {
 
         return ResponseEntity.ok("User password has been successfully changed.");
     }
-
-
-
-
-
-
-
 
 
 

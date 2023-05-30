@@ -1,0 +1,17 @@
+.reminders_panel_container{
+    width: 525px;
+    height: 375px;
+    border: 1px solid black;
+    border-radius: 15px;
+    margin: 2%;
+    background-color: white;
+    font-size: larger;
+}
+
+.reminders_panel_container h1{
+    text-align: center;
+}
+
+.reminders_panel_container li{
+    margin: 10px 25px;
+}

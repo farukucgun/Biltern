@@ -11,8 +11,7 @@ import org.springframework.stereotype.Service;
 import static org.springframework.beans.MethodInvocationException.ERROR_CODE;
 
 /**
- * @author jmo
- * @date 9.05.2023
+ * This is the service class for the random generation of passwords to ensure system security
  */
 
 

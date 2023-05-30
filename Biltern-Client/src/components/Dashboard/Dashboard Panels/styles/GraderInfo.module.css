@@ -1,0 +1,47 @@
+.grader_info_panel_container{
+    box-sizing: border-box;
+    width: 425px;
+    height: 300px;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    border-radius: 15px;
+    margin: 2%;
+    background-color: white;
+    font-size: larger;
+}
+
+.grader_info_panel_container h1{
+    text-align: center;
+}
+
+.grader_profile{
+    display: flex;
+    align-items: center;
+    background-color: #EAFF97;
+    border-radius: 45px;
+    justify-content: space-evenly;
+}
+
+.grader_profile p{
+    margin: 15px;
+    text-align: center;
+}
+
+.profile_image{
+    width: 50px;
+    height: 50px;
+}
+
+.grader_name{
+    display: flex;
+    background-color: #ECECEC;
+    width: 150px;
+    height: 35px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 25px;
+    margin: 15px;
+}

@@ -1,0 +1,27 @@
+[
+    {
+        "name": "taname",
+        "course": "cs399",
+        "numberOfStudents": 20,
+        "grader": "Eray Tüzün1"
+    },
+    {
+        "name": "taname1",
+        "course": "cs299",
+        "numberOfStudents": 22,
+        "grader": "Eray Tüzün2"
+    },
+    {
+        "name": "taname2",
+        "course": "cs299",
+        "numberOfStudents": 21,
+        "grader": "Eray Tüzün4"
+    },
+    {
+        "name": "taname3",
+        "course": "cs299",
+        "numberOfStudents": 24,
+        "grader": "Eray Tüzün3"
+    }
+]
+

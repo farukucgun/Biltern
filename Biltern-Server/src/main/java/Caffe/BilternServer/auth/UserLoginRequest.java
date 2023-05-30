@@ -5,8 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author jmo
- * @date 7.05.2023
+ * This is the entity class for the UserLoginRequest object
  */
 @NoArgsConstructor
 @Data
