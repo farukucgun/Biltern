@@ -1,5 +1,7 @@
 package Caffe.BilternServer.report.Feedback;
 
+import Caffe.BilternServer.notification.NotificationService;
+import Caffe.BilternServer.report.Report;
 import Caffe.BilternServer.report.ReportRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,25 +15,37 @@ import org.springframework.stereotype.Service;
 @Service
 public class FeedbackService {
     private final FeedbackRepository feedbackRepository;
+
+    private final NotificationService notificationService;
     private final ReportRepository reportRepository;
     @Autowired
     public FeedbackService(
-            FeedbackRepository feedBackRepository, ReportRepository reportRepository) {
+            FeedbackRepository feedBackRepository,
+            NotificationService notificationService,
+            ReportRepository reportRepository) {
         this.feedbackRepository = feedBackRepository;
+        this.notificationService = notificationService;
         this.reportRepository = reportRepository;
     }
 
     @Transactional
     public void saveReportFeedback(Long reportId, byte[] feedbackPDF){
         Feedback feedback = feedbackRepository.findByReportId(reportId);
+
+        Report report = reportRepository.findById(reportId).orElse(null);
+
         if(feedback == null){
             feedback = new Feedback();
-            feedback.setReport(reportRepository.findById(reportId).orElse(null));
+            feedback.setReport(report);
         }
 
         feedback.setPdfData(feedbackPDF);
         feedback.setPrev(false);
         feedbackRepository.save(feedback);
+
+        notificationService.createFeedbackGivenNotification(
+                report.getStudent().getBilkentId(), reportId, report.getCourse().getCourseCode()
+        );
     }
     public ByteArrayResource downloadReportFeedback(Long reportId){
         Feedback feedback = feedbackRepository.findByReportIdAndAndIsPrev(reportId, false).get();
@@ -43,14 +57,21 @@ public class FeedbackService {
     @Transactional
     public void saveReportPreviewFeedback(Long reportId, byte[] feedbackPDF){
         Feedback feedback = feedbackRepository.findByReportIdAndAndIsPrev(reportId, true).get();
+
+        Report report = reportRepository.findById(reportId).orElse(null);
         if(feedback == null){
             feedback = new Feedback();
-            feedback.setReport(reportRepository.findById(reportId).orElse(null));
+
+            feedback.setReport(report);
         }
 
         feedback.setPdfData(feedbackPDF);
         feedback.setPrev(true);
         feedbackRepository.save(feedback);
+
+        notificationService.createPreviewFeedbackGivenNotification(
+                report.getStudent().getBilkentId(), report.getId(), report.getCourse().getCourseCode()
+        );
     }
     @Transactional
     public void removeFeedback(Long reportId){
