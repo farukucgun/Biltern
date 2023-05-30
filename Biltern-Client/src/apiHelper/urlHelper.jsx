@@ -13,6 +13,7 @@ export const GRADING_FORM_PATH = (reportId) => COMMON_PATH + 'report/gradingForm
 export const GRADER_REPORT_PATH = (reportId) => COMMON_PATH + 'report/grader/' + reportId;
 export const TA_PATH = (reportId) => COMMON_PATH + 'report/TA' + reportId;
 export const GET_GRADING = (reportId) => COMMON_PATH + 'report/grades/' + reportId;
+export const GET_SPECIFIC_ITERATION_PATH = (reportId) => COMMON_PATH + "report/iterations/" + reportId;
 
 // coordinator controller
 export const COORDINATOR_PATH = () => COMMON_PATH + 'coordinator';
@@ -34,6 +35,7 @@ export const STUDENT_PATH = () => COMMON_PATH + 'student';
 export const STUDENT_SELECT_PATH = (studentId) => COMMON_PATH + 'student/' + studentId;
 export const STUDENT_DETAILS_PATH = () => COMMON_PATH + 'student/details';
 export const STUDENT_DETAILS_BY_ID_PATH = (studentId) => COMMON_PATH + 'student/details/' + studentId;
+export const STUDENT_ITERATIONS_PATH = () => COMMON_PATH + "student/iterations"
 
 // teaching assistant controller
 export const TEACHING_ASSISTANT_PATH = () => COMMON_PATH + 'teachingassistant';
