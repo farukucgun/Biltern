@@ -6,8 +6,7 @@ import lombok.Data;
 import lombok.NonNull;
 
 /**
- * @author jmo
- * @date 19.04.2023
+ * This is the entity class for the change password request from a user in case they wish to change it
  */
 
 @Data

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 
-import classes from './Alert.module.css';
+import './Alert.css';
 
 /**
  * @author Faruk Uçgun
@@ -25,7 +25,7 @@ const Alert = () => {
     }
 
     return ( 
-        <div className={classes.alerts}>
+        <div className="alerts">
                 {alerts.map((alert) => (
                     <div key={alert.id} className={`alert alert-${alert.alertType}`}>
                         {alert.msg}

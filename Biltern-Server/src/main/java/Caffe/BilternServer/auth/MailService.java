@@ -8,8 +8,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 /**
- * @author jmo
- * @date 4.04.2023
+ * This is the service class for the emailing functionality in the system, used to email users when they are registered or when they receive a new password
  */
 
 @Service
@@ -31,7 +30,7 @@ public class MailService {
     public void sendPasswordChangeMail(String bilkentMail, Long bilkentId, String token){
         createAndSendMail("Biltern-Password Change", bilkentMail,
                 " <h1> Your password change link is below <h1> \n  <a href = \""
-                        + "http://127.0.0.1:5173?id=" +
+                        + "http://127.0.0.1:5173/login/newpassword?id=" +
                         bilkentId + "&token=" + token  + "\" >  Click  </a> \n"
                 );
     }
@@ -43,10 +42,9 @@ public class MailService {
                 " <h1> Your Biltern account has been created <h1> " +
                         "\nYou can use your credentials below to login: \n Bilkent ID: "+ bilkentId
                         +"\nPassword: " + password + "\n<a href = \""
-                        + "http://127.0.0.1:5173/home" +
+                        + "http://127.0.0.1:5173/login" +
                         "\" >  Click to open Biltern  </a> \n"
         );
-        System.out.println("Sent mail to " + bilkentMail + " for registeration!");
     }
 
     private void createAndSendMail(String subject, String mail, String text){

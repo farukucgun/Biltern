@@ -13,6 +13,9 @@ import java.util.HashMap;
  * @date 4.04.2023
  */
 
+/**
+ * This is the service class for the authentication of users
+ */
 
 @Service
 public class AuthService {
@@ -45,6 +48,9 @@ public class AuthService {
 
         authenticationDTO.setRole(bilternUser.getBilternUserRole());
         authenticationDTO.setJwt(jwtService.generateRefreshToken(bilternUser, new HashMap<>()));
+        authenticationDTO.setEmail(bilternUser.getBilkentMail());
+        authenticationDTO.setFullName(bilternUser.getUsername());
+        authenticationDTO.setBilkentId(bilternUser.getBilkentId());
 
         return authenticationDTO;
     }

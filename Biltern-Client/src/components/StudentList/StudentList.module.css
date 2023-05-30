@@ -1,0 +1,102 @@
+.studentListPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* width: 100%; */
+    width: 1000px;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.studentList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    margin: 10px auto;
+    padding: 0;
+    list-style: none;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.studentListTop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto;
+    background-color: #fff;
+    border-color: #b24646;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.searchBar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.searchButton {
+    margin: 10px;
+}
+
+.searchContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    margin: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.studentListHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.studentListHeaders {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto;
+    /* padding: 100px; */
+    list-style: none;
+    background-color: #fff;
+} 
+
+.listHeaderItem {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+    background-color: #fff;
+    border-radius: 5px;
+}

@@ -1,0 +1,30 @@
+[
+    {
+        "stageName": "Initial Report",
+        "currentStage": true    
+    },
+    {
+        "stageName": "Compant Evaluation Report",
+        "currentStage": false
+    },
+    {
+        "stageName": "Pre-evaluation",
+        "currentStage": false
+    },
+    {
+        "stageName": "System Check",
+        "currentStage": false
+    },
+    {
+        "stageName": "Evaluation of Report Part-A",
+        "currentStage": false
+    },
+    {
+        "stageName": "Evaluation of Report Part-B",
+        "currentStage": false
+    },
+    {
+        "stageName": "Evaluation of Report Part-C",
+        "currentStage": false
+    }
+]
