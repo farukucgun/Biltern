@@ -3,7 +3,7 @@ import StudentItem from './StudentItem';
 import ActionButton from '../../UI/ActionButton';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getGraderDetails, getTeachingAssistantDetails, getSecretaries } from '../../apiHelper/backendHelper';
+import { getGraderDetails, getTeachingAssistantDetails } from '../../apiHelper/backendHelper';
 import { setTimedAlert } from '../../features/alertSlice';
 
 import classes from "./StudentList.module.css";
