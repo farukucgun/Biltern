@@ -30,7 +30,7 @@ public class ReportDTO {
         this.dueDate = report.getDueDate();
         this.reportStats = report.getReportStats();
         this.reportId = report.getId();
-        this.taId = report.getTeachingAssistant().getBilkentId();
+        //this.taId = report.getTeachingAssistant().getBilkentId();
         this.studentId = report.getStudent().getBilkentId();
         this.graderId = report.getGrader().getBilkentId();
         courseCode = report.getCourse().getCourseCode();
@@ -38,7 +38,7 @@ public class ReportDTO {
         studentId = report.getStudent().getBilkentId();
         studentName = report.getStudent().getUserName();
         graderName = report.getGrader().getUserName();
-        taName = report.getTeachingAssistant().getUserName();
+        //taName = report.getTeachingAssistant().getUserName();
 
     }
 

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import ActionButton from '../../../UI/ActionButton';
 import { useDispatch } from 'react-redux';
 import { setTimedAlert } from '../../../features/alertSlice';
-import { getGrading } from '../../../apiHelper/backendHelper';
+import { getGradingForm } from '../../../apiHelper/backendHelper';
 
 import classes from '../CurrentStatus.module.css';
 
@@ -18,11 +18,11 @@ const FinalStage = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        getGrading(id)
+        getGradingForm(id, "arraybuffer", true)
             .then(res => {
-                // const blob = new Blob([res.data], {type: 'application/pdf'});
-                // setGradeFile(blob);
                 console.log(res.data);
+                const blob = new Blob([res.data], {type: 'application/pdf'});
+                setGradeFile(blob);
             })
             .catch(err => {
                 dispatch(setTimedAlert({msg: "Error while fetching grading", alertType: "error", timeout: 4000}));
@@ -48,13 +48,13 @@ const FinalStage = (props) => {
     }
 
     const downloadGradingFormHandler = () => {
-        downloadReport(feedbackFile);
+        downloadReport(gradeFile);
     }
 
     return (
         <div className={classes.iterationStage}>
             <div className={classes.dueDate}>
-                <p>Due Date: {dueDate}</p>
+                <p>Due Date: {}</p>
             </div>
             <div className={classes.actions}>
                 <div className={classes.buttons}>

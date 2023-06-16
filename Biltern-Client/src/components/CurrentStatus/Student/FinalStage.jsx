@@ -54,7 +54,7 @@ const FinalStage = (props) => {
     return (
         <div className={classes.iterationStage}>
             <div className={classes.dueDate}>
-                <p>Due Date: {dueDate}</p>
+                <p>Due Date: {}</p>
             </div>
             <div className={classes.actions}>
                 <div className={classes.buttons}>

@@ -33,8 +33,9 @@ public class Feedback {
     public Feedback(){
 
     }
-    public Feedback(Report report){
+    public Feedback(Report report, boolean isPrev){
         this.report = report;
+        this.isPrev = isPrev;
     }
     public byte[] getPdfData() {
         return pdfData;

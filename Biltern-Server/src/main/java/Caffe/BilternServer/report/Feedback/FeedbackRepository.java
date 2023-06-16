@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
 
-    Optional<Feedback> findByReportIdAndAndIsPrev(Long reportId, boolean isPrev);
+    Optional<Feedback> findByReportIdAndIsPrev(Long reportId, boolean isPrev);
     Feedback findByReportId(Long reportId);
-    void deleteByReportIdAndReport_isIteration(Long reportId, boolean isIteration);
+    void deleteByReportIdAndReportIsIteration(Long reportId, boolean isIteration);
 }
