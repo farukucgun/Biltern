@@ -91,6 +91,21 @@ export default function GradingFormPage(){
         });
     }
 
+    function handleSubmitPartB(){
+        let formData = {
+            input4: partBSatisfactory === "satisfactory"? "choice1": "choice2",
+            input5: revisionDate,
+            formName: "iteration"
+        }
+        submitGradingForm(reportId, formData)
+        .then(res => {
+            console.log(res.data)
+        })
+        .catch(err => {
+            console.log(err)
+        });
+    }
+
     // Handles submitting the whole report
     function handleSubmit(){
         let formData = {
@@ -345,6 +360,11 @@ export default function GradingFormPage(){
                                 <p className={classes.explaining_information}>
                                     Student is given two weeks for each revision.
                                 </p>
+                                <button
+                                    onClick={handleSubmitPartB}
+                                >
+                                    Submit Part-B
+                                </button>
                             </form>
                         </div>
                         <p className={classes.explaining_information}>
