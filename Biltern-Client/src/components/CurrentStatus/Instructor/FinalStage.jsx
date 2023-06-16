@@ -20,7 +20,6 @@ const FinalStage = (props) => {
     useEffect(() => {
         getGradingForm(id, "arraybuffer", true)
             .then(res => {
-                console.log(res.data);
                 const blob = new Blob([res.data], {type: 'application/pdf'});
                 setGradeFile(blob);
             })
@@ -53,12 +52,8 @@ const FinalStage = (props) => {
 
     return (
         <div className={classes.iterationStage}>
-            <div className={classes.dueDate}>
-                <p>Due Date: {}</p>
-            </div>
             <div className={classes.actions}>
                 <div className={classes.buttons}>
-                    
                     <ActionButton
                         className=""
                         text="Download Grading Form"

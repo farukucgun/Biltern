@@ -28,9 +28,6 @@ const StudentCurrentStatus = (props) => {
     const [departmentA, setDepartmentA] = useState();
     const [lastReport, setLastReport] = useState();
 
-    // const departmentUsed = department ? department : departmentA;
-    // const reportUsed = report ? report : lastReport;
-
     const allStats = [
         {"NOT_SUBMITTED": [" ", "Waiting for submission", "Submitted"]},
         {"SUBMITTED": ["Submitted", "Waiting for approval", "Approved"]},
@@ -45,7 +42,6 @@ const StudentCurrentStatus = (props) => {
         if (role == "UNDERGRADUATE") {
             getStudentDetails()
                 .then(res => {
-                    console.log(res.data);
                     setDepartmentA(res.data.department);
                     setLastReport(res.data.reports[0]);
 
@@ -58,7 +54,6 @@ const StudentCurrentStatus = (props) => {
                                 
                                 if (JSON.stringify(values) === JSON.stringify(res.data)) {
                                     setCurStatus(key);
-                                    console.log(key);
                                 break;
                                 }
                             }
@@ -89,8 +84,7 @@ const StudentCurrentStatus = (props) => {
                         
                         if (JSON.stringify(values) === JSON.stringify(res.data)) {
                             setCurStatus(key);
-                            console.log(key);
-                        break;
+                            break;
                         }
                     }
                 })
