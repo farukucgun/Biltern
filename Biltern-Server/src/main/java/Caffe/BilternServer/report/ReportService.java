@@ -48,32 +48,6 @@ public class ReportService {
         this.notificationService = notificationService;
     }
 
-
-    @Transactional
-    public void addNewReport(){
-        Report report = new Report();
-        Feedback feedback = new Feedback();
-        Feedback prevFeedback = new Feedback();
-        GradingForm gradingForm = new GradingForm();
-
-        report.setFeedback(feedback);
-        feedback.setReport(report);
-        prevFeedback.setReport(report);
-        gradingForm.setReport(report);
-
-        feedback.setPrev(false);
-        prevFeedback.setPrev(true);
-
-        report.setReportStats(ReportStats.NOT_SUBMITTED);
-        report.setCompanyStats(CompanyStats.WAITING);
-
-        reportRepository.save(report);
-        feedbackRepository.save(feedback);
-        feedbackRepository.save(prevFeedback);
-        gradingFormRepository.save(gradingForm);
-    }
-
-
     @Transactional
     public void setDueDate(Long reportId, LocalDate dueDate){
         Report report = reportRepository.findReportByIdAndIsIteration(reportId, false);
@@ -148,25 +122,11 @@ public class ReportService {
         report.setIteration(true);
 
         Report newReport = new Report(report);
-        Feedback feedback = new Feedback(newReport, false);
-        Feedback prevFeedback = new Feedback(newReport, true);
-        if(report.getFeedback() != null){
-            feedback.setPdfData(report.getFeedback().getPdfData());
-        }
-        if(report.getPrevFeedback() != null){
-            prevFeedback.setPdfData(report.getPrevFeedback().getPdfData());
-        }
 
-
-        newReport.setFeedback(feedback);
-        newReport.setPrevFeedback(prevFeedback);
-
-        newReport.setGradingForm(report.getGradingForm());
-        newReport.getGradingForm().setReport(newReport);
         newReport.setPreviousIteration(report);
         newReport.setIteration(false);
         report.setGradingForm(null);
-        newReport.setReportStats(ReportStats.ITERATION);
+
         reportRepository.save(report);
         reportRepository.save(newReport);
     }
@@ -181,7 +141,7 @@ public class ReportService {
 
     @Transactional
     public void updateStatusGradingForm(Long reportId, String formName){
-        Report report = reportRepository.getById(reportId);
+        Report report = reportRepository.findReportByIdAndIsIteration(reportId, false);
         formName = formName.toLowerCase().strip();
         if(formName.equals("company")){
             report.setCompanyStats(CompanyStats.GRADED);

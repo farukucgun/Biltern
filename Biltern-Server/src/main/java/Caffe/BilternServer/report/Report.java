@@ -8,12 +8,17 @@ import Caffe.BilternServer.users.Student;
 import Caffe.BilternServer.users.TeachingAssistant;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is the entity class for the Report object
  */
 
+@Data
 @Entity(name = "Report")
 @Table(name = "Report")
 public class Report {
@@ -62,13 +67,8 @@ public class Report {
     @JoinColumn(name = "courseId")
     private Course course;
 
-    @OneToOne(mappedBy = "report", cascade = CascadeType.ALL)
-    @JoinColumn(name = "feedbackId")
-    private Feedback feedback;
-
-    @OneToOne(mappedBy = "report", cascade = CascadeType.ALL)
-    @JoinColumn(name = "prevFeedbackId")
-    private Feedback prevFeedback;
+    @OneToMany(mappedBy = "report",cascade = CascadeType.ALL)
+    private List<Feedback> feedbacks;
     @OneToOne(mappedBy = "report", cascade = CascadeType.ALL)
     @JoinColumn(name = "gradingFormId")
     private GradingForm gradingForm;
@@ -79,9 +79,10 @@ public class Report {
     private Report previousIteration;
 
     public Report(){
-        feedback = new Feedback(this, false);
+        feedbacks = new ArrayList<Feedback>();
+        feedbacks.add(new Feedback(this, false));
+        feedbacks.add(new Feedback(this, true));
         gradingForm = new GradingForm(this);
-        prevFeedback = new Feedback(this, true);
         reportStats = ReportStats.NOT_SUBMITTED;
         companyStats = CompanyStats.WAITING;
     }
@@ -98,128 +99,60 @@ public class Report {
         this.grader = newReport.grader;
         this.teachingAssistant = newReport.teachingAssistant;
         this.course = newReport.course;
-        this.feedback = newReport.feedback;
-        this.gradingForm = newReport.gradingForm;
         this.previousIteration = newReport.previousIteration;
-    }
-    public LocalDate getDueDate() {
-        return dueDate;
+
+        feedbacks = new ArrayList<Feedback>();
+
+        Feedback feedback = new Feedback(this, false);
+        Feedback prevFeedback = new Feedback(this, true);
+        if(newReport.getFeedback() != null){
+            feedback.setPdfData(newReport.getFeedback().getPdfData());
+        }
+        if(newReport.getPrevFeedback() != null){
+            prevFeedback.setPdfData(newReport.getPrevFeedback().getPdfData());
+        }
+        feedbacks.add(feedback);
+        feedbacks.add(prevFeedback);
+        gradingForm = newReport.getGradingForm();
     }
 
-    public void setDueDate(LocalDate dueDate) {
-        this.dueDate = dueDate;
+    public Feedback getFeedback(){
+        for(Feedback f : feedbacks){
+            if(!f.isPrev()){
+                return f;
+            }
+        }
+        return null;
     }
 
-    public LocalDate getApprovalDueDate() {
-        return approvalDueDate;
+    public void setFeedback(Feedback newFeedback){
+        for(Feedback f : feedbacks){
+            if(!f.isPrev()){
+               f = newFeedback;
+               f.setPrev(true);
+               f.setReport(this);
+               return;
+            }
+        }
+    }
+    public Feedback getPrevFeedback(){
+        for(Feedback f : feedbacks){
+            if(f.isPrev()){
+                return f;
+            }
+        }
+        return null;
     }
 
-    public void setApprovalDueDate(LocalDate approvalDueDate) {
-        this.approvalDueDate = approvalDueDate;
+    public void setPrevFeedback(Feedback newFeedback){
+        for(Feedback f : feedbacks){
+            if(f.isPrev()){
+                f = newFeedback;
+                f.setReport(this);
+                f.setPrev(true);
+                return;
+            }
+        }
     }
-
-    public ReportStats getReportStats() {
-        return reportStats;
-    }
-
-    public void setReportStats(ReportStats reportStats) {
-        this.reportStats = reportStats;
-    }
-
-    public CompanyStats getCompanyStats() {
-        return companyStats;
-    }
-
-    public void setCompanyStats(CompanyStats companyStats) {
-        this.companyStats = companyStats;
-    }
-
-    public boolean isIteration() {
-        return isIteration;
-    }
-
-    public void setIteration(boolean iteration) {
-        isIteration = iteration;
-    }
-
-    public GradingForm getGradingForm() {
-        return gradingForm;
-    }
-
-    public void setGradingForm(GradingForm gradingForm) {
-        this.gradingForm = gradingForm;
-    }
-
-    public Report getPreviousIteration() {
-        return previousIteration;
-    }
-
-    public void setPreviousIteration(Report previousIteration) {
-        this.previousIteration = previousIteration;
-    }
-
-    public Long getId(){
-        return id;
-    }
-
-    public byte[] getReportPdf() {
-        return reportPdf;
-    }
-
-    public void setReportPdf(byte[] reportPdf) {
-        this.reportPdf = reportPdf;
-    }
-
-    public Feedback getFeedback() {
-        return feedback;
-    }
-
-    public void setFeedback(Feedback feedback) {
-        this.feedback = feedback;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public Grader getGrader() {
-        return grader;
-    }
-
-    public void setGrader(Grader grader) {
-        this.grader = grader;
-    }
-
-    public TeachingAssistant getTeachingAssistant() {
-        return teachingAssistant;
-    }
-
-    public void setTeachingAssistant(TeachingAssistant teachingAssistant) {
-        this.teachingAssistant = teachingAssistant;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-    public Feedback getPrevFeedback() {
-        return prevFeedback;
-    }
-
-    public void setPrevFeedback(Feedback prevFeedback) {
-        this.prevFeedback = prevFeedback;
-    }
-
 }
 
