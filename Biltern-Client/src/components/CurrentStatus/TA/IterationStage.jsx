@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import FileUpload from "../../../UI/FileUpload";
 import ActionButton from '../../../UI/ActionButton';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setTimedAlert } from '../../../features/alertSlice';
-import { getReportDueDate, getReportContent, uploadReportContent, getReportFeedback } from '../../../apiHelper/backendHelper';
+import { getReportDueDate, getReportContent, getPreviewFeedback } from '../../../apiHelper/backendHelper';
 
 import classes from '../CurrentStatus.module.css';
 
@@ -21,18 +20,6 @@ const IterationStage = (props) => {
     const [feedbackFile, setFeedbackFile] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
-    const submitHandler = (files) => {
-        let formData = new FormData();
-        formData.append('file', files[0]);
-        uploadReportContent(id, formData, "multipart/form-data")
-            .then(res => {
-                dispatch(setTimedAlert({msg: "Report uploaded successfully", alertType: "success", timeout: 4000}));
-            })
-            .catch(err => {
-                dispatch(setTimedAlert({msg: "Error while uploading report", alertType: "error", timeout: 4000}));
-            });
-    };
 
     useEffect(() => {
         getReportDueDate(id)
@@ -52,7 +39,7 @@ const IterationStage = (props) => {
                 dispatch(setTimedAlert({msg: "Error while fetching report", alertType: "error", timeout: 4000}));
             });
 
-        getReportFeedback(id, 'arraybuffer', true)
+        getPreviewFeedback(id, 'arraybuffer', true)
             .then(res => {
                 const blob = new Blob([res.data], {type: 'application/pdf'});
                 setFeedbackFile(blob);
@@ -115,23 +102,15 @@ const IterationStage = (props) => {
                     />
                     <ActionButton
                         className=""
-                        text="Download Feedback"
+                        text="Download TA Feedback"
                         onClick={downloadFeedbackHandler}
                     />
                     <ActionButton
                         className=""
-                        text="View Feedback"
+                        text="View TA Feedback"
                         onClick={viewFeedbackHandler}
                     />
                 </div>
-                <FileUpload 
-                    accept=".pdf" 
-                    multiple={false}
-                    onSubmit={submitHandler} 
-                    dragMessage="Drag and drop a pdf file or click here"
-                    uploadMessage="Upload a pdf file"
-                    buttonMessage="Upload"    
-                />
             </div>    
         </div>
     )

@@ -26,7 +26,6 @@ export default function MiniStudentListPanel(){
                     
                     // DUE DATE CHECKS
 
-                    console.log(res.data);
                     setReports(res.data.reports);
                     setDepartment(res.data.department);
                 })
