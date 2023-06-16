@@ -62,15 +62,20 @@ public class AssignmentService {
 
         Secretary secretary = (Secretary)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        Report report = new Report();
+
         Student student = (Student) studentRepository.findById(studentId).get();
         Course course = courseRepository.findByCourseCode(courseCode).orElse(new Course());
+        List<Report> studentReports = student.getReports();
+        List<Report> courseReports = course.getReports();
+        for(Report r : studentReports){
+            if(r.getCourse().getCourseCode().equals(course.getCourseCode())){
+                return;
+            }
+        }
+        Report report = new Report();
         course.setCourseCode(courseCode);
         course.setSecretary(secretary);
 
-
-        List<Report> studentReports = student.getReports();
-        List<Report> courseReports = course.getReports();
         if(studentReports == null){
             studentReports = new ArrayList<Report>();
         }
@@ -78,14 +83,13 @@ public class AssignmentService {
             courseReports = new ArrayList<Report>();
         }
 
-        report.setCourse(course);
-        report.setStudent(student);
 
-        report.setCourse(course);
+        report.setStudent(student);
         report.setStudent(student);
         studentReports.add(report);
+        report.setCourse(course);
+        report.setCourse(course);
         courseReports.add(report);
-
 
         courseRepository.save(course);
         studentRepository.save(student);
@@ -101,9 +105,11 @@ public class AssignmentService {
         if(graderReports == null){
             graderReports = new ArrayList<Report>();
         }
-        graderReports.add(report);
+        if(!graderReports.contains(report))
+            graderReports.add(report);
 
         graderRepository.save(grader);
+        reportRepository.save(report);
     }
 
     @Transactional
@@ -117,9 +123,11 @@ public class AssignmentService {
         if(TAReports == null){
             TAReports = new ArrayList<Report>();
         }
-        TAReports.add(report);
+        if(!TAReports.contains(report))
+            TAReports.add(report);
 
         TARepository.save(TA);
+        reportRepository.save(report);
     }
 
     @Transactional
@@ -133,11 +141,15 @@ public class AssignmentService {
         for(int i = 0; i < sheetCount; i++){
             Sheet sheet = workbook.getSheetAt(i);
 
-            if(doesRowContainWords(sheet,0, keyWords)){
+            if(doesRowContainWords(sheet,0, keyWords))
                 initializeUsers(sheet);
-            } else{
+        }
+        for(int i = 0; i < sheetCount; i++){
+            Sheet sheet = workbook.getSheetAt(i);
+
+            if(!doesRowContainWords(sheet,0, keyWords))
                 assignUsers(sheet);
-            }
+
         }
 
         workbook.close();

@@ -144,7 +144,7 @@ public class ReportService {
 
     @Transactional
     public void addIteration(Long reportId){
-        Report report = reportRepository.findById(reportId).get();
+        Report report = reportRepository.findReportByIdAndIsIteration(reportId, false);
         report.setIteration(true);
 
         Report newReport = new Report(report);

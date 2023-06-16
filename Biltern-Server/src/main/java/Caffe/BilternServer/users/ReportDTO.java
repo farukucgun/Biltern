@@ -27,18 +27,24 @@ public class ReportDTO {
 
     public ReportDTO(Report report) {
         this.courseCode = report.getCourse().getCourseCode();
+
         this.dueDate = report.getDueDate();
         this.reportStats = report.getReportStats();
         this.reportId = report.getId();
-        //this.taId = report.getTeachingAssistant().getBilkentId();
         this.studentId = report.getStudent().getBilkentId();
         this.graderId = report.getGrader().getBilkentId();
+
         courseCode = report.getCourse().getCourseCode();
         studentMail = report.getStudent().getBilkentMail();
         studentId = report.getStudent().getBilkentId();
         studentName = report.getStudent().getUserName();
-        graderName = report.getGrader().getUserName();
-        //taName = report.getTeachingAssistant().getUserName();
+        if(report.getGrader() != null)
+            graderName = report.getGrader().getUserName();
+        if(report.getTeachingAssistant() != null){
+            this.taId = report.getTeachingAssistant().getBilkentId();
+            taName = report.getTeachingAssistant().getUserName();
+        }
+
 
     }
 
