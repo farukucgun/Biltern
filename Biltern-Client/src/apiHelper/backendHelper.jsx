@@ -23,7 +23,6 @@ export const uploadReportContent = async (reportId, data, contentType) => {
 }
 
 export const getReportContent = async (reportId, responseType) => {
-   
     return await getFetcher(url.REPORT_CONTENT_PATH(reportId), responseType);
 }
 

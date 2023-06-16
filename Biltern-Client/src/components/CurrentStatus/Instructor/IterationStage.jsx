@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { setTimedAlert } from '../../../features/alertSlice';
 import DatePicker from '../../../UI/datePicker';
 import { getReportDueDate, getReportContent, uploadReportFeedback, 
-    getReportFeedback, changeReportDueDate} from '../../../apiHelper/backendHelper';
+    getReportFeedback, changeReportDueDate, getPreviewFeedback} from '../../../apiHelper/backendHelper';
 
 /**
  * @author Faruk Uçgun
@@ -22,6 +22,7 @@ const IterationStage = (props) => {
     const [datePickerOpen, setDatePickerOpen] = useState(false);
     const [studentFile, setStudentFile] = useState(null);
     const [feedbackFile, setFeedbackFile] = useState(null);
+    const [taFeedbackFile, setTaFeedbackFile] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -64,6 +65,15 @@ const IterationStage = (props) => {
             .catch(err => {
                 dispatch(setTimedAlert({msg: "Error while fetching feedback", alertType: "error", timeout: 4000}));
             });
+
+        getPreviewFeedback(id, 'arraybuffer', true)
+            .then(res => {
+                const blob = new Blob([res.data], {type: 'application/pdf'});
+                setTaFeedbackFile(blob);
+            })
+            .catch(err => {
+                dispatch(setTimedAlert({msg: "Error while fetching ta feedback", alertType: "error", timeout: 4000}));
+            });    
     }, []);
 
     const ViewReportHandler = () => {
@@ -72,6 +82,10 @@ const IterationStage = (props) => {
 
     const viewFeedbackHandler = () => {
         navigate("/displayfilepage", {state:{url: URL.createObjectURL(feedbackFile)}});
+    }
+
+    const viewTAFeedbackHandler = () => {
+        navigate("/displayfilepage", {state:{url: URL.createObjectURL(taFeedbackFile)}});
     }
 
     const downloadReport = (blob) => {
@@ -100,8 +114,14 @@ const IterationStage = (props) => {
         downloadReport(feedbackFile);
     }
 
+    const downloadTAFeedbackHandler = () => {
+        downloadReport(taFeedbackFile);
+    }
+
     const showExtendDeadline = () => {
-        setDatePickerOpen((prevState) => (!prevState));
+        setDatePickerOpen((prevState) => {
+            return !prevState;
+        });
     }
 
     const gradeHandler = () => {
@@ -137,6 +157,16 @@ const IterationStage = (props) => {
                         className=""
                         text="View Student Report"
                         onClick={ViewReportHandler}
+                    />
+                    <ActionButton
+                        className=""
+                        text="Download TA Feedback"
+                        onClick={downloadTAFeedbackHandler}
+                    />
+                    <ActionButton
+                        className=""
+                        text="View TA Feedback"
+                        onClick={viewTAFeedbackHandler}
                     />
                     <ActionButton
                         className=""

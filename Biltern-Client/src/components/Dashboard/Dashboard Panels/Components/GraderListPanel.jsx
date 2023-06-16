@@ -16,7 +16,6 @@ export default function GraderListPanel(){
     React.useEffect(()=>{
         getGraders()
         .then(res => {
-            console.log(res.data)
             setGraderData(res.data)
         })
         .catch(err => {

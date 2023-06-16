@@ -16,20 +16,21 @@ import axios from "axios";
  */
 export default function StudentStatisticsPanel(){
 
+  const [statistics, setStatistics] = React.useState([["Stages", "Number of Students"]]);
+
   React.useEffect(()=>{
+
     const config = {
       headers: {
-          'Content-Type': 'application/json',
-          "Authorization": localStorage.getItem("token"),
-      }
-  };
+        Authorization: localStorage.getItem("token"),
+      },
+    };
 
-  axios.get("http://localhost:8080/statistics", config)
+    axios.get("http://localhost:8080/statistics", config)
       .then(res => {
-          console.log(res.data);
           const stats = [];
-          for( const key in res.data[0]){
-            stats.push([key, res.data[0][key]])
+          for(let key in res.data[0]){
+            stats.push([key=key, res.data[0][key]])
           }
           setStatistics(prevStatistics =>{
             return prevStatistics.concat( stats)
@@ -37,13 +38,10 @@ export default function StudentStatisticsPanel(){
       })
       .catch(err => {
           console.log(err);
-      });
+    });
   },[])
 
-
-    const [statistics, setStatistics] = React.useState([["Stages", "Number of Students"]]);
     const studentsExist = statistics !== undefined;
-    console.log(statistics)
       
       const options = {
         title: "",
