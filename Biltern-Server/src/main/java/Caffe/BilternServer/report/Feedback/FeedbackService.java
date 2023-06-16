@@ -3,6 +3,7 @@ package Caffe.BilternServer.report.Feedback;
 import Caffe.BilternServer.notification.NotificationService;
 import Caffe.BilternServer.report.Report;
 import Caffe.BilternServer.report.ReportRepository;
+import Caffe.BilternServer.report.ReportStats;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -30,7 +31,7 @@ public class FeedbackService {
 
     @Transactional
     public void saveReportFeedback(Long reportId, byte[] feedbackPDF){
-        Feedback feedback = feedbackRepository.findByReportId(reportId);
+        Feedback feedback = feedbackRepository.findByReportIdAndIsPrev(reportId, false).get();
 
         Report report = reportRepository.findById(reportId).orElse(null);
 
@@ -48,7 +49,7 @@ public class FeedbackService {
         );
     }
     public ByteArrayResource downloadReportFeedback(Long reportId){
-        Feedback feedback = feedbackRepository.findByReportIdAndAndIsPrev(reportId, false).get();
+        Feedback feedback = feedbackRepository.findByReportIdAndIsPrev(reportId, false).get();
         byte[] feedbackPDF = feedback.getPdfData();
         ByteArrayResource byteArrayResource = new ByteArrayResource(feedbackPDF);
 
@@ -56,9 +57,10 @@ public class FeedbackService {
     }
     @Transactional
     public void saveReportPreviewFeedback(Long reportId, byte[] feedbackPDF){
-        Feedback feedback = feedbackRepository.findByReportIdAndAndIsPrev(reportId, true).get();
+        Feedback feedback = feedbackRepository.findByReportIdAndIsPrev(reportId, true).get();
 
         Report report = reportRepository.findById(reportId).orElse(null);
+        report.setReportStats(ReportStats.APPROVED);
         if(feedback == null){
             feedback = new Feedback();
 
@@ -75,12 +77,12 @@ public class FeedbackService {
     }
     @Transactional
     public void removeFeedback(Long reportId){
-        feedbackRepository.delete(feedbackRepository.findByReportIdAndAndIsPrev(reportId, false).get());
+        feedbackRepository.delete(feedbackRepository.findByReportIdAndIsPrev(reportId, false).get());
     }
 
     @Transactional
     public void removePreviewFeedback(Long reportId){
-        feedbackRepository.delete(feedbackRepository.findByReportIdAndAndIsPrev(reportId, true).get());
+        feedbackRepository.delete(feedbackRepository.findByReportIdAndIsPrev(reportId, true).get());
     }
 
 }

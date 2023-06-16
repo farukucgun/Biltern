@@ -1,12 +1,6 @@
 import { getFetcher, postFetcher, putFetcher, patchFetcher, deleteFetcher } from "./apiHelper";
 import * as url from "./urlHelper";
 
-/**
- * @author Faruk Uçgun
- * @date 25.05.2023
- * @abstract: This is the helper file for the backend api calls.
- */
-
 // report controller
 export const changeReportDueDate = async (reportId, data) => {
     return await putFetcher(url.REPORT_DUEDATE_PATH(reportId), data);
@@ -29,6 +23,7 @@ export const uploadReportContent = async (reportId, data, contentType) => {
 }
 
 export const getReportContent = async (reportId, responseType) => {
+   
     return await getFetcher(url.REPORT_CONTENT_PATH(reportId), responseType);
 }
 
@@ -45,7 +40,7 @@ export const getReportFeedback = async (reportId, responseType) => {
 }
 
 export const uploadPreviewFeedback = async (reportId, data, contentType) => {
-    return await postFetcher(url.PREVIEW_FEEDBACK_PATH(reportId), data, contentType);
+    return await putFetcher(url.PREVIEW_FEEDBACK_PATH(reportId), data, contentType);
 }
 
 export const getPreviewFeedback = async (reportId, responseType) => {
@@ -77,6 +72,7 @@ export const getGrading = async (reportId) => {
 }
 
 export const getReportGrader = async (reportId) => {
+
     return await getFetcher(url.GRADER_REPORT_PATH(reportId));
 }
 
@@ -115,6 +111,7 @@ export const deleteGrader = async (data) => {
 }
 
 export const getGraderDetails = async () => {
+    console.log("we are here" +url.GRADER_DETAILS_PATH() );
     return await getFetcher(url.GRADER_DETAILS_PATH());
 }
 
