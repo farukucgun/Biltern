@@ -137,25 +137,29 @@ public class ReportService {
     public void deleteReportFeedback(Long reportId){
         Report report = reportRepository.findById(reportId).get();
         report.setFeedback(null);
-        feedbackRepository.deleteByReportIdAndReport_isIteration(reportId, false);
+        feedbackRepository.deleteByReportIdAndReportIsIteration(reportId, false);
         report.setReportStats(ReportStats.ITERATION_SUBMITTED);
         reportRepository.save(report);
     }
 
     @Transactional
     public void addIteration(Long reportId){
-        Report report = reportRepository.getById(reportId);
+        Report report = reportRepository.findById(reportId).get();
         report.setIteration(true);
 
         Report newReport = new Report(report);
-        Feedback feedback = new Feedback(newReport);
-
+        Feedback feedback = new Feedback(newReport, false);
+        Feedback prevFeedback = new Feedback(newReport, true);
         if(report.getFeedback() != null){
             feedback.setPdfData(report.getFeedback().getPdfData());
+        }
+        if(report.getPrevFeedback() != null){
+            prevFeedback.setPdfData(report.getPrevFeedback().getPdfData());
         }
 
 
         newReport.setFeedback(feedback);
+        newReport.setPrevFeedback(prevFeedback);
 
         newReport.setGradingForm(report.getGradingForm());
         newReport.getGradingForm().setReport(newReport);

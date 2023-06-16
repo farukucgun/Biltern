@@ -67,16 +67,21 @@ public class Report {
     private Feedback feedback;
 
     @OneToOne(mappedBy = "report", cascade = CascadeType.ALL)
+    @JoinColumn(name = "prevFeedbackId")
+    private Feedback prevFeedback;
+    @OneToOne(mappedBy = "report", cascade = CascadeType.ALL)
     @JoinColumn(name = "gradingFormId")
     private GradingForm gradingForm;
+
 
     @OneToOne
     @JoinColumn(name = "previousIterationId")
     private Report previousIteration;
 
     public Report(){
-        feedback = new Feedback(this);
+        feedback = new Feedback(this, false);
         gradingForm = new GradingForm(this);
+        prevFeedback = new Feedback(this, true);
         reportStats = ReportStats.NOT_SUBMITTED;
         companyStats = CompanyStats.WAITING;
     }
@@ -208,5 +213,13 @@ public class Report {
     public void setCourse(Course course) {
         this.course = course;
     }
+    public Feedback getPrevFeedback() {
+        return prevFeedback;
+    }
+
+    public void setPrevFeedback(Feedback prevFeedback) {
+        this.prevFeedback = prevFeedback;
+    }
+
 }
 
