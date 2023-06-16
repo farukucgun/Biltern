@@ -63,11 +63,11 @@ public class BilternUserService implements UserDetailsService {
         bilternUserRepo.save(bilternUser);
     }
 
-    public boolean  registerUser(UserRegisterationRequest userRegisterationRequest) throws InstanceAlreadyExistsException {
+    public boolean  registerUser(UserRegisterationRequest userRegisterationRequest) {
 
         if(bilternUserRepo.findById(userRegisterationRequest.getBilkentId()).orElse(null) != null
                 || bilternUserRepo.findBilternUserByBilkentMail(userRegisterationRequest.getEmail()) != null){
-            throw new InstanceAlreadyExistsException();
+            return false;
         }
 
         BilternUser userToBeRegistered;

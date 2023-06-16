@@ -70,7 +70,8 @@ public class GraderService {
                 continue;
             }
             ReportDTO reportDTO = new ReportDTO(report);
-            listOfReports.add(reportDTO);
+            if(!listOfReports.contains(reportDTO))
+                listOfReports.add(reportDTO);
         }
 
         return listOfReports;

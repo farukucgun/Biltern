@@ -54,7 +54,7 @@ public class GradingFormService {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd");
             String formattedDate = currentDate.format(formatter);
             formFields.setField("date", formattedDate);
-
+            formFields.setField("grader", report.getGrader().getUserName());
 //            PdfDictionary fieldDict = formFields.getFieldItem("sig").getMerged(0);
 //            PdfDictionary widgetDict = fieldDict.getAsDict(PdfName.AP);
 //            PdfDictionary normalDict = widgetDict.getAsDict(PdfName.N);

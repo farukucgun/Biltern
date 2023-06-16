@@ -84,8 +84,8 @@ public class TeachingAssistantService {
             reportDTO.setStudentId(report.getStudent().getBilkentId());
             reportDTO.setStudentName(report.getStudent().getUserName());
             reportDTO.setStudentMail(report.getStudent().getBilkentMail());
-
-            listOfReports.add(reportDTO);
+            if(!listOfReports.contains(reportDTO))
+                listOfReports.add(reportDTO);
         }
 
         return listOfReports;
