@@ -18,7 +18,7 @@ import classes from '../CurrentStatus.module.css';
 
 const StudentCurrentStatus = (props) => {
 
-    const { id, authorizedId, name, email, role, department, report }= props;
+    const { id, authorizedId, name, email, role, department, report } = props;
     const dispatch = useDispatch();
 
     const [reportStatus, setReportStatus] = useState([]);
