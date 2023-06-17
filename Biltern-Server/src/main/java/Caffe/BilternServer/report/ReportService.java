@@ -117,14 +117,23 @@ public class ReportService {
     }
 
     @Transactional
-    public void addIteration(Long reportId){
-        Report report = reportRepository.findReportByIdAndIsIteration(reportId, false);
+    public void addIteration(Report report, LocalDate dueDate){
         report.setIteration(true);
 
         Report newReport = new Report(report);
+        if(dueDate == null){
+            newReport.setDueDate(LocalDate.now().plusDays(14));
+        }
+        else{
+            newReport.setDueDate(dueDate);
+        }
 
         newReport.setPreviousIteration(report);
         newReport.setIteration(false);
+        GradingForm gradingForm = report.getGradingForm();
+        newReport.setGradingForm(gradingForm);
+        gradingForm.setReport(newReport);
+
         report.setGradingForm(null);
 
         reportRepository.save(report);
@@ -140,16 +149,18 @@ public class ReportService {
     }
 
     @Transactional
-    public void updateStatusGradingForm(Long reportId, String formName){
+    public void updateStatusGradingForm(Long reportId, String formName, LocalDate dueDate){
         Report report = reportRepository.findReportByIdAndIsIteration(reportId, false);
         formName = formName.toLowerCase().strip();
         if(formName.equals("company")){
             report.setCompanyStats(CompanyStats.GRADED);
+            reportRepository.save(report);
         } else if (formName.equals("iteration")) {
             report.setReportStats(ReportStats.ITERATION);
-            addIteration(reportId);
+            addIteration(report, dueDate);
         } else if (formName.equals("final")) {
             report.setReportStats(ReportStats.GRADED);
+            reportRepository.save(report);
         }
 
     }
