@@ -4,7 +4,7 @@ import ActionButton from '../../../UI/ActionButton';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setTimedAlert } from '../../../features/alertSlice';
-import { getApprovalDueDate, getReportContent, getPreviewFeedback, uploadReportContent } from '../../../apiHelper/backendHelper';
+import { getApprovalDueDate, getReportContent, uploadReportContent } from '../../../apiHelper/backendHelper';
 
 import classes from '../CurrentStatus.module.css';
 
@@ -18,7 +18,6 @@ const TAEvaluationStage = (props) => {
     const {id} = props;
     const [dueDate, setDueDate] = useState(null);
     const [studentFile, setStudentFile] = useState(null);
-    const [feedbackFile, setFeedbackFile] = useState(null);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -53,23 +52,10 @@ const TAEvaluationStage = (props) => {
             .catch(err => {
                 dispatch(setTimedAlert({msg: "Error while fetching report", alertType: "error", timeout: 4000}));
             });
-
-        getPreviewFeedback(id, 'arraybuffer', true)
-            .then(res => {
-                const blob = new Blob([res.data], {type: 'application/pdf'});
-                setFeedbackFile(blob);
-            })
-            .catch(err => {
-                dispatch(setTimedAlert({msg: "Error while fetching feedback", alertType: "error", timeout: 4000}));
-            });
     }, []);
 
     const ViewReportHandler = () => {
         navigate("/displayfilepage", {state:{url: URL.createObjectURL(studentFile)}});
-    }
-
-    const viewFeedbackHandler = () => {
-        navigate("/displayfilepage", {state:{url: URL.createObjectURL(feedbackFile)}});
     }
 
     const downloadReport = (blob) => {
@@ -94,10 +80,6 @@ const TAEvaluationStage = (props) => {
         downloadReport(studentFile);
     }
 
-    const downloadFeedbackHandler = () => {
-        downloadReport(feedbackFile);
-    }
-
     return (
         <div>
             <div className={classes.dueDate}>
@@ -114,16 +96,6 @@ const TAEvaluationStage = (props) => {
                         className=""
                         text="View Student Report"
                         onClick={ViewReportHandler}
-                    />
-                    <ActionButton
-                        className=""
-                        text="Download TA Feedback"
-                        onClick={downloadFeedbackHandler}
-                    />
-                    <ActionButton
-                        className=""
-                        text="View TA Feedback"
-                        onClick={viewFeedbackHandler}
                     />
                 </div>
                 <div>
