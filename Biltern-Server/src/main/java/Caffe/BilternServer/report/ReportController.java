@@ -107,7 +107,7 @@ public class ReportController {
 
         return ResponseEntity.ok()
                 .headers(headers)
-                .body(feedbackService.downloadReportFeedback(reportId));
+                .body(feedbackService.downloadReportFeedback(reportId, false));
     }
 
     @PutMapping("/previewFeedback/{reportId}")
@@ -126,7 +126,7 @@ public class ReportController {
 
         return ResponseEntity.ok()
                 .headers(headers)
-                .body(feedbackService.downloadReportFeedback(reportId));
+                .body(feedbackService.downloadReportFeedback(reportId, true));
     }
 
     @GetMapping("/reportStatus/{reportId}")

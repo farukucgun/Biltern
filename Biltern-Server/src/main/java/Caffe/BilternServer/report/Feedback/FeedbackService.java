@@ -48,8 +48,8 @@ public class FeedbackService {
                 report.getStudent().getBilkentId(), reportId, report.getCourse().getCourseCode()
         );
     }
-    public ByteArrayResource downloadReportFeedback(Long reportId){
-        Feedback feedback = feedbackRepository.findByReportIdAndIsPrev(reportId, false).get();
+    public ByteArrayResource downloadReportFeedback(Long reportId, boolean isPrev){
+        Feedback feedback = feedbackRepository.findByReportIdAndIsPrev(reportId, isPrev).get();
         byte[] feedbackPDF = feedback.getPdfData();
         ByteArrayResource byteArrayResource = new ByteArrayResource(feedbackPDF);
 
