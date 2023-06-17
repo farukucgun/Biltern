@@ -64,9 +64,11 @@ public class GradingFormService {
 //            image.put(PdfName.TYPE, PdfName.XOBJECT);
 //            image.put(PdfName.SUBTYPE, PdfName.IMAGE);
 //            normalDict.put(PdfName.RESOURCES, image);
-
-            String base64Image = Base64.getEncoder().encodeToString(report.getGrader().getSignature());
-            formFields.setField("sig", base64Image);
+            
+            if (report.getGrader().getSignature() != null) {
+                String base64Image = Base64.getEncoder().encodeToString(report.getGrader().getSignature());
+                formFields.setField("sig", base64Image);
+            }
 
             for (Map.Entry<String, String> entry : grades.entrySet()) {
                 formFields.setField(entry.getKey().toLowerCase().trim(),entry.getValue());
