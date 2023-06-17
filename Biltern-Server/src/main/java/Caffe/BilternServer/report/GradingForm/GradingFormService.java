@@ -54,7 +54,7 @@ public class GradingFormService {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd");
             String formattedDate = currentDate.format(formatter);
             formFields.setField("date", formattedDate);
-
+            formFields.setField("grader", report.getGrader().getUserName());
 //            PdfDictionary fieldDict = formFields.getFieldItem("sig").getMerged(0);
 //            PdfDictionary widgetDict = fieldDict.getAsDict(PdfName.AP);
 //            PdfDictionary normalDict = widgetDict.getAsDict(PdfName.N);
@@ -64,9 +64,11 @@ public class GradingFormService {
 //            image.put(PdfName.TYPE, PdfName.XOBJECT);
 //            image.put(PdfName.SUBTYPE, PdfName.IMAGE);
 //            normalDict.put(PdfName.RESOURCES, image);
-
-            String base64Image = Base64.getEncoder().encodeToString(report.getGrader().getSignature());
-            formFields.setField("sig", base64Image);
+            
+            if (report.getGrader().getSignature() != null) {
+                String base64Image = Base64.getEncoder().encodeToString(report.getGrader().getSignature());
+                formFields.setField("sig", base64Image);
+            }
 
             for (Map.Entry<String, String> entry : grades.entrySet()) {
                 formFields.setField(entry.getKey().toLowerCase().trim(),entry.getValue());

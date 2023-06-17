@@ -7,6 +7,7 @@ import { setTimedAlert } from '../features/alertSlice';
 /**
  * @author Faruk Uçgun
  * @date 09.05.2023
+ * @abstract: This component is responsible for displaying private routes
  */
 
 const PrivateRoute = (props) => {

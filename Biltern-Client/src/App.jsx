@@ -30,9 +30,11 @@ import './App.css';
 /**
  * @author Faruk Uçgun
  * @date 23.04.2023
+ * @abstract: This component is responsible for displaying the whole application
  * @todo: refresh leads to dashboard page, it shouldn't
  * @todo: keep user login date + 1 hour in the local storege and check if it is expired (1 hour)
- * @todo: don't allow acces to pages if user is not authorized
+ * @todo: don't allow acces to pages if user is not authorized (roles), private routes
+ * @todo: notifications should direct to the page
  */
 
 const App = () => {

@@ -4,30 +4,31 @@ import ActionButton from '../../../UI/ActionButton';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setTimedAlert } from '../../../features/alertSlice';
-import { getReportDueDate, getReportContent, uploadReportContent, 
-    getReportFeedback, getPreviewFeedback } from '../../../apiHelper/backendHelper';
-
-import classes from '../CurrentStatus.module.css';
+import DatePicker from '../../../UI/datePicker';
+import { getReportDueDate, getReportContent, uploadReportFeedback, 
+    changeReportDueDate, getPreviewFeedback} from '../../../apiHelper/backendHelper';
 
 /**
  * @author Faruk Uçgun
  * @date 25.05.2023
- * @abstract: This component is responsible for displaying student iteration stage for a student
+ * @abstract: This component is responsible for displaying instructor grade stage for instructor
  */
 
-const IterationStage = (props) => {
+import classes from '../CurrentStatus.module.css';
+
+const GradeStage = (props) => {
     const {id} = props;
     const [dueDate, setDueDate] = useState(null); 
+    const [datePickerOpen, setDatePickerOpen] = useState(false);
     const [studentFile, setStudentFile] = useState(null);
-    const [feedbackFile, setFeedbackFile] = useState(null);
-    const [previewFeedback, setPreviewFeedback] = useState(null);
+    const [taFeedbackFile, setTaFeedbackFile] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const submitHandler = (files) => {
         let formData = new FormData();
         formData.append('file', files[0]);
-        uploadReportContent(id, formData, "multipart/form-data")
+        uploadReportFeedback(id, formData, "multipart/form-data")
             .then(res => {
                 dispatch(setTimedAlert({msg: "Report uploaded successfully", alertType: "success", timeout: 4000}));
             })
@@ -52,37 +53,25 @@ const IterationStage = (props) => {
             })
             .catch(err => {
                 dispatch(setTimedAlert({msg: "Error while fetching report", alertType: "error", timeout: 4000}));
+                
             });
-         
+
         getPreviewFeedback(id, 'arraybuffer', true)
             .then(res => {
                 const blob = new Blob([res.data], {type: 'application/pdf'});
-                setPreviewFeedback(blob);
+                setTaFeedbackFile(blob);
             })
             .catch(err => {
-                dispatch(setTimedAlert({msg: "Error while fetching preview feedback", alertType: "error", timeout: 4000}));
-            });
-
-        getReportFeedback(id, 'arraybuffer', true)
-            .then(res => {
-                const blob = new Blob([res.data], {type: 'application/pdf'});
-                setFeedbackFile(blob);
-            })
-            .catch(err => {
-                dispatch(setTimedAlert({msg: "Error while fetching feedback", alertType: "error", timeout: 4000}));
-            });
+                dispatch(setTimedAlert({msg: "Error while fetching ta feedback", alertType: "error", timeout: 4000}));
+            });    
     }, []);
 
     const ViewReportHandler = () => {
         navigate("/displayfilepage", {state:{url: URL.createObjectURL(studentFile)}});
     }
 
-    const viewFeedbackHandler = () => {
-        navigate("/displayfilepage", {state:{url: URL.createObjectURL(feedbackFile)}});
-    }
-
-    const viewPreviewFeedbackHandler = () => {
-        navigate("/displayfilepage", {state:{url: URL.createObjectURL(previewFeedback)}});
+    const viewTAFeedbackHandler = () => {
+        navigate("/displayfilepage", {state:{url: URL.createObjectURL(taFeedbackFile)}});
     }
 
     const downloadReport = (blob) => {
@@ -107,12 +96,31 @@ const IterationStage = (props) => {
         downloadReport(studentFile);
     }
 
-    const downloadFeedbackHandler = () => {
-        downloadReport(feedbackFile);
+    const downloadTAFeedbackHandler = () => {
+        downloadReport(taFeedbackFile);
     }
 
-    const downloadPreviewFeedbackHandler = () => {
-        downloadReport(previewFeedback);
+    const showExtendDeadline = () => {
+        setDatePickerOpen((prevState) => {
+            return !prevState;
+        });
+    }
+
+    const gradeHandler = () => {
+        navigate("/gradingformpage", {state:{url: URL.createObjectURL(studentFile), id: id}});
+    }
+
+    const extendDeadlineHandler = (date) => {
+        let data = {"dueDate": date};
+        changeReportDueDate(id, data)
+            .then(res => {
+                setDueDate(date);
+                dispatch(setTimedAlert({msg: "Deadline extended successfully", alertType: "success", timeout: 4000}));
+            })
+            .catch(err => {
+                dispatch(setTimedAlert({msg: "Error while extending deadline", alertType: "error", timeout: 4000}));
+            });
+        setDatePickerOpen(false);
     }
 
     return (
@@ -134,23 +142,23 @@ const IterationStage = (props) => {
                     />
                     <ActionButton
                         className=""
-                        text="Download Feedback"
-                        onClick={downloadFeedbackHandler}
-                    />
-                    <ActionButton
-                        className=""
-                        text="View Feedback"
-                        onClick={viewFeedbackHandler}
-                    />
-                    <ActionButton
-                        className=""
                         text="Download TA Feedback"
-                        onClick={downloadPreviewFeedbackHandler}
+                        onClick={downloadTAFeedbackHandler}
                     />
                     <ActionButton
                         className=""
                         text="View TA Feedback"
-                        onClick={viewPreviewFeedbackHandler}
+                        onClick={viewTAFeedbackHandler}
+                    />
+                    <ActionButton
+                        className=""
+                        text="Set Deadline"
+                        onClick={showExtendDeadline}
+                    />
+                    <ActionButton
+                        className=""
+                        text="Grade"
+                        onClick={gradeHandler}
                     />
                 </div>
                 <FileUpload 
@@ -161,9 +169,10 @@ const IterationStage = (props) => {
                     uploadMessage="Upload a pdf file"
                     buttonMessage="Upload"    
                 />
-            </div>    
+            </div>
+            {datePickerOpen && <DatePicker onConfirm={extendDeadlineHandler}/>}   
         </div>
     )
 }
 
-export default IterationStage;
+export default GradeStage;

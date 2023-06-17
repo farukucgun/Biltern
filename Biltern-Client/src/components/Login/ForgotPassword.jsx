@@ -10,10 +10,7 @@ import classes from './ForgotPassword.module.css';
 /**
  * @author Faruk Uçgun
  * @date 05.05.2023
- * let url = new URL(url redirected from email);
- * let token = url.searchParams.get("token");
- * let id = url.searchParams.get("id");
- * @todo: implement this
+ * @abstract: This component is responsible for displaying forgot password page
  */
 
 const ForgotPassword = () => {

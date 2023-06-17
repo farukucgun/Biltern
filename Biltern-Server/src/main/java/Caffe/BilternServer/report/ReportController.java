@@ -93,7 +93,6 @@ public class ReportController {
     public void saveReportFeedback(@PathVariable Long reportId,@RequestBody MultipartFile file) {
         try {
             feedbackService.saveReportFeedback(reportId, file.getBytes());
-            reportService.addIteration(reportId);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -107,7 +106,7 @@ public class ReportController {
 
         return ResponseEntity.ok()
                 .headers(headers)
-                .body(feedbackService.downloadReportFeedback(reportId));
+                .body(feedbackService.downloadReportFeedback(reportId, false));
     }
 
     @PutMapping("/previewFeedback/{reportId}")
@@ -126,7 +125,7 @@ public class ReportController {
 
         return ResponseEntity.ok()
                 .headers(headers)
-                .body(feedbackService.downloadReportFeedback(reportId));
+                .body(feedbackService.downloadReportFeedback(reportId, true));
     }
 
     @GetMapping("/reportStatus/{reportId}")
@@ -143,7 +142,13 @@ public class ReportController {
     public void submitGrades(@PathVariable Long reportId, @RequestBody Map<String, String> grades){
         String formName = grades.get("formName");
         grades.remove("formName");
-        reportService.updateStatusGradingForm(reportId, formName);
+
+        LocalDate dueDate = null;
+        if(grades.get("input5") != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            dueDate = LocalDate.parse(grades.get("input5"), formatter);
+        }
+        reportService.updateStatusGradingForm(reportId, formName, dueDate);
         gradingFormService.setGradingFormGrades(reportId,grades);
     }
     @GetMapping("/gradingForm/{reportId}")

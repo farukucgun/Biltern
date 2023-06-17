@@ -2,11 +2,12 @@ package Caffe.BilternServer.report.Feedback;
 
 import Caffe.BilternServer.report.Report;
 import jakarta.persistence.*;
+import lombok.Data;
 
 /**
  * This is the entity class for the Feedback object
  */
-
+@Data
 @Entity(name = "Feedback")
 public class Feedback {
 
@@ -26,38 +27,16 @@ public class Feedback {
 
     private boolean isPrev;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "reportId", referencedColumnName = "id")
     private Report report;
 
     public Feedback(){
 
     }
-    public Feedback(Report report){
+    public Feedback(Report report, boolean isPrev){
         this.report = report;
-    }
-    public byte[] getPdfData() {
-        return pdfData;
-    }
-
-    public void setPdfData(byte[] pdfData) {
-        this.pdfData = pdfData;
-    }
-
-    public boolean isPrev() {
-        return isPrev;
-    }
-
-    public void setPrev(boolean prev) {
-        isPrev = prev;
-    }
-
-    public Report getReport() {
-        return report;
-    }
-
-    public void setReport(Report report) {
-        this.report = report;
+        this.isPrev = isPrev;
     }
 }
 

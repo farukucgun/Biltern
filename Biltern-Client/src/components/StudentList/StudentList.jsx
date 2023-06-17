@@ -3,7 +3,7 @@ import StudentItem from './StudentItem';
 import ActionButton from '../../UI/ActionButton';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getGraderDetails, getTeachingAssistantDetails, getSecretaries } from '../../apiHelper/backendHelper';
+import { getGraderDetails, getTeachingAssistantDetails } from '../../apiHelper/backendHelper';
 import { setTimedAlert } from '../../features/alertSlice';
 
 import classes from "./StudentList.module.css";
@@ -25,10 +25,6 @@ const StudentList = () => {
         if (role == "TEACHING_ASSISTANT") {
             getTeachingAssistantDetails()
                 .then(res => {
-                    
-                    // DUE DATE CHECKS
-
-                    console.log(res.data);
                     setReports(res.data.reports);
                     setDepartment(res.data.department);
                 })
@@ -39,7 +35,6 @@ const StudentList = () => {
         } else if (role == "FACULTY_MEMBER") {
             getGraderDetails()
                 .then(res => {
-                    console.log(res.data);
                     setReports(res.data.reports);
                     setDepartment(res.data.department);
                 })

@@ -1,6 +1,12 @@
 import React, {useState} from 'react';
 import ActionButton from './ActionButton';
 
+/**
+ * @author Faruk Uçgun
+ * @date 25.05.2023
+ * @abstract: This is a custom date picker component
+ */
+
 const DatePicker = (props) => {
 
     const {onConfirm} = props;

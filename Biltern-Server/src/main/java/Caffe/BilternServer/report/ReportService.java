@@ -48,32 +48,6 @@ public class ReportService {
         this.notificationService = notificationService;
     }
 
-
-    @Transactional
-    public void addNewReport(){
-        Report report = new Report();
-        Feedback feedback = new Feedback();
-        Feedback prevFeedback = new Feedback();
-        GradingForm gradingForm = new GradingForm();
-
-        report.setFeedback(feedback);
-        feedback.setReport(report);
-        prevFeedback.setReport(report);
-        gradingForm.setReport(report);
-
-        feedback.setPrev(false);
-        prevFeedback.setPrev(true);
-
-        report.setReportStats(ReportStats.NOT_SUBMITTED);
-        report.setCompanyStats(CompanyStats.WAITING);
-
-        reportRepository.save(report);
-        feedbackRepository.save(feedback);
-        feedbackRepository.save(prevFeedback);
-        gradingFormRepository.save(gradingForm);
-    }
-
-
     @Transactional
     public void setDueDate(Long reportId, LocalDate dueDate){
         Report report = reportRepository.findReportByIdAndIsIteration(reportId, false);
@@ -137,32 +111,31 @@ public class ReportService {
     public void deleteReportFeedback(Long reportId){
         Report report = reportRepository.findById(reportId).get();
         report.setFeedback(null);
-        feedbackRepository.deleteByReportIdAndReport_isIteration(reportId, false);
+        feedbackRepository.deleteByReportIdAndReportIsIteration(reportId, false);
         report.setReportStats(ReportStats.ITERATION_SUBMITTED);
         reportRepository.save(report);
     }
 
     @Transactional
-    public void addIteration(Long reportId){
-        Report report = reportRepository.getById(reportId);
+    public void addIteration(Report report, LocalDate dueDate){
         report.setIteration(true);
 
         Report newReport = new Report(report);
-        Feedback feedback = new Feedback(newReport);
-
-        if(report.getFeedback() != null){
-            feedback.setPdfData(report.getFeedback().getPdfData());
+        if(dueDate == null){
+            newReport.setDueDate(LocalDate.now().plusDays(14));
+        }
+        else{
+            newReport.setDueDate(dueDate);
         }
 
-
-        newReport.setFeedback(feedback);
-
-        newReport.setGradingForm(report.getGradingForm());
-        newReport.getGradingForm().setReport(newReport);
         newReport.setPreviousIteration(report);
         newReport.setIteration(false);
+        GradingForm gradingForm = report.getGradingForm();
+        newReport.setGradingForm(gradingForm);
+        gradingForm.setReport(newReport);
+
         report.setGradingForm(null);
-        newReport.setReportStats(ReportStats.ITERATION);
+
         reportRepository.save(report);
         reportRepository.save(newReport);
     }
@@ -176,16 +149,18 @@ public class ReportService {
     }
 
     @Transactional
-    public void updateStatusGradingForm(Long reportId, String formName){
-        Report report = reportRepository.getById(reportId);
+    public void updateStatusGradingForm(Long reportId, String formName, LocalDate dueDate){
+        Report report = reportRepository.findReportByIdAndIsIteration(reportId, false);
         formName = formName.toLowerCase().strip();
         if(formName.equals("company")){
             report.setCompanyStats(CompanyStats.GRADED);
+            reportRepository.save(report);
         } else if (formName.equals("iteration")) {
             report.setReportStats(ReportStats.ITERATION);
-            addIteration(reportId);
+            addIteration(report, dueDate);
         } else if (formName.equals("final")) {
             report.setReportStats(ReportStats.GRADED);
+            reportRepository.save(report);
         }
 
     }

@@ -4,7 +4,7 @@ import * as url from "./urlHelper";
 /**
  * @author Faruk Uçgun
  * @date 25.05.2023
- * @abstract: This is the helper file for the backend api calls.
+ * @abstract: This file is responsible for making requests to backend 
  */
 
 // report controller
@@ -45,7 +45,7 @@ export const getReportFeedback = async (reportId, responseType) => {
 }
 
 export const uploadPreviewFeedback = async (reportId, data, contentType) => {
-    return await postFetcher(url.PREVIEW_FEEDBACK_PATH(reportId), data, contentType);
+    return await putFetcher(url.PREVIEW_FEEDBACK_PATH(reportId), data, contentType);
 }
 
 export const getPreviewFeedback = async (reportId, responseType) => {
@@ -77,6 +77,7 @@ export const getGrading = async (reportId) => {
 }
 
 export const getReportGrader = async (reportId) => {
+
     return await getFetcher(url.GRADER_REPORT_PATH(reportId));
 }
 

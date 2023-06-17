@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import { useDispatch } from 'react-redux';
 import TAEvaluationStage from './TAEvaluationStage';
 import StudentReportStage from './StudentReportStage';
+import IterationStage from './IterationStage';
+import FinalStage from './FinalStage';
 import { setTimedAlert } from '../../../features/alertSlice';
 import { getReportStatus, getCompanyStatus } from '../../../apiHelper/backendHelper'; 
 
@@ -10,18 +12,16 @@ import classes from '../CurrentStatus.module.css';
 /**
  * @author Faruk Uçgun
  * @date 07.05.2023
+ * @abstract: This component is responsible for displaying general student stage information for a ta
  */
 
 const TACurrentStage = (props) => {
     const { id, authorizedId, name, email, role, department, report }= props;
     const dispatch = useDispatch();
-    const dummyId = 1;
 
     const [reportStatus, setReportStatus] = useState([]);
     const [curStatus, setCurStatus] = useState();
     const [companyStatus, setCompanyStatus] = useState();
-    // const [firstReport, setFirstReport] = useState({});
-    // const [department, setDepartment] = useState("CS");
 
     const allStats = [
         {"NOT_SUBMITTED": [" ", "Waiting for submission", "Submitted"]},
@@ -34,7 +34,7 @@ const TACurrentStage = (props) => {
     ];
 
     useEffect(() => {
-        getReportStatus(report.reportId || 1)
+        getReportStatus(report?.reportId)
         .then(res => {
             setReportStatus(res.data);
             for (const status of allStats) {
@@ -51,7 +51,7 @@ const TACurrentStage = (props) => {
             dispatch(setTimedAlert({msg: "Error while fetching report status", alertType: "error", timeout: 4000}));
         })
 
-        getCompanyStatus(report.reportId || 1)
+        getCompanyStatus(report?.reportId)
         .then(res => {
             setCompanyStatus(res.data);
         })
@@ -64,13 +64,13 @@ const TACurrentStage = (props) => {
         <div className={classes.currentStatusPage}>
             <div className={classes.infoPane}>
                 <div className={classes.infoPaneLeft}>
-                    <h2>{report.studentName}</h2>
-                    <p>{department}</p>
+                    <h2>{report?.studentName || "NAME"}</h2>
+                    <p>{department || "CS"}</p>
                 </div>
                 <div className={classes.infoPaneRight}>
-                    <p>Contact: {report.studentMail || email}</p>
-                    <p>Courses: {report.courseCode || "CS-299"}</p>
-                    <p>Bilkent ID: {report.studentId || id}</p>
+                    <p>Contact: {report?.studentMail || email}</p>
+                    <p>Courses: {report?.courseCode || "CS-299"}</p>
+                    <p>Bilkent ID: {report?.studentId || id}</p>
                 </div>
             </div>
                 <h3>Company Evaluation Status</h3>
@@ -83,9 +83,11 @@ const TACurrentStage = (props) => {
                 <h3 className={classes.activeState}>{reportStatus[1]}</h3>
                 <h3 className={classes.singleState}>{reportStatus[2]}</h3>
             </div>
-            {curStatus == "SUBMITTED" && <TAEvaluationStage id={report.reportId || 1}/>} 
-            {(curStatus=="APPROVED" || curStatus=="ITERATION" ||curStatus=="ITERATION_SUBMITTED" ||
-             curStatus=="GRADED") && <StudentReportStage id={report.reportId || 1}/>}
+            {curStatus=="NOT_SUBMITTED" && <StudentReportStage id={report?.reportId}/>}
+            {curStatus == "SUBMITTED" && <TAEvaluationStage id={report?.reportId}/>} 
+            {(curStatus=="APPROVED" || curStatus=="ITERATION" || curStatus=="ITERATION_SUBMITTED")
+                && <IterationStage id={report?.reportId}/>}
+            {curStatus=="GRADED" && <FinalStage id={report?.reportId}/>}
         </div>
     );
 }

@@ -6,7 +6,7 @@ import classes from './NavbarItem.module.css';
 /**
  * @author Faruk Uçgun
  * @date 08.05.2023
- * TODO: change style of the active page
+ * @abstract: This component is responsible for displaying a navbar item
  */
 
 
