@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 /**
  * @author Faruk Uçgun
  * @date 23.04.2023
+ * @abstract: This component is holds the logic for custom alerts 
  */
 
 const initialState = {

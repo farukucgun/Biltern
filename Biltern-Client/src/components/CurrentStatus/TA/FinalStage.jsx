@@ -9,7 +9,7 @@ import classes from '../CurrentStatus.module.css';
 /**
  * @author Faruk Uçgun
  * @date 25.05.2023
- * @abstract: This component is responsible for displaying student final stage for student 
+ * @abstract: This component is responsible for displaying student final stage for ta 
  */
 
 const FinalStage = (props) => {

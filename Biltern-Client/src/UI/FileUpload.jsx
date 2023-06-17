@@ -5,6 +5,7 @@ import "./FileUpload.css";
 /**
  * @author Faruk Uçgun
  * @date 08.05.2023
+ * @abstract: This is a custom file upload component
  */
 
 const FileUpload = (props) => {

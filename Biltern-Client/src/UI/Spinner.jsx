@@ -4,6 +4,7 @@ import spinner from './spinner.gif';
 /**
  * @author Faruk Uçgun
  * @date 09.05.2023
+ * @abstract: This component is responsible for displaying a spinner for loading state
  */
 
 const Spinner = () => (

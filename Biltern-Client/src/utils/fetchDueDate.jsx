@@ -3,6 +3,12 @@ import setHeaders from "./setHeaders";
 import { useSelector, useDispatch } from "react-redux";
 import { setTimedAlert } from "../features/alertSlice";
 
+/**
+ * @author Faruk Uçgun
+ * @date 25.05.2023
+ * @abstract: This function fetches due date of a report
+ */
+
 const fetchDueDate = async (props) => {
     const dispatch = useDispatch();
     const {id, setDueDate, errMsg} = props;

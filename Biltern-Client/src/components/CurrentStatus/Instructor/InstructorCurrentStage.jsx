@@ -12,7 +12,7 @@ import classes from '../CurrentStatus.module.css';
 /**
  * @author Faruk Uçgun
  * @date 25.05.2023
- * @abstract: This component is responsible for displaying general student final stage for instructor
+ * @abstract: This component is responsible for displaying general student stage information for instructor
  */
 
 const InstructorCurrentStage = (props) => {
