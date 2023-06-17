@@ -6,6 +6,7 @@ import { setTimedAlert } from './alertSlice';
 /**
  * @author Faruk Uçgun
  * @date 23.04.2023
+ * @abstract: This component is holds the logic for authentication
  */
 
 const initialState = {

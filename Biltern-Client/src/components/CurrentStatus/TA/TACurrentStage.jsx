@@ -12,6 +12,7 @@ import classes from '../CurrentStatus.module.css';
 /**
  * @author Faruk Uçgun
  * @date 07.05.2023
+ * @abstract: This component is responsible for displaying general student stage information for a ta
  */
 
 const TACurrentStage = (props) => {

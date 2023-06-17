@@ -8,6 +8,12 @@ import { getApprovalDueDate, getReportContent, getPreviewFeedback, uploadReportC
 
 import classes from '../CurrentStatus.module.css';
 
+/**
+ * @author Faruk Uçgun
+ * @date 25.05.2023
+ * @abstract: This component is responsible for displaying TA evaluation stage for a student
+ */
+
 const TAEvaluationStage = (props) => {
     const {id} = props;
     const [dueDate, setDueDate] = useState(null);
