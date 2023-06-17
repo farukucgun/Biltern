@@ -4,6 +4,7 @@ import FinalStage from './FinalStage';
 import IterationStage from './IterationStage';
 import TAEvaluationStage from './TAEvaluationStage';
 import StudentReportStage from './StudentReportStage'; 
+import GradeStage from './GradeStage';
 
 import { setTimedAlert } from '../../../features/alertSlice';
 import { getReportStatus, getCompanyStatus, getStudentDetails } from '../../../apiHelper/backendHelper';
@@ -18,7 +19,7 @@ import classes from '../CurrentStatus.module.css';
 
 const StudentCurrentStatus = (props) => {
 
-    const { id, authorizedId, name, email, role, department, report }= props;
+    const { id, authorizedId, name, email, role, department, report } = props;
     const dispatch = useDispatch();
 
     const [reportStatus, setReportStatus] = useState([]);
@@ -27,9 +28,6 @@ const StudentCurrentStatus = (props) => {
 
     const [departmentA, setDepartmentA] = useState();
     const [lastReport, setLastReport] = useState();
-
-    // const departmentUsed = department ? department : departmentA;
-    // const reportUsed = report ? report : lastReport;
 
     const allStats = [
         {"NOT_SUBMITTED": [" ", "Waiting for submission", "Submitted"]},
@@ -45,7 +43,6 @@ const StudentCurrentStatus = (props) => {
         if (role == "UNDERGRADUATE") {
             getStudentDetails()
                 .then(res => {
-                    console.log(res.data);
                     setDepartmentA(res.data.department);
                     setLastReport(res.data.reports[0]);
 
@@ -58,7 +55,6 @@ const StudentCurrentStatus = (props) => {
                                 
                                 if (JSON.stringify(values) === JSON.stringify(res.data)) {
                                     setCurStatus(key);
-                                    console.log(key);
                                 break;
                                 }
                             }
@@ -89,8 +85,7 @@ const StudentCurrentStatus = (props) => {
                         
                         if (JSON.stringify(values) === JSON.stringify(res.data)) {
                             setCurStatus(key);
-                            console.log(key);
-                        break;
+                            break;
                         }
                     }
                 })
@@ -112,7 +107,7 @@ const StudentCurrentStatus = (props) => {
         <div className={classes.currentStatusPage}>
             <div className={classes.infoPane}>
                 <div className={classes.infoPaneLeft}>
-                    <h2>{lastReport?.studentName || "NAME"}</h2>
+                    <h2>{lastReport?.studentName || name || "NAME"}</h2>
                     <p>{departmentA || "CS"}</p>
                 </div>
                 <div className={classes.infoPaneRight}>
@@ -135,8 +130,8 @@ const StudentCurrentStatus = (props) => {
             <>
                 {curStatus == "NOT_SUBMITTED" && <StudentReportStage id={lastReport?.reportId}/>}
                 {curStatus == "SUBMITTED" && <TAEvaluationStage id={lastReport?.reportId}/>}
-                {(curStatus=="APPROVED" || curStatus=="ITERATION" || curStatus=="ITERATION_SUBMITTED") 
-                && <IterationStage id={lastReport?.reportId}/>}
+                {curStatus == "APPROVED" && <GradeStage id={lastReport?.reportId}/>}
+                {(curStatus == "ITERATION" || curStatus == "ITERATION_SUBMITTED") && <IterationStage id={lastReport?.reportId}/>}
                 {curStatus == "GRADED" && <FinalStage id={lastReport?.reportId}/>}
             </>}
         </div>

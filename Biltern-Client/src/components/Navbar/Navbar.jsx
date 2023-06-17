@@ -11,8 +11,7 @@ import classes from "./Navbar.module.css";
 /**
  * @author Faruk Uçgun
  * @date 23.04.2023
- * @todo: handle the active page 
- * @todo: change the items in the navbar according to the user role
+ * @abstract This component is responsible for displaying navbar specific to user role
  */
 
 const Navbar = () => {
@@ -57,18 +56,6 @@ const Navbar = () => {
     } 
   }
   
-  // const items = [
-  //   {to: "/dashboard", name: "Dashboard"},
-  //   {to: "/uploadedfiles", name: "Uploaded Files"},
-  //   {to: `/currentstatus/${studentId}`, name: "Current Status"},
-  //   {to: "/settings", name: "Settings"},
-  //   {to: "/semesterInitialization", name: "Semester Initialization"},
-  //   {to: "/roleassignment", name: "Role Assignment"},
-  //   {to: "/gradingformpage", name: "Grading Form"},
-  //   {to: "/registeruser", name: "Register User"},
-  //   {to: "/studentlist", name: "Student List"},
-  // ]
-
   const logoutHandler = () => {
     dispatch(logout());
   }

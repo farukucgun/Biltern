@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import ActionButton from '../../../UI/ActionButton';
 import { useDispatch } from 'react-redux';
 import { setTimedAlert } from '../../../features/alertSlice';
-import { getGrading } from '../../../apiHelper/backendHelper';
+import { getGradingForm, getReportContent } from '../../../apiHelper/backendHelper';
+import { useNavigate } from 'react-router-dom';
 
 import classes from '../CurrentStatus.module.css';
 
@@ -15,17 +16,28 @@ import classes from '../CurrentStatus.module.css';
 const FinalStage = (props) => {
     const {id} = props;
     const [gradeFile, setGradeFile] = useState(null);
+    const [studentFile, setStudentFile] = useState(null);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        getGrading(id)
+        getGradingForm(id, "arraybuffer", true)
             .then(res => {
-                // const blob = new Blob([res.data], {type: 'application/pdf'});
-                // setGradeFile(blob);
-                console.log(res.data);
+                const blob = new Blob([res.data], {type: 'application/pdf'});
+                setGradeFile(blob);
             })
             .catch(err => {
-                dispatch(setTimedAlert({msg: "Error while fetching grading", alertType: "error", timeout: 4000}));
+                dispatch(setTimedAlert({msg: "Error while fetching grading form", alertType: "error", timeout: 4000}));
+            });
+
+        getReportContent(id, 'arraybuffer', true)
+            .then(res => {
+                const blob = new Blob([res.data], {type: 'application/pdf'});
+                setStudentFile(blob);
+            })
+            .catch(err => {
+                dispatch(setTimedAlert({msg: "Error while fetching report", alertType: "error", timeout: 4000}));
+                
             });
     }, []);
 
@@ -48,24 +60,46 @@ const FinalStage = (props) => {
     }
 
     const downloadGradingFormHandler = () => {
-        downloadReport(feedbackFile);
+        downloadReport(gradeFile);
+    }
+
+    const downloadStudentReportHandler = () => {
+        downloadReport(studentFile);
+    }
+
+    const gradeHandler = () => {
+        navigate("/gradingformpage", {state:{url: URL.createObjectURL(studentFile), id: id}});
+    }
+
+    const ViewReportHandler = () => {
+        navigate("/displayfilepage", {state:{url: URL.createObjectURL(studentFile)}});
     }
 
     return (
         <div className={classes.iterationStage}>
-            <div className={classes.dueDate}>
-                <p>Due Date: {dueDate}</p>
-            </div>
             <div className={classes.actions}>
                 <div className={classes.buttons}>
-                    
+                    <ActionButton
+                        className=""
+                        text="Download Student Report"
+                        onClick={downloadStudentReportHandler}
+                    />
+                    <ActionButton
+                        className=""
+                        text="View Student Report"
+                        onClick={ViewReportHandler}
+                    />
                     <ActionButton
                         className=""
                         text="Download Grading Form"
                         onClick={downloadGradingFormHandler}
                     />
+                    <ActionButton
+                        className=""
+                        text="Grade"
+                        onClick={gradeHandler}
+                    />
                 </div>
-                
             </div>
         </div>
     )

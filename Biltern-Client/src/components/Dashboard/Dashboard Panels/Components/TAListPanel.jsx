@@ -17,7 +17,6 @@ export default function TAListPanel(){
     React.useEffect(()=>{
         getTeachingAssistants()
         .then(res => {
-            console.log(res.data)
             setTaData(res.data)
         })
         .catch(err => {

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { setTimedAlert } from '../../features/alertSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { changePasswordAsync } from '../../features/authSlice';
@@ -9,6 +8,7 @@ import classes from './ChangePassword.module.css';
 /**
  * @author Faruk Uçgun
  * @date 05.05.2023
+ * @abstract: This component is responsible for displaying change password page
  */
 
 const ChangePassword = () => {

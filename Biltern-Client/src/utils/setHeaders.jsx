@@ -3,6 +3,7 @@ import axios from "axios";
 /**
  * @author Faruk Uçgun
  * @date 27.05.2023
+ * @abstract: This component is responsible for setting common headers for axios
  */
 
 const setHeaders = (token) => {

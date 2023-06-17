@@ -3,6 +3,12 @@ import { setTimedAlert } from '../features/alertSlice';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
+/**
+ * @author Faruk Uçgun
+ * @date 25.05.2023
+ * @abstract: This hook is responsible for sending http requests
+ */
+
 export const useHttp = () => {
     const dispatch = useDispatch();
     const baseURL = "http://localhost:8080/";

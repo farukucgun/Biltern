@@ -7,6 +7,7 @@ import "./Notification.css"
 /**
  * @author Faruk Uçgun
  * @date 09.05.2023
+ * @abstract: This component is responsible for displaying a single notification
  * @todo: use reportId (if available) to redirect to related report page
  */
 
@@ -14,7 +15,7 @@ const Notification = (props) => {
     const {type, body, date, seen, reportId, notificationId, onDeleteNotification} = props;
     const dispatch = useDispatch();
 
-    const notificationDate = new Date(date)
+    const notificationDate = new Date(date);
  
 
     const activeClasses = `notification ${seen ? "notification-seen" : ""}`;
@@ -29,7 +30,7 @@ const Notification = (props) => {
 
         axios.delete(`http://localhost:8080/notification/${notificationId}`, config)
             .then(res => {
-                // dispatch(setTimedAlert({msg: "Notification deleted", alertType: "success", timeout: 4000}));
+                dispatch(setTimedAlert({msg: "Notification deleted", alertType: "success", timeout: 4000}));
                 onDeleteNotification(notificationId);
             })
             .catch(err => {

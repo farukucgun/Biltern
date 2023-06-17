@@ -73,7 +73,8 @@ export default function GradingFormPage(){
     const sumOfItems2_7 = tableAssesment2 + tableAssesment3 + tableAssesment4 + tableAssesment5+ tableAssesment6 +tableAssesment7;
 
     // Handles submitting only the information of part-a of grading form
-    function handleSubmitPartA(){
+    function handleSubmitPartA(event){
+        event.preventDefault();
         let formData = {
             input1: stajDegerlendirmeFormu,
             input2: relatedToCS,
@@ -91,36 +92,52 @@ export default function GradingFormPage(){
         });
     }
 
+    function handleSubmitPartB(event){
+        event.preventDefault();
+        let formData = {
+            input4: partBSatisfactory === "satisfactory"? "choice1": "choice2",
+            input5: revisionDate,
+            formName: "iteration"
+        }
+        submitGradingForm(reportId, formData)
+        .then(res => {
+            console.log(res.data)
+        })
+        .catch(err => {
+            console.log(err)
+        });
+    }
+
     // Handles submitting the whole report
     function handleSubmit(){
         let formData = {
-        input1: stajDegerlendirmeFormu,
-        input2: relatedToCS,
-        input3: supervisorSimilarBackground,
-        input4: partBSatisfactory === "satisfactory"? "choice1": "choice2",
-        input5: revisionDate,
-        input6: tableAssesment1,
-        input7: sumOfItems2_7,
-        input8: tableAssesment8,
-        input9: reportSatisfactory === "satisfactory"? "choice1": "choice2",
-        input10: recommendPlace,
-        input11: tableEvidence1,
-        input12: tableAssesment1,
-        input13: tableEvidence2,
-        input14: tableAssesment2,
-        input15: tableEvidence3,
-        input16: tableAssesment3,
-        input17: tableEvidence4,
-        input18: tableAssesment4,
-        input19: tableEvidence5,
-        input20: tableAssesment5,
-        input21: tableEvidence6,
-        input22: tableAssesment6,
-        input23: tableEvidence7,
-        input24: tableAssesment7,
-        input25: tableEvidence8,
-        input26: tableAssesment8,
-        formName: (tableEvidence1 === undefined? "iteration": "final") 
+            input1: stajDegerlendirmeFormu,
+            input2: relatedToCS,
+            input3: supervisorSimilarBackground,
+            input4: partBSatisfactory === "satisfactory"? "choice1": "choice2",
+            input5: revisionDate,
+            input6: tableAssesment1,
+            input7: sumOfItems2_7,
+            input8: tableAssesment8,
+            input9: reportSatisfactory === "satisfactory"? "choice1": "choice2",
+            input10: recommendPlace,
+            input11: tableEvidence1,
+            input12: tableAssesment1,
+            input13: tableEvidence2,
+            input14: tableAssesment2,
+            input15: tableEvidence3,
+            input16: tableAssesment3,
+            input17: tableEvidence4,
+            input18: tableAssesment4,
+            input19: tableEvidence5,
+            input20: tableAssesment5,
+            input21: tableEvidence6,
+            input22: tableAssesment6,
+            input23: tableEvidence7,
+            input24: tableAssesment7,
+            input25: tableEvidence8,
+            input26: tableAssesment8,
+            formName: ("final") 
         }
 
          submitGradingForm(reportId, formData)
@@ -190,7 +207,6 @@ export default function GradingFormPage(){
     React.useEffect(()=>{
         displaySignature( 'arraybuffer')
         .then(res => {
-            console.log(res.data)
             var blob = new Blob( [ res.data ], { type: "image/jpeg" } );
             setSignature(window.URL.createObjectURL(blob))
         })
@@ -333,6 +349,8 @@ export default function GradingFormPage(){
                                 <p>
                                     If revision is required, changes needed must be stated on the report. The report is returned to the student until satisfactory.
                                 </p>
+                                {partBSatisfactory === "revisionRequired" &&
+                                <>
                                 <label>
                                     Due date for resubmission: 
                                     <input 
@@ -345,15 +363,116 @@ export default function GradingFormPage(){
                                 <p className={classes.explaining_information}>
                                     Student is given two weeks for each revision.
                                 </p>
+                                <button
+                                    onClick={handleSubmitPartB}
+                                >
+                                    Submit Part-B
+                                </button>
+                                </>}
                             </form>
                         </div>
                         <p className={classes.explaining_information}>
                             ...... If the report in Part-B is Satisfactory, continue to Part-C,
                             else return it to the student for Revision ......
                         </p>
+
                         {
-                            revisionDate !== undefined &&
+                            (partBSatisfactory === "satisfactory" && revisionDate !== undefined) &&
                             <div>                                       {/* Grading form part-c */}
+
+                                <div className={classes.grading_parts}>                 {/* Grading form part-c */}
+                            <h3>
+                                Part-C: Final Version of the Report
+                            </h3>
+                            <h5>
+                                Based on the final version of the report, as evaluated on the back side of this form:
+                            </h5>
+                            <form>
+                                <label>
+                                    Assessment/quality score of Evaluation of the Work - item(1):
+                                    <input 
+                                        type="number"
+                                        value={tableAssesment1}
+                                    />
+                                </label>
+                                <p className={classes.explaining_information}>
+                                    To be satisfactory, the score must be at least 7/10.
+                                </p>
+                                <label><br/>
+                                    Sum of the Assessment/quality scores of Evaluation of Work - items (2)-(7):
+                                    <input
+                                        type="number"
+                                        value={sumOfItems2_7}    
+                                    />
+                                </label>
+                                <p className={classes.explaining_information}>
+                                    To be satisfactory, the score must be at least 30/60.
+                                </p>
+                                <label><br/>
+                                    The Assessment/quality score of Evaluation of Report:
+                                    <input
+                                        type="number"
+                                        value={tableAssesment8}
+                                    />
+                                </label>
+                                <p className={classes.explaining_information}>
+                                    To be satisfactory, the score must be at least 7/10.
+                                </p>
+                            </form>
+                        </div>
+                            
+                        
+                        
+                        <div className={classes.grading_parts}>             {/* Grading form report satisfactory part */}
+                            <h3> Overall Evaluation</h3>
+                            <label>
+                                Satisfactory
+                                <input 
+                                    type="radio"
+                                    value="satisfactory"
+                                    checked={reportSatisfactory === "satisfactory"}
+                                    onChange={(event)=>setReportSatisfactory(event.target.value)}
+                                />
+                            </label>
+                            <label>
+                                Unsatisfactory
+                                <input 
+                                    type="radio"
+                                    value="unsatisfactory"
+                                    checked={reportSatisfactory === "unsatisfactory"}
+                                    onChange={(event)=>setReportSatisfactory(event.target.value)}
+                                />
+                            </label>
+                        </div>
+                        <div className={classes.grading_parts}>         {/* Grading form recommend company part */}
+                            <label>
+                                <input 
+                                    type="radio"
+                                    value="choice1"
+                                    checked={recommendPlace === "choice1"}
+                                    onChange={(event)=>setRecommendPlace(event.target.value)}
+                                />
+                                I strongly recommend this place for future students
+                            </label><br/>
+                            <label>
+                                <input 
+                                    type="radio"
+                                    value="choice2"
+                                    checked={recommendPlace === "choice2"}
+                                    onChange={(event)=>setRecommendPlace(event.target.value)}
+                                />
+                                I am satisfied with this place 
+                            </label><br/>
+                            <label>
+                                <input 
+                                    type="radio"
+                                    value="choice3"
+                                    checked={recommendPlace === "choice3"}
+                                    onChange={(event)=>setRecommendPlace(event.target.value)}
+                                />
+                                Unsatisfactory
+                            </label>
+                        </div>
                                 <div className={classes.grading_parts}> 
                                 <table>                                 {/* Grading form table */}
                                 <tr>
@@ -532,100 +651,8 @@ export default function GradingFormPage(){
                             </table>
                         </div>
 
-
-                        <div className={classes.grading_parts}>                 {/* Grading form part-c */}
-                            <h3>
-                                Part-C: Final Version of the Report
-                            </h3>
-                            <h5>
-                                Based on the final version of the report, as evaluated on the back side of this form:
-                            </h5>
-                            <form>
-                                <label>
-                                    Assessment/quality score of Evaluation of the Work - item(1):
-                                    <input 
-                                        type="number"
-                                        value={tableAssesment1}
-                                    />
-                                </label>
-                                <p className={classes.explaining_information}>
-                                    To be satisfactory, the score must be at least 7/10.
-                                </p>
-                                <label><br/>
-                                    Sum of the Assessment/quality scores of Evaluation of Work - items (2)-(7):
-                                    <input
-                                        type="number"
-                                        value={sumOfItems2_7}    
-                                    />
-                                </label>
-                                <p className={classes.explaining_information}>
-                                    To be satisfactory, the score must be at least 30/60.
-                                </p>
-                                <label><br/>
-                                    The Assessment/quality score of Evaluation of Report:
-                                    <input
-                                        type="number"
-                                        value={tableAssesment8}
-                                    />
-                                </label>
-                                <p className={classes.explaining_information}>
-                                    To be satisfactory, the score must be at least 7/10.
-                                </p>
-                            </form>
-                        </div>
-                            </div>
+                    </div>
                         }
-                        
-                        <div className={classes.grading_parts}>             {/* Grading form report satisfactory part */}
-                            <h3> Overall Evaluation</h3>
-                            <label>
-                                Satisfactory
-                                <input 
-                                    type="radio"
-                                    value="satisfactory"
-                                    checked={reportSatisfactory === "satisfactory"}
-                                    onChange={(event)=>setReportSatisfactory(event.target.value)}
-                                />
-                            </label>
-                            <label>
-                                Unsatisfactory
-                                <input 
-                                    type="radio"
-                                    value="unsatisfactory"
-                                    checked={reportSatisfactory === "unsatisfactory"}
-                                    onChange={(event)=>setReportSatisfactory(event.target.value)}
-                                />
-                            </label>
-                        </div>
-                        <div className={classes.grading_parts}>         {/* Grading form recommend company part */}
-                            <label>
-                                <input 
-                                    type="radio"
-                                    value="choice1"
-                                    checked={recommendPlace === "choice1"}
-                                    onChange={(event)=>setRecommendPlace(event.target.value)}
-                                />
-                                I strongly recommend this place for future students
-                            </label><br/>
-                            <label>
-                                <input 
-                                    type="radio"
-                                    value="choice2"
-                                    checked={recommendPlace === "choice2"}
-                                    onChange={(event)=>setRecommendPlace(event.target.value)}
-                                />
-                                I am satisfied with this place 
-                            </label><br/>
-                            <label>
-                                <input 
-                                    type="radio"
-                                    value="choice3"
-                                    checked={recommendPlace === "choice3"}
-                                    onChange={(event)=>setRecommendPlace(event.target.value)}
-                                />
-                                Unsatisfactory
-                            </label>
-                        </div>
                         <div className={classes.buttons}>                   {/* Grading form submitting part */}
                             { signature !== undefined &&
                                     <img src={signature} style={ {width: "150px", border:"1px solid black"}}/>

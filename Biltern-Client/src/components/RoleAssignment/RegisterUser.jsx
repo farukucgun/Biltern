@@ -8,8 +8,7 @@ import classes from './RoleAssignment.module.css';
 /**
  * @author Faruk Uçgun
  * @date 08.05.2023
- * @todo: when the user changes it's own role, it should load the new role
- * @todo: conditionally change the role options
+ * @abstract: This component is responsible for registering a new user
  */
 
 const RegisterUser = () => {

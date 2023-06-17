@@ -18,8 +18,7 @@ export default function CoordinatorInfoPanel(){
     React.useEffect(()=>{
         getSecretaryDetails()
         .then(res => {
-            console.log(res.data)
-            setCoordinatorData(res.data)
+            // setCoordinatorData(res.data)
         })
         .catch(err => {
             console.log(err)
