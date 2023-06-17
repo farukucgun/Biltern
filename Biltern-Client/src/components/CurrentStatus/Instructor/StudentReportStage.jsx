@@ -3,7 +3,7 @@ import ActionButton from '../../../UI/ActionButton';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setTimedAlert } from '../../../features/alertSlice';
-import { getReportDueDate, getReportContent, changeReportDueDate } from '../../../apiHelper/backendHelper';
+import { getReportDueDate, changeReportDueDate } from '../../../apiHelper/backendHelper';
 import DatePicker from '../../../UI/datePicker';
 
 import classes from '../CurrentStatus.module.css';
@@ -18,7 +18,6 @@ const StudentReportStage = (props) => {
     const {id} = props;
     const [dueDate, setDueDate] = useState(null);
     const [datePickerOpen, setDatePickerOpen] = useState(false);
-    const [studentFile, setStudentFile] = useState(null);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -30,15 +29,6 @@ const StudentReportStage = (props) => {
             })
             .catch(err => {
                 dispatch(setTimedAlert({msg: "Error while fetching due date", alertType: "error", timeout: 4000}));
-            });
-
-        getReportContent(id, 'arraybuffer', true)
-            .then(res => {
-                const blob = new Blob([res.data], {type: 'application/pdf'});
-                setStudentFile(blob);
-            })
-            .catch(err => {
-                dispatch(setTimedAlert({msg: "Error while fetching report", alertType: "error", timeout: 4000}));
             });
     }, []);
 
@@ -62,7 +52,7 @@ const StudentReportStage = (props) => {
     }
 
     const gradeHandler = () => {
-        navigate("/gradingformpage", {state:{url: studentFile && URL.createObjectURL(studentFile), id: id}});
+        navigate("/gradingformpage", {state:{id: id}});
     }
 
     return (

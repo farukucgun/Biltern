@@ -4,6 +4,7 @@ import FinalStage from './FinalStage';
 import IterationStage from './IterationStage';
 import TAEvaluationStage from './TAEvaluationStage';
 import StudentReportStage from './StudentReportStage'; 
+import GradeStage from './GradeStage';
 
 import { setTimedAlert } from '../../../features/alertSlice';
 import { getReportStatus, getCompanyStatus, getStudentDetails } from '../../../apiHelper/backendHelper';
@@ -129,8 +130,8 @@ const StudentCurrentStatus = (props) => {
             <>
                 {curStatus == "NOT_SUBMITTED" && <StudentReportStage id={lastReport?.reportId}/>}
                 {curStatus == "SUBMITTED" && <TAEvaluationStage id={lastReport?.reportId}/>}
-                {(curStatus=="APPROVED" || curStatus=="ITERATION" || curStatus=="ITERATION_SUBMITTED") 
-                && <IterationStage id={lastReport?.reportId}/>}
+                {curStatus == "APPROVED" && <GradeStage id={lastReport?.reportId}/>}
+                {(curStatus == "ITERATION" || curStatus == "ITERATION_SUBMITTED") && <IterationStage id={lastReport?.reportId}/>}
                 {curStatus == "GRADED" && <FinalStage id={lastReport?.reportId}/>}
             </>}
         </div>

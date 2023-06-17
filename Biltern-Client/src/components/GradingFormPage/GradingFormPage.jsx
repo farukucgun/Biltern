@@ -349,6 +349,8 @@ export default function GradingFormPage(){
                                 <p>
                                     If revision is required, changes needed must be stated on the report. The report is returned to the student until satisfactory.
                                 </p>
+                                {partBSatisfactory === "revisionRequired" &&
+                                <>
                                 <label>
                                     Due date for resubmission: 
                                     <input 
@@ -363,10 +365,10 @@ export default function GradingFormPage(){
                                 </p>
                                 <button
                                     onClick={handleSubmitPartB}
-                                    disabled={partBSatisfactory === "satisfactory"}
                                 >
                                     Submit Part-B
                                 </button>
+                                </>}
                             </form>
                         </div>
                         <p className={classes.explaining_information}>

@@ -3,6 +3,7 @@ import ActionButton from '../../../UI/ActionButton';
 import { useDispatch } from 'react-redux';
 import { setTimedAlert } from '../../../features/alertSlice';
 import { getGradingForm, getReportContent } from '../../../apiHelper/backendHelper';
+import { useNavigate } from 'react-router-dom';
 
 import classes from '../CurrentStatus.module.css';
 
@@ -17,6 +18,7 @@ const FinalStage = (props) => {
     const [gradeFile, setGradeFile] = useState(null);
     const [studentFile, setStudentFile] = useState(null);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         getGradingForm(id, "arraybuffer", true)
@@ -25,7 +27,7 @@ const FinalStage = (props) => {
                 setGradeFile(blob);
             })
             .catch(err => {
-                dispatch(setTimedAlert({msg: "Error while fetching grading", alertType: "error", timeout: 4000}));
+                dispatch(setTimedAlert({msg: "Error while fetching grading form", alertType: "error", timeout: 4000}));
             });
 
         getReportContent(id, 'arraybuffer', true)
