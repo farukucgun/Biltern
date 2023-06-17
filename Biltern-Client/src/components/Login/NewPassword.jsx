@@ -1,20 +1,19 @@
 import React, { useState } from 'react'
-import { setTimedAlert } from '../../features/alertSlice';
 import { useDispatch } from 'react-redux';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { changePasswordAsync } from '../../features/authSlice';
 
-import classes from './ChangePassword.module.css';
+import classes from './NewPassword.module.css';
 
 /**
  * @author Faruk Uçgun
  * @date 05.05.2023
+ * @abstract: This component is responsible for displaying new password page
  */
 
 const ChangePassword = () => {
     
     const dispatch = useDispatch();
-    // const navigate = useNavigate();
 
     const [searchParams] = useSearchParams();
     const token = searchParams.get('token');

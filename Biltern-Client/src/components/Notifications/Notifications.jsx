@@ -10,7 +10,7 @@ import classes from "./Notifications.module.css";
 /**
  * @author Faruk Uçgun
  * @date 09.05.2023
- * @todo: user should be able to click on the screen to close notifications
+ * @abstract: This component is responsible for displaying notifications
  */
 
 const Notifications = () => {
@@ -35,7 +35,7 @@ const Notifications = () => {
                     const id = notification.notificationId;
                     axios.put(`http://localhost:8080/notification/${id}`, config)
                         .then(res => {
-                            // do nothing
+
                         })
                         .catch(err => {
                             dispatch(setTimedAlert({msg: "Error while marking notifications as seen", alertType: "error", timeout: 4000}));
@@ -46,7 +46,6 @@ const Notifications = () => {
     };
 
     useEffect(() => {
-        // add optional date parameter to fetch notifications after that date
         const fetchNotifications = async () => {
         const config = {
             headers: {

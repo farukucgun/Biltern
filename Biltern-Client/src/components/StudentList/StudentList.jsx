@@ -25,10 +25,6 @@ const StudentList = () => {
         if (role == "TEACHING_ASSISTANT") {
             getTeachingAssistantDetails()
                 .then(res => {
-                    
-                    // DUE DATE CHECKS
-
-                    console.log(res.data);
                     setReports(res.data.reports);
                     setDepartment(res.data.department);
                 })
@@ -39,7 +35,6 @@ const StudentList = () => {
         } else if (role == "FACULTY_MEMBER") {
             getGraderDetails()
                 .then(res => {
-                    console.log(res.data);
                     setReports(res.data.reports);
                     setDepartment(res.data.department);
                 })

@@ -9,7 +9,7 @@ import classes from './CurrentStatus.module.css';
 /**
  * @author Faruk Uçgun
  * @date 07.05.2023
- * @abstract: This component is responsible for displaying current stage of an undergraduate student
+ * @abstract: This component is responsible for displaying current stage of a student
  */
 
 const CurrentStatus = () => {

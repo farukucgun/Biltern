@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { setTimedAlert } from '../../features/alertSlice';
 import { loginAsync } from '../../features/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -9,6 +8,7 @@ import classes from './Login.module.css';
 /**
  * @author Faruk Uçgun
  * @date 23.04.2023
+ * @abstract: This component is responsible for displaying login page
  */
 
 const Login = () => {
