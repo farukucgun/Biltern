@@ -1,46 +1,32 @@
-import React, {useState, useEffect} from 'react';
-import FileUpload from "../../../UI/FileUpload";
+import React, {useEffect, useState} from 'react';
 import ActionButton from '../../../UI/ActionButton';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { setTimedAlert } from '../../../features/alertSlice';
-import { getApprovalDueDate, getReportContent, uploadPreviewFeedback } from '../../../apiHelper/backendHelper';
+import { getReportDueDate, getReportContent, getPreviewFeedback } from '../../../apiHelper/backendHelper';
 
 import classes from '../CurrentStatus.module.css';
 
 /**
  * @author Faruk Uçgun
  * @date 25.05.2023
- * @abstract: This component is responsible for displaying ta evaluation stage for a ta
+ * @abstract: This component is responsible for displaying instructor grade stage for a student
  */
 
-const TAEvaluationStage = (props) => {
+const GradeStage = (props) => {
     const {id} = props;
-    const [dueDate, setDueDate] = useState(null);
+    const [dueDate, setDueDate] = useState(null); 
     const [studentFile, setStudentFile] = useState(null);
-
-    const dispatch = useDispatch();
+    const [feedbackFile, setFeedbackFile] = useState(null);
     const navigate = useNavigate();
-
-    const submitHandler = (files) => {
-        let formData = new FormData();
-        formData.append('file', files[0]);
-        uploadPreviewFeedback(id, formData, "multipart/form-data")
-            .then(res => {
-                dispatch(setTimedAlert({msg: "Report uploaded successfully", alertType: "success", timeout: 4000}));
-            })
-            .catch(err => {
-                dispatch(setTimedAlert({msg: "Error while uploading report", alertType: "error", timeout: 4000}));
-            });
-    };
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        getApprovalDueDate(id)
+        getReportDueDate(id)
             .then(res => {
                 setDueDate(res.data);
             })
             .catch(err => {
-                console.log(err);
                 dispatch(setTimedAlert({msg: "Error while fetching due date", alertType: "error", timeout: 4000}));
             });
 
@@ -52,10 +38,23 @@ const TAEvaluationStage = (props) => {
             .catch(err => {
                 dispatch(setTimedAlert({msg: "Error while fetching report", alertType: "error", timeout: 4000}));
             });
+
+        getPreviewFeedback(id, 'arraybuffer', true)
+            .then(res => {
+                const blob = new Blob([res.data], {type: 'application/pdf'});
+                setFeedbackFile(blob);
+            })
+            .catch(err => {
+                dispatch(setTimedAlert({msg: "Error while fetching feedback", alertType: "error", timeout: 4000}));
+            });
     }, []);
 
     const ViewReportHandler = () => {
         navigate("/displayfilepage", {state:{url: URL.createObjectURL(studentFile)}});
+    }
+
+    const viewFeedbackHandler = () => {
+        navigate("/displayfilepage", {state:{url: URL.createObjectURL(feedbackFile)}});
     }
 
     const downloadReport = (blob) => {
@@ -80,8 +79,12 @@ const TAEvaluationStage = (props) => {
         downloadReport(studentFile);
     }
 
+    const downloadFeedbackHandler = () => {
+        downloadReport(feedbackFile);
+    }
+
     return (
-        <div>
+        <div className={classes.iterationStage}>
             <div className={classes.dueDate}>
                 <p>Due Date: {dueDate}</p>
             </div>
@@ -97,20 +100,20 @@ const TAEvaluationStage = (props) => {
                         text="View Student Report"
                         onClick={ViewReportHandler}
                     />
-                </div>
-                <div>
-                    <FileUpload 
-                        accept=".pdf" 
-                        multiple={false}
-                        onSubmit={submitHandler} 
-                        dragMessage="Drag and drop a pdf file or click here"
-                        uploadMessage="Upload a pdf file"
-                        buttonMessage="Upload"    
+                    <ActionButton
+                        className=""
+                        text="Download TA Feedback"
+                        onClick={downloadFeedbackHandler}
+                    />
+                    <ActionButton
+                        className=""
+                        text="View Feedback"
+                        onClick={viewFeedbackHandler}
                     />
                 </div>
-            </div>
+            </div>    
         </div>
     )
 }
 
-export default TAEvaluationStage;
+export default GradeStage;
