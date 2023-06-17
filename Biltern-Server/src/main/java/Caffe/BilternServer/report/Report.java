@@ -85,6 +85,8 @@ public class Report {
         gradingForm = new GradingForm(this);
         reportStats = ReportStats.NOT_SUBMITTED;
         companyStats = CompanyStats.WAITING;
+        dueDate = LocalDate.now().plusDays(14);
+        approvalDueDate = LocalDate.now().plusDays(30);
     }
 
 
