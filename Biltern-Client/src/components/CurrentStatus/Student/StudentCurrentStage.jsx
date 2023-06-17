@@ -106,7 +106,7 @@ const StudentCurrentStatus = (props) => {
         <div className={classes.currentStatusPage}>
             <div className={classes.infoPane}>
                 <div className={classes.infoPaneLeft}>
-                    <h2>{lastReport?.studentName || "NAME"}</h2>
+                    <h2>{lastReport?.studentName || name || "NAME"}</h2>
                     <p>{departmentA || "CS"}</p>
                 </div>
                 <div className={classes.infoPaneRight}>

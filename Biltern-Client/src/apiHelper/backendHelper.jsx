@@ -110,7 +110,6 @@ export const deleteGrader = async (data) => {
 }
 
 export const getGraderDetails = async () => {
-    console.log("we are here" +url.GRADER_DETAILS_PATH() );
     return await getFetcher(url.GRADER_DETAILS_PATH());
 }
 
