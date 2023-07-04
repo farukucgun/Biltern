@@ -2,7 +2,7 @@
 
 ## Bilkent CS-319 project of group Caffé
 
-  Biltern is a web application aimed to facilitate the internship report processing for Summer Training(XX299-XX399) courses in the Engineering Faculty of Bilkent University.
+Biltern is a web application aimed to facilitate the internship report processing for Summer Training(XX299-XX399) courses in the Engineering Faculty of Bilkent University.
 
 ## Team Members
 
